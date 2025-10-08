@@ -3,7 +3,7 @@ Proyecto SocioTecnologico en la comunidad INSAI
 
 ## Diccionarios de Comandos
 
-> [! IMPORTANTE]
+> [! IMPORTANT]
 > ### Comandos Básicos de Consola
 > - **ls** : Listar archivos y directorios en el directorio actual.
 > - **cd** : Cambiar el directorio actual.
