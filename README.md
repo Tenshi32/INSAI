@@ -31,7 +31,7 @@ Proyecto SocioTecnologico en la comunidad INSAI
 > - [ ] Configurar entorno de desarrollo.
 > - [ ] Crear estructura inicial del proyecto.
 > - [ ] Implementar autenticación de usuarios.
-> - [ ] Desarrollar funcionalidades principales.
+> - [x] Desarrollar funcionalidades principales.
 > - [ ] Realizar pruebas y depuración.
 > - [ ] Documentar el código y el proyecto.
 > - [ ] Desplegar la aplicación en un servidor.
