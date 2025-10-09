@@ -27,7 +27,7 @@ class UsuarioModelo {
      * Accepts either a single id or an array compatible with execute().
      */
     function getUsuario($id) {
-        $get = $this->pdo->prepare("SELECT * FROM usuarios WHERE id = ?");
+        $get = $this->pdo->prepare("SELECT * FROM usuarios WHERE id_usuario = ?");
         $params = is_array($id) ? $id : [$id];
         $get->execute($params);
 
@@ -48,7 +48,7 @@ class UsuarioModelo {
      * Create a usuario. Returns the new inserted id on success, or false on failure.
      */
     function createUsuario($datos) {
-        $create = $this->pdo->prepare("INSERT INTO usuarios (nombre, apellido, fecha_nacimiento, email, telefono, profesion, statu) 
+        $create = $this->pdo->prepare("INSERT INTO usuarios (id_usuario, nombre, apellido, fecha_nacimiento, email, telefono, profesion, statu) 
         VALUES (?, ?, ?, ?, ?, ?, ?)");
         $ok = $create->execute($datos);
 
@@ -59,7 +59,7 @@ class UsuarioModelo {
      * Update usuario. Expects [nombre, email, id]. Returns number of affected rows.
      */
     function updateUsuario($datos) {
-        $update = $this->pdo->prepare("UPDATE usuarios SET nombre = ?, email = ? WHERE id = ?");
+        $update = $this->pdo->prepare("UPDATE usuarios SET nombre = ?, email = ? WHERE id_usuario = ?");
         $update->execute($datos);
         return $update->rowCount();
     }
