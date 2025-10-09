@@ -41,7 +41,7 @@ class SeguridadModelo {
     function createSeguridad($datos) {
         $datos[2] = password_hash($datos[2], PASSWORD_DEFAULT);
 
-        $create = $this->pdo->prepare("INSERT INTO seguridad (id_seguridad, usuario, paswrd, ruta_foto, cont_fail, token, remember) 
+        $create = $this->pdo->prepare("INSERT INTO seguridad (id_seguridad, usuario, passwrd, ruta_foto, cont_fail, token, remember) 
         VALUES (?, ?, ?, ?, ?, ?, ?)");
         $ok = $create->execute($datos);
 

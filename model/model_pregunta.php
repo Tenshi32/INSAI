@@ -46,10 +46,10 @@ class PreguntaModelo {
     }
 
     /**
-     * Update pregunta. Expects [nombre, email, id]. Returns number of affected rows.
+     * Update pregunta. Returns number of affected rows.
      */
     function updateUsuario($datos) {
-        $update = $this->pdo->prepare("UPDATE pregunta SET pregunta1 = ?, repuesta1 = ? pregunta2 = ?, repuesta2 = ? pregunta3 = ?, repuesta3 = ? 
+        $update = $this->pdo->prepare("UPDATE pregunta SET pregunta1 = ?, repuesta1 = ?, pregunta2 = ?, repuesta2 = ?, pregunta3 = ?, repuesta3 = ? 
         WHERE id_pregunta = ?");
         $update->execute($datos);
         return $update->rowCount();
