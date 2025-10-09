@@ -3,7 +3,7 @@ Proyecto SocioTecnologico en la comunidad INSAI
 
 ## Diccionarios de Comandos
 
-> [! IMPORTANT]
+> [!IMPORTANT]
 > ### Comandos Básicos de Consola
 > - **ls** : Listar archivos y directorios en el directorio actual.
 > - **cd** : Cambiar el directorio actual.
@@ -26,7 +26,7 @@ Proyecto SocioTecnologico en la comunidad INSAI
 > - **git pull** : Obtener y fusionar cambios desde un repositorio remoto.
 > - **git push** : Enviar cambios a un repositorio remoto.
 
-> [! NOTE]
+> [!NOTE]
 > ## Tareas Pendientes
 > - [ ] Configurar entorno de desarrollo.
 > - [ ] Crear estructura inicial del proyecto.
