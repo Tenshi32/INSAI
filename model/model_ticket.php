@@ -1,6 +1,6 @@
 <?php 
 
-class AuditoriaModelo {
+class TicketModelo {
 
     private $db;
     private $pdo;
@@ -26,32 +26,32 @@ class AuditoriaModelo {
      * Get a single usuario by id.
      * Accepts either a single id or an array compatible with execute().
      */
-    function getAuditoria($id) {
-        $get = $this->pdo->prepare("SELECT * FROM auditoria WHERE id_data = ?");
+    function getTicket($id) {
+        $get = $this->pdo->prepare("SELECT * FROM tickets WHERE id_data = ?");
         $params = is_array($id) ? $id : [$id];
         $get->execute($params);
 
         return $get->fetch(PDO::FETCH_ASSOC);
     }
 
-    function getAuditoriaFull($id) {
-        $get = $this->pdo->prepare("SELECT a.id_auditoria, a.id_data, a.hora, a.fecha, a.accion, a.descripcion,
+    function getTicketFull($id) {
+        $get = $this->pdo->prepare("SELECT t.id_ticket, t.id_data, t.hora, t.fecha, t.accion, t.descripcion, t.statu,
         u.id_usuario, u.nombre AS usuario_nombre, u.apellido AS usuario_apellido
-        FROM auditoria a
-        JOIN usuarios u ON a.id_data = u.id_usuario
-        WHERE a.id_auditoria = ?");
+        FROM tickets t
+        JOIN usuarios u ON t.id_data = u.id_usuario
+        WHERE t.id_ticket = ?");
         $params = is_array($id) ? $id : [$id];
         $get->execute($params);
 
         return $get->fetch(PDO::FETCH_ASSOC);
     }
-
+    
     /**
      * Create a usuario. Returns the new inserted id on success, or false on failure.
      */
-    function createAuditoria($datos) {
-        $create = $this->pdo->prepare("INSERT INTO auditoria (id_data, hora, fecha, accion, descripcion) 
-        VALUES (?, ?, ?, ?, ?)");
+    function createTicket($datos) {
+        $create = $this->pdo->prepare("INSERT INTO tickets (id_data, hora, fecha, accion, descripcion, statu) 
+        VALUES (?, ?, ?, ?, ?, ?)");
         $ok = $create->execute($datos);
 
         return $ok ? $this->pdo->lastInsertId() : false;

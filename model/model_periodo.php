@@ -1,6 +1,6 @@
 <?php 
 
-class AuditoriaModelo {
+class PeriodoModelo {
 
     private $db;
     private $pdo;
@@ -26,20 +26,19 @@ class AuditoriaModelo {
      * Get a single usuario by id.
      * Accepts either a single id or an array compatible with execute().
      */
-    function getAuditoria($id) {
-        $get = $this->pdo->prepare("SELECT * FROM auditoria WHERE id_data = ?");
+    function getPeriodo($id) {
+        $get = $this->pdo->prepare("SELECT * FROM periodos WHERE id_periodo = ?");
         $params = is_array($id) ? $id : [$id];
         $get->execute($params);
 
         return $get->fetch(PDO::FETCH_ASSOC);
     }
 
-    function getAuditoriaFull($id) {
-        $get = $this->pdo->prepare("SELECT a.id_auditoria, a.id_data, a.hora, a.fecha, a.accion, a.descripcion,
-        u.id_usuario, u.nombre AS usuario_nombre, u.apellido AS usuario_apellido
-        FROM auditoria a
-        JOIN usuarios u ON a.id_data = u.id_usuario
-        WHERE a.id_auditoria = ?");
+    function getPeriodoFull($id) {
+        $get = $this->pdo->prepare("SELECT p.id_periodo, p.id_lineamiento, l.nombre AS lineamiento, p.rango, p.fecha_inicio, p.fecha_final, p.statu
+        FROM periodos p
+        JOIN lineamientos l ON p.id_lineamiento = l.id_lineamiento
+        WHERE p.id_periodo = ?");
         $params = is_array($id) ? $id : [$id];
         $get->execute($params);
 
@@ -49,9 +48,9 @@ class AuditoriaModelo {
     /**
      * Create a usuario. Returns the new inserted id on success, or false on failure.
      */
-    function createAuditoria($datos) {
-        $create = $this->pdo->prepare("INSERT INTO auditoria (id_data, hora, fecha, accion, descripcion) 
-        VALUES (?, ?, ?, ?, ?)");
+    function createPeriodo($datos) {
+        $create = $this->pdo->prepare("INSERT INTO periodos (id_periodo, id_lineamiento, rango, fecha_inicio, fecha_final, statu) 
+        VALUES (?, ?, ?, ?, ?, ?)");
         $ok = $create->execute($datos);
 
         return $ok ? $this->pdo->lastInsertId() : false;
