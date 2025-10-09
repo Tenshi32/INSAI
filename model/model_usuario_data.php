@@ -45,6 +45,20 @@ class UsuarioDataModelo {
         return $ok ? $this->pdo->lastInsertId() : false;
     }
 
-}
+    function loginFull($datos) {
+        // Get user data by email
+        $login = $this->pdo->prepare("SELECT ud.*, u.*, s.* FROM usuario_data ud
+            JOIN usuarios u ON ud.id_usuario = u.id_usuario
+            JOIN seguridad s ON ud.id_seguridad = s.id_seguridad
+            WHERE u.email = ?");
+        $login->execute([$datos['email']]);
+        $user = $login->fetch(PDO::FETCH_ASSOC);
 
+        // Verify hashed password
+        if ($user && password_verify($datos['password'], $user['passwrd'])) {
+            return $user;
+        }
+        return false;
+    }
+}
 ?>

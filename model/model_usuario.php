@@ -68,7 +68,7 @@ class UsuarioModelo {
      * Login: returns the user row on success, or false if not found.
      */
     function login($datos) {
-        $login = $this->pdo->prepare("SELECT * FROM usuarios WHERE email = ? AND passwrd = ?");
+        $login = $this->pdo->prepare("SELECT * FROM usuarios WHERE email = ?");
         $login->execute($datos);
 
         return $login->fetch(PDO::FETCH_ASSOC);

@@ -66,19 +66,6 @@ class SeguridadModelo {
         return $del->rowCount();
     }
 
-    /**
-     * Login: returns the user row on success, or false if not found.
-     */
-    function login($datos) {
-        $login = $this->pdo->prepare("SELECT * FROM seguridad WHERE id_seguridad = ?");
-        $login->execute([$datos[0]]);
-        $user = $login->fetch(PDO::FETCH_ASSOC);
-
-        if ($user && password_verify($datos[1], $user['passwrd'])) {
-            return $user;
-        }
-        return false;
-    }
 
     function rememberMe($datos) {
         $stmt = $this->pdo->prepare("UPDATE seguridad SET token = ?, remember = ? WHERE id_seguridad = ?");
