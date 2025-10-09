@@ -1,4 +1,15 @@
 ---
+2025-10-08  (segunda ejecución) - Ejecución de `tests/run_model_tests.php`
+
+Comando ejecutado:
+php tests/run_model_tests.php
+
+Salida observada:
+model_usuario => FAIL : SQLSTATE[HY000]: General error: 1 table usuarios has no column named id_usuario
+model_pregunta => FAIL : update failed: SQLSTATE[HY000]: General error: 1 near "pregunta2": syntax error
+model_seguridad => FAIL : SQLSTATE[HY000]: General error: 1 table seguridad has no column named paswrd
+model_usuario_data => FAIL : getUsuarioData empty
+
 2025-10-08 - Registro de pruebas automáticas sobre carpeta `model/`
 
 Archivos verificados (ruta: `model/`):
