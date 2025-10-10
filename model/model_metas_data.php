@@ -35,10 +35,10 @@ class MetasDataModelo {
     }
 
     function getMetasFull($id) {
-        $get = $this->pdo->prepare("SELECT md.*, m.nombre_meta, o.nombre AS observado, cd.id_lineamiento, cd.id_departamento, cd.id_tipo_poa, u.nombre AS ubicacion
+        $get = $this->pdo->prepare("SELECT md.*, m.nombre_meta, o.nombre AS observacion, cd.id_lineamiento, cd.id_departamento, cd.id_tipo_poa, u.nombre AS ubicacion
         FROM metas_data md
         JOIN metas m ON md.id_meta = m.id_meta
-        JOIN observados o ON md.id_observado = o.id_observado
+        JOIN observaciones o ON md.id_observado = o.id_observado
         JOIN cabeceras_data cd ON md.id_cabecera_data = cd.id_cabecera
         JOIN ubicaciones u ON md.id_ubicacion = u.id_ubicacion
         WHERE md.id_meta = ?");
