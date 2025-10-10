@@ -35,12 +35,12 @@ class CabeceraDataModelo {
     }
 
     function getCabeceraFull($id) {
-        $get = $this->pdo->prepare("SELECT cd.id_cabecera, cd.id_lineamiento, l.nombre AS lineamiento, cd.id_departamento, d.nombre AS departamento, 
-        cd.id_tipo_poa, tp.nombre AS tipo_poa
+        $get = $this->pdo->prepare("SELECT cd.*, l.nombre_lineamiento, d.nombre AS departamento, tp.nombre AS tipo_poa, o.nombre AS observado
         FROM cabeceras_data cd
         JOIN lineamientos l ON cd.id_lineamiento = l.id_lineamiento
         JOIN departamentos d ON cd.id_departamento = d.id_departamento
-        JOIN tipos_poa tp ON cd.id_tipo_poa = tp.id_tipo_poa
+        JOIN tipo_poa tp ON cd.id_tipo_poa = tp.id_tipo_poa
+        JOIN observados o ON cd.id_observado = o.id_observado
         WHERE cd.id_cabecera = ?");
         $params = is_array($id) ? $id : [$id];
         $get->execute($params);
@@ -62,7 +62,7 @@ class CabeceraDataModelo {
      * Create a cabecera. Returns the new inserted id on success, or false on failure.
      */
     function createCabeceraData($datos) {
-        $create = $this->pdo->prepare("INSERT INTO cabeceras_data (id_cabecera, id_lineamiento, id_departamento, id_tipo_poa) 
+        $create = $this->pdo->prepare("INSERT INTO cabeceras_data (id_cabecera, id_lineamiento, id_departamento, id_observado, id_tipo_poa) 
         VALUES (?, ?, ?, ?)");
         $ok = $create->execute($datos);
 

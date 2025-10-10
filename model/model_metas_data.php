@@ -35,15 +35,11 @@ class MetasDataModelo {
     }
 
     function getMetasFull($id) {
-        $get = $this->pdo->prepare("SELECT md.id_meta, md.id_cabecera_data, cd.id_lineamiento, l.nombre 
-        AS lineamiento, cd.id_departamento, d.nombre 
-        AS departamento, cd.id_tipo_poa, tp.nombre 
-        AS tipo_poa, md.id_ubicacion, u.nombre AS ubicacion
+        $get = $this->pdo->prepare("SELECT md.*, m.nombre_meta, o.nombre AS observado, cd.id_lineamiento, cd.id_departamento, cd.id_tipo_poa, u.nombre AS ubicacion
         FROM metas_data md
+        JOIN metas m ON md.id_meta = m.id_meta
+        JOIN observados o ON md.id_observado = o.id_observado
         JOIN cabeceras_data cd ON md.id_cabecera_data = cd.id_cabecera
-        JOIN lineamientos l ON cd.id_lineamiento = l.id_lineamiento
-        JOIN departamentos d ON cd.id_departamento = d.id_departamento
-        JOIN tipos_poa tp ON cd.id_tipo_poa = tp.id_tipo_poa
         JOIN ubicaciones u ON md.id_ubicacion = u.id_ubicacion
         WHERE md.id_meta = ?");
         $params = is_array($id) ? $id : [$id];
@@ -66,7 +62,8 @@ class MetasDataModelo {
      * Create a data metas. Returns the new inserted id on success, or false on failure.
      */
     function createMetasData($datos) {
-        $create = $this->pdo->prepare("INSERT INTO metas_data (id_meta, id_cabecera_data, id_ubicacion) VALUES (?, ?, ?)");
+        $create = $this->pdo->prepare("INSERT INTO metas_data (id_meta, id_observado, id_cabecera_data, id_ubicacion) 
+        VALUES (?, ?, ?, ?)");
         $ok = $create->execute($datos);
 
         return $ok ? $this->pdo->lastInsertId() : false;
