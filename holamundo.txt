@@ -1,20 +1,72 @@
+
+Run modules create/update tests
+usuario_model => CREATE_OK : create_usuario returned: 6
+usuario_model => UPDATE_OK : update_usuario returned: 1
+usuario_data_model => CREATE_OK : create_usuario_data returned: None
+pregunta_model => CREATE_OK : create_pregunta returned: 7
+pregunta_model => UPDATE_OK : update_pregunta returned: 1
+seguidad_model => CREATE_OK : create_seguridad returned: None
+seguidad_model => UPDATE_OK : update_seguridad returned: 0
+ticket_model => CREATE_OK : create_ticket returned: None
+ticket_model => UPDATE_OK : update_ticket returned: 0
+ubicacion_model => CREATE_OK : create_ubicacion returned: 6
+ubicacion_model => UPDATE_OK : update_ubicacion returned: 1
+periodo_model => CREATE_OK : create_periodo returned: None
+periodo_model => UPDATE_OK : update_periodo returned: 0
+metas_model => CREATE_OK : create_metas returned: 6
+metas_model => UPDATE_OK : update_metas returned: 1
+2025-10-13 - Ejecutando create/update para todos los módulos Python en `model/`
+
+Archivos detectados en `model/`:
+- auditoria_model.py
+- db_connect.py
+- departamento_model.py
+- lineamiento_model.py
+- metas_model.py
+- observacion_model.py
+- periodo_model.py
+- pregunta_model.py
+- seguidad_model.py
+- ticket_model.py
+- ubicacion_model.py
+- usuario_data_model.py
+- usuario_model.py
+
+Acción: ejecutar `tests/run_models_using_module_queries.py` y `tests/run_model_writes.py`, y anexar la salida aquí.
+
+
 ---
-2025-10-08  (segunda ejecución) - Ejecución de `tests/run_model_tests.php`
+Run modules create/update tests
+usuario_model => CREATE_OK : create_usuario returned: 7
+usuario_model => UPDATE_OK : update_usuario returned: 1
+usuario_data_model => CREATE_OK : create_usuario_data returned: None
+pregunta_model => CREATE_OK : create_pregunta returned: 8
+pregunta_model => UPDATE_OK : update_pregunta returned: 1
+seguidad_model => CREATE_OK : create_seguridad returned: None
+seguidad_model => UPDATE_OK : update_seguridad returned: 0
+ticket_model => CREATE_OK : create_ticket returned: None
+ticket_model => UPDATE_OK : update_ticket returned: 0
+ubicacion_model => CREATE_OK : create_ubicacion returned: 7
+ubicacion_model => UPDATE_OK : update_ubicacion returned: 1
+periodo_model => CREATE_OK : create_periodo returned: None
+periodo_model => UPDATE_OK : update_periodo returned: 0
+metas_model => CREATE_OK : create_metas returned: 7
+metas_model => UPDATE_OK : update_metas returned: 1
+---
 
-Comando ejecutado:
-php tests/run_model_tests.php
-
-Salida observada:
-model_usuario => FAIL : SQLSTATE[HY000]: General error: 1 table usuarios has no column named id_usuario
-model_pregunta => FAIL : update failed: SQLSTATE[HY000]: General error: 1 near "pregunta2": syntax error
-model_seguridad => FAIL : SQLSTATE[HY000]: General error: 1 table seguridad has no column named paswrd
-model_usuario_data => FAIL : getUsuarioData empty
-
-2025-10-08 - Registro de pruebas automáticas sobre carpeta `model/`
-
-Archivos verificados (ruta: `model/`):
-- bd_conect.php -> sintaxis: OK (php -l)
-- model_pregunta.php -> sintaxis: OK (php -l)
-- model_seguridad.php -> sintaxis: OK (php -l)
-- model_usuario.php -> sintaxis: OK (php -l)
-- model_usuario_data.php -> sintaxis: OK (php -l)
+---
+Run model writes test
+auditoria_model.py => FAIL : Insert failed for table auditoria: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`insai_poa`.`auditoria`, CONSTRAINT `auditoria_ibfk_1` FOREIGN KEY (`id_data`) REFERENCES `usuario_data` (`id_data`))
+db_connect.py => SKIP : No matching table found among candidates: db_connect,db_connects,db_connect_data,db_connectes
+departamento_model.py => SKIP : No matching table found among candidates: departamento,departamento_model,departamento_models,departamento_model_data,departamento_modeles
+lineamiento_model.py => SKIP : No matching table found among candidates: lineamiento,lineamiento_model,lineamiento_models,lineamiento_model_data,lineamiento_modeles
+metas_model.py => SKIP : No matching table found among candidates: metas,metas_model,metas_models,metas_model_data,metas_modeles
+observacion_model.py => SKIP : No matching table found among candidates: observacion,observacion_model,observacion_models,observacion_model_data,observacion_modeles
+periodo_model.py => SKIP : No matching table found among candidates: periodo,periodo_model,periodo_models,periodo_model_data,periodo_modeles
+pregunta_model.py => OK : Inserted id=9 into pregunta, updated pregunta1
+seguidad_model.py => OK : Inserted id=2 into seguridad, updated usuario
+ticket_model.py => SKIP : No matching table found among candidates: ticket,ticket_model,ticket_models,ticket_model_data,ticket_modeles
+ubicacion_model.py => SKIP : No matching table found among candidates: ubicacion,ubicacion_model,ubicacion_models,ubicacion_model_data,ubicacion_modeles
+usuario_data_model.py => FAIL : Insert failed for table usuario_data: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`insai_poa`.`usuario_data`, CONSTRAINT `usuario_data_ibfk_3` FOREIGN KEY (`id_seguridad`) REFERENCES `seguridad` (`id_seguridad`))
+usuario_model.py => SKIP : No matching table found among candidates: usuario,usuario_model,usuario_models,usuario_model_data,usuario_modeles
+---
