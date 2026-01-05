@@ -1,0 +1,22 @@
+// 1. Definir la ruta exacta donde están tus archivos .ttf, .woff, etc.
+$boxicons-font-path: "../fonts/boxicons"; 
+
+// 2. Importar el CSS base de la librería
+@import '../node_modules/boxicons/css/boxicons';
+
+// 3. Sobreescribir el font-face para que use TUS archivos locales
+@font-face {
+  font-family: 'boxicons';
+  font-weight: normal;
+  font-style: normal;
+  // Usamos solo los archivos que tienes
+  src: url('#{$boxicons-font-path}/boxicons.woff2') format('woff2'),
+       url('#{$boxicons-font-path}/boxicons.woff') format('woff'),
+       url('#{$boxicons-font-path}/boxicons.ttf') format('truetype');
+}
+
+.bx {
+  vertical-align: middle;
+  font-size: 1.15rem;
+  line-height: 1;
+}

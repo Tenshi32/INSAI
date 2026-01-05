@@ -1,0 +1,176 @@
+<div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title fw-bold py-2" id="exampleModalLabel1"> <span class="text-muted fw-light"></span>
+          Creación de Departamento</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="formDepartamento" method="POST" onsubmit="return false">
+
+        <div class="modal-body">
+
+
+          <div class="row">
+            <span class="text-danger fw-light mb-3">Campos Obligatorio(*)</span>
+
+            <div class="col-12 col-md-6 mb-2">
+
+              <input type="hidden" name="created" id="created"/>
+
+              <div class="row">
+                <div class="col-12 col-md-6 mb-2">
+                  <div class="form-group">
+                    <label for="cedula" class="form-label">*Codigo</label>
+                    <input class="form-control" type="text" name="codigo" id="codigo" placeholder="V-13357514"
+                      autofocus />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2">
+                  <div class="form-group">
+                    <label for="firstName" class="form-label">*Nombre</label>
+                    <input class="form-control" type="text" id="nombre" name="nombre" placeholder="Freddy" autofocus />
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-12 col-md-6 mb-2">
+                  <div class="form-group">
+
+                    <label class="form-label" for="country">*Jefe del departamento</label>
+                    <select id="jefe" name="jefe" class="select2 form-select">
+                      <option value="">seleccione un usuario</option>
+                      <option value="Aragua">Aragua</option>
+                      <option value="Carabobo">Carabobo</option>
+                      <option value="Distrito Capital">Distrito Capital</option>
+                      <option value="Apure">Apure</option>
+                      <option value="Bolívar">Bolívar</option>
+                      <option value="Amazonas">Amazonas</option>
+                      <option value="Monagas">Monagas</option>
+                      <option value="Mérida">Mérida</option>
+                      <option value="Trujillo">Trujillo</option>
+                      <option value="ITáchira">Táchira</option>
+                      <option value="Portuguesa">Portuguesa</option>
+                      <option value="Lara">Lara</option>
+                      <option value="Falcón">Falcón</option>
+                      <option value="Sucre">Sucre</option>
+                      <option value="Nueva Esparta">Nueva Esparta</option>
+                      <option value="Zulia">Zulia</option>
+                      <option value="Delta Amacuro">Delta Amacuro</option>
+                      <option value="Guárico">Guárico</option>
+                      <option value="Barinas">Barinas</option>
+                      <option value="Anzoátegui">Anzoátegui</option>
+                      <option value="Cojedes">Cojedes</option>
+                      <option value="Miranda">Miranda</option>
+                      <option value="Vargas">Vargas</option>
+                      <option value="Yaracuy">Yaracuy</option>
+                    </select>
+
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 mb-2">
+                  <div class="form-group">
+                    <label for="fechan" class="form-label">*Ubicación</label>
+                    <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="..." />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 mb-2">
+              <div class="row">
+                <div class="col-12 col-md-12 mb-2">
+                  <div class="form-group">
+                    <label for="direccion" class="form-label">*Descripción</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="5"
+                      placeholder="Indique su dirección"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="Enviar" class="btn btn-primary">Enviar</button>
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+            Cancelar
+          </button>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</div>
+
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Consulta de</span> Departamentos</h4>
+
+<!-- Basic Bootstrap Table -->
+<div class="card">
+  <h5 class="card-header">Table Basic</h5>
+
+  <div class="ml-2 card-body">
+    <div class="row">
+      <div class="col-12 col-md-4 mb2">
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal"
+          class="btn btn-primary me-2">Crear Departamento</button>
+
+      </div>
+      <div class="col-12 col-md-4 mb2"></div>
+
+      <div class="col-12 col-md-4 mb2 d-flex align-items-center">
+        <i class="bx bx-search fs-4 lh-0"></i>
+        <input type="text" name="buscador" id="buscador" class="form-control border-0 shadow-none"
+          placeholder="Buscador..." aria-label="Buscador..." />
+      </div>
+    </div>
+
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Jefe</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+          <tr>
+            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Angular Project</strong></td>
+            <td>Albert Cook</td>
+            <td>
+              <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                  class="avatar avatar-xs pull-up" title="Lilian Fuller">
+                  <img src="../../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                </li>
+              </ul>
+            </td>
+            <td><span class="badge bg-label-primary me-1">Active</span></td>
+            <td>
+              <div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                  <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Js de Departamento -->
+<script src="../../assets/js/form-basic-inputs.js"></script>
+<script src="../../js/pages/departamento.js"></script>
