@@ -1,4 +1,4 @@
-from db_connect import DbConnect
+from model.db_connect import DbConnect
 import bcrypt
 
 class UsuarioDataModel:
@@ -32,7 +32,7 @@ class UsuarioDataModel:
             print(f"Error inesperado: {e}")
             return None
     
-    def verificar_contrasena(self, contrasena_ingresada, hash_almacenado) -> bool:
+    def verificar_contrasena(self, contrasena_ingresada, hash_almacenado):
 
         # 1. Convertir la contraseña ingresada a bytes
         contrasena_bytes = contrasena_ingresada.encode('utf-8')
@@ -41,14 +41,19 @@ class UsuarioDataModel:
         return bcrypt.checkpw(contrasena_bytes, hash_almacenado)
 
     def login_full(self, datos):
+
         sql = "SELECT ud.*, u.*, s.* FROM usuario_data ud "\
-              "JOIN usuarios u ON ud.id_usuario = u.id_usuario " \
-              "JOIN seguridad s ON ud.id_seguridad = s.id_seguridad " \
-              "WHERE u.email = %s"
-        self.cursor.execute(sql, (datos[0],))
+              "INNER JOIN usuarios u ON ud.id_usuario = u.id_usuario " \
+              "INNER JOIN seguridad s ON ud.id_seguridad = s.id_seguridad " \
+              "WHERE (u.email = %s OR s.usuario = %s)"
+        
+        self.cursor.execute(sql, (datos[0],datos[0]))
         user = self.cursor.fetchone()
 
-        if user and self.verificar_contrasena(datos[1], user['password'].encode('utf-8')):
+        if user and self.verificar_contrasena(datos[1], user['passwrd'].encode('utf-8')):
+
             return user
+        
         else:
+
             return None

@@ -7,6 +7,11 @@ $(document).on("click", "a[data-page]", function (e) {
 $(document).ready(function() {
     const pageToLoad = "home"; 
     loadContent(pageToLoad, $("a[data-page='home']") );
+    consultarLineamientos()
+
+    const nombre = sessionStorage.getItem('usuario_nombre');
+    $('.username').text(nombre);
+    
 });
 
 document.addEventListener('keyup', e => {
@@ -29,21 +34,33 @@ document.addEventListener('keyup', e => {
   }
 });
 
-/* Codigo de AJAX para buscar en la base de datos
-document.getElementById('buscador').addEventListener('keyup', function() {
-    let consulta = this.value;
+function consultarLineamientos() {
+    // 1. URL de tu servidor Flask
+    const url = "http://localhost:5000/Periodo/ViewPeriodo";
 
-    // Solo busca si hay al menos 2 caracteres
-    if (consulta.length >= 1) {
-        fetch('buscar.php', {
-            method: 'POST',
-            body: new URLSearchParams({ 'consulta': consulta })
-        })
-        .then(response => response.text())
-        .then(data => {
-            // Reemplazamos el contenido del tbody con los resultados
-            document.querySelector('.table tbody').innerHTML = data;
-        })
-        .catch(error => console.error('Error:', error));
-    }
-}); */
+    fetch(url, {
+        method: "GET", 
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Error en la red");
+        return response.json(); 
+    })
+    .then(data => {
+      const tabla = document.getElementById("ViewPeriodo");
+
+      if (data != null){
+        contenido = `Periodo Actual: <button type='button' class='btn btn-warning rounded-pill btn-lg'> ${data.rango}</button>`;
+      } else {
+        contenido = `No hay un periodo activo actualmente.`;
+      }
+      tabla.innerHTML = contenido;
+    })
+    .catch(error => {
+        console.error("Hubo un problema con la consulta:", error);
+    });
+}
+
+function SessionActiva(){
+  const nombre = sessionStorage.getItem('usuario_nombre') || '';
+  $('.username').text(nombre);
+}

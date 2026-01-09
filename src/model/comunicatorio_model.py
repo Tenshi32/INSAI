@@ -1,4 +1,4 @@
-from db_connect import DbConnect
+from model.db_connect import DbConnect
 
 class ComunicatorioModel:
 
@@ -19,6 +19,14 @@ class ComunicatorioModel:
         row = self.cursor.fetchone()
         return row
     
+    def get_comunicatorios(self):
+        sql = "SELECT c.*, l.* FROM comunicatorios c "\
+              "JOIN lineamientos l ON c.id_lineamiento = l.id_lineamiento "
+        self.cursor.execute(sql)
+
+        row = self.cursor.fetchall()
+        return row
+    
     def get_full_comunicatorio(self, id):
         sql = "SELECT c.*, l.* FROM comunicatorios c "\
               "JOIN lineamientos l ON c.id_lineamiento = l.id_lineamiento "\
@@ -28,8 +36,8 @@ class ComunicatorioModel:
         return rows
 
     def create_comunicatorio(self, datos):
-        sql = "INSERT INTO comunicatorios (id_comunicatorio, id_lineamiento, fecha_carga, descripcion) " \
-        "VALUES (%s, %s, %s, %s)"
+        sql = "INSERT INTO comunicatorios (id_comunicatorio, id_lineamiento, id_departamento, tipo, prioridad, fecha_carga, descripcion) " \
+        "VALUES (%s, %s, %s, %s, %s, %s, %s)"
       
         try: 
             self.cursor.execute(sql, tuple(datos))

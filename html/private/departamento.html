@@ -1,4 +1,4 @@
-<div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="DepartamentoModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -6,7 +6,7 @@
           Creación de Departamento</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form id="formDepartamento" method="POST" onsubmit="return false">
+      <form id="formDepartamento" method="POST" >
 
         <div class="modal-body">
 
@@ -38,41 +38,6 @@
               <div class="row">
                 <div class="col-12 col-md-6 mb-2">
                   <div class="form-group">
-
-                    <label class="form-label" for="country">*Jefe del departamento</label>
-                    <select id="jefe" name="jefe" class="select2 form-select">
-                      <option value="">seleccione un usuario</option>
-                      <option value="Aragua">Aragua</option>
-                      <option value="Carabobo">Carabobo</option>
-                      <option value="Distrito Capital">Distrito Capital</option>
-                      <option value="Apure">Apure</option>
-                      <option value="Bolívar">Bolívar</option>
-                      <option value="Amazonas">Amazonas</option>
-                      <option value="Monagas">Monagas</option>
-                      <option value="Mérida">Mérida</option>
-                      <option value="Trujillo">Trujillo</option>
-                      <option value="ITáchira">Táchira</option>
-                      <option value="Portuguesa">Portuguesa</option>
-                      <option value="Lara">Lara</option>
-                      <option value="Falcón">Falcón</option>
-                      <option value="Sucre">Sucre</option>
-                      <option value="Nueva Esparta">Nueva Esparta</option>
-                      <option value="Zulia">Zulia</option>
-                      <option value="Delta Amacuro">Delta Amacuro</option>
-                      <option value="Guárico">Guárico</option>
-                      <option value="Barinas">Barinas</option>
-                      <option value="Anzoátegui">Anzoátegui</option>
-                      <option value="Cojedes">Cojedes</option>
-                      <option value="Miranda">Miranda</option>
-                      <option value="Vargas">Vargas</option>
-                      <option value="Yaracuy">Yaracuy</option>
-                    </select>
-
-                  </div>
-                </div>
-
-                <div class="col-12 col-md-6 mb-2">
-                  <div class="form-group">
                     <label for="fechan" class="form-label">*Ubicación</label>
                     <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="..." />
                   </div>
@@ -95,9 +60,9 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" id="Enviar" class="btn btn-primary">Enviar</button>
+          <button type="button" id="Crear" class="btn btn-primary">Enviar</button>
           <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-            Cancelar
+            Cerrar
           </button>
         </div>
         
@@ -116,7 +81,7 @@
     <div class="row">
       <div class="col-12 col-md-4 mb2">
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal"
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#DepartamentoModal"
           class="btn btn-primary me-2">Crear Departamento</button>
 
       </div>
@@ -140,7 +105,7 @@
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody class="table-border-bottom-0">
+        <tbody class="table-border-bottom-0" id="tablaDepartamentos">
           <tr>
             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Angular Project</strong></td>
             <td>Albert Cook</td>
@@ -174,3 +139,4 @@
 <!-- Js de Departamento -->
 <script src="../../assets/js/form-basic-inputs.js"></script>
 <script src="../../js/pages/departamento.js"></script>
+

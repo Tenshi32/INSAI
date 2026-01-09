@@ -1,4 +1,4 @@
-from db_connect import DbConnect
+from model.db_connect import DbConnect
 
 class PeriodoModel:
 
@@ -9,6 +9,12 @@ class PeriodoModel:
             raise ConnectionError("No se pudo establecer la conexión a la base de datos.")
 
         self.cursor = self.conn.cursor(dictionary=True)
+        
+    def get_active_periodo(self):
+        # Buscamos directamente el que tenga statu '1'
+        sql = "SELECT * FROM periodos WHERE statu = '1' LIMIT 1"
+        self.cursor.execute(sql)
+        return self.cursor.fetchone()
 
     def get_periodo(self, id):
         sql = "SELECT p.id_periodo, p.id_lineamiento, l.nombre AS lineamiento, p.rango, p.fecha_inicio, p.fecha_final, p.statu" \
@@ -31,8 +37,8 @@ class PeriodoModel:
         return all_usuarios
 
     def create_periodo(self, datos):
-        sql = "INSERT INTO periodos (id_periodo, id_lineamiento, rango, fecha_inicio, fecha_final, statu) " \
-        "VALUES (%s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO periodos (id_periodo, id_lineamiento, rango, fecha_inicio, fecha_final) " \
+        "VALUES (%s, %s, %s, %s, %s)"
       
         try: 
             self.cursor.execute(sql, tuple(datos))

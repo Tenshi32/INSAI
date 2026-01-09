@@ -5,7 +5,7 @@ class DbConnect:
 
     def __init__(self):
         self.conn = None
-        self.mysql_params = {'host':'localhost','user':'root','password':'','database':'insai_poa'}
+        self.mysql_params = {'host':'localhost','user':'root','password':'','database':'insai'}
 
     def connect(self):
         try:

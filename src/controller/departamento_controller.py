@@ -1,31 +1,69 @@
-from src.model.departamento_model import modelo
+from model.departamento_model import DepartamentoModel
+
 
 class DepartamentoController:
 
     def __init__(self):
-        pass
+        # Instantiate the model here (lazy DB connection inside model)
+        self.modelo = DepartamentoModel()
 
-    def get_departamento(self, id):
-        sql = "SELECT * FROM departamentos WHERE id_departamento = %s"
-        self.cursor.execute(sql, (id))
 
-        row = self.cursor.fetchone()
-        return row
+    def buscar_departamentos(self):
+        return self.modelo.gets_departamentos()
+
+    def buscar_departamento(self, id):
+        if not id:
+            return None
+        return self.modelo.get_departamento(id)
 
     def crear_departamento(self, datos):
-        modelo = modelo()
-        pass
+        valores = [
+            datos['codigo'],
+            datos['nombre'],
+            datos['ubicacion'],
+            datos['descripcion']
+        ]
+        retorno = self.modelo.create_departamento(valores)
 
-    def update_departamento(self, datos):
-        sql = "UPDATE departamentos SET nombre = %s, descripcion = %s " \
-        "WHERE id_departamento = %s"
+        if retorno is not None:
+
+            return {"status": True, "mensaje": "Registro creado id: " + datos['codigo']}
         
-        try: 
-            self.cursor.execute(sql, tuple(datos))
-            self.conn.commit()
-            return self.cursor.rowcount
+        else:
 
-        except Exception as e:
-            self.conn.rollback()
-            print(f"Error inesperado: {e}")
-            return None
+            return {"status": False, "mensaje": "No se pudo guardar el registro"}
+    
+    def Toggle_departamento(self, datos):
+        valores = [
+            datos['status'],
+            datos['id_departamento']
+        ]
+        retorno = self.modelo.status_departamento(valores)
+
+        if retorno is not None:
+
+            return {"status": True, "mensaje": "se cambio el estado al departamento de id: " + datos['id_departamento']}
+        
+        else:
+
+            return {"status": False, "mensaje": "No se pudo guardar el registro"}
+
+
+    def Edit_departamento(self, datos):
+        valores = [
+            datos['codigo'],
+            datos['nombre'],
+            datos['descripcion'],
+            datos['ubicacion'],
+            datos['created']
+        ]
+        retorno = self.modelo.update_departamento(valores)
+
+        if retorno is not None:
+
+            return {"status": True, "mensaje": "se edito el departamento de id: " + datos['created']}
+        
+        else:
+
+            return {"status": False, "mensaje": "No se pudo guardar el registro"}
+        

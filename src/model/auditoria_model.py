@@ -1,7 +1,7 @@
-from db_connect import DbConnect
+from model.db_connect import DbConnect
 
 
-class UsuarioModel:
+class AuditoriaModel:
 
     def __init__(self):
         self.conn = DbConnect().connect()
@@ -39,7 +39,7 @@ class UsuarioModel:
 
     def create_auditoria (self, datos):
         sql = "INSERT INTO usuarios (id_data, hora, fecha, accion, descripcion) " \
-        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        "VALUES (%s, %s, %s, %s, %s)"
       
         try: 
             self.cursor.execute(sql, tuple(datos))

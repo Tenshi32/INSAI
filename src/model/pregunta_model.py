@@ -1,4 +1,4 @@
-from db_connect import DbConnect
+from model.db_connect import DbConnect
 
 class PreguntaModel:
 

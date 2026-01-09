@@ -700,7 +700,7 @@ body.swal2-no-backdrop .swal2-shown {
     align-items: center;
     justify-content: center;
     margin: 1.25em auto 0;
-    z-index: 1; }
+    z-index: 1100; }
     .swal2-popup .swal2-actions:not(.swal2-loading) .swal2-styled[disabled] {
       opacity: .4; }
     .swal2-popup .swal2-actions:not(.swal2-loading) .swal2-styled:hover {
@@ -813,7 +813,7 @@ body.swal2-no-backdrop .swal2-shown {
     font-size: 1.125em;
     font-weight: 300;
     line-height: normal;
-    z-index: 1;
+    z-index: 1100;
     word-wrap: break-word; }
   .swal2-popup #swal2-content {
     text-align: center; }
@@ -1023,7 +1023,7 @@ body.swal2-no-backdrop .swal2-shown {
       height: 100%;
       border: 0.25em solid rgba(165, 220, 134, 0.3);
       border-radius: 50%;
-      z-index: 2;
+      z-index: 1100;
       box-sizing: content-box; }
     .swal2-icon.swal2-success .swal2-success-fix {
       position: absolute;
@@ -1033,14 +1033,14 @@ body.swal2-no-backdrop .swal2-shown {
       height: 5.625em;
       -webkit-transform: rotate(-45deg);
               transform: rotate(-45deg);
-      z-index: 1; }
+      z-index: 1100; }
     .swal2-icon.swal2-success [class^='swal2-success-line'] {
       display: block;
       position: absolute;
       height: .3125em;
       border-radius: .125em;
       background-color: #a5dc86;
-      z-index: 1091; }
+      z-index: 1100; }
       .swal2-icon.swal2-success [class^='swal2-success-line'][class$='tip'] {
         top: 2.875em;
         left: .875em;
@@ -1070,7 +1070,7 @@ body.swal2-no-backdrop .swal2-shown {
     color: #fff;
     line-height: 2em;
     text-align: center;
-    z-index: 20; }
+    z-index: 1100; }
     .swal2-progresssteps .swal2-progresscircle:first-child {
       margin-left: 0; }
     .swal2-progresssteps .swal2-progresscircle:last-child {
@@ -1086,7 +1086,7 @@ body.swal2-no-backdrop .swal2-shown {
     height: .4em;
     margin: 0 -1px;
     background: #3085d6;
-    z-index: 10; }
+    z-index: 1100; }
 
 [class^='swal2'] {
   -webkit-tap-highlight-color: transparent; }

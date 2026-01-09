@@ -1,4 +1,4 @@
-from db_connect import DbConnect
+from model.db_connect import DbConnect
 
 class LineamientoModel:
 
@@ -20,14 +20,16 @@ class LineamientoModel:
  
 
     def get_all_lineamiento(self):
-        sql = "SELECT * FROM lineaminetos"
+        sql = "SELECT * FROM lineamientos " \
+        "INNER JOIN periodos ON periodos.id_lineamiento = lineamientos.id_lineamiento " \
+        "ORDER BY lineamientos.id_lineamiento DESC"
         self.cursor.execute(sql)
 
         all_usuarios = self.cursor.fetchall()
         return all_usuarios
 
     def create_lineamiento(self, datos):
-        sql = "INSERT INTO lineaminetos (id_lineamiento, normas_legales, enfoque_estrategico, lineamientos, fecha_carga) " \
+        sql = "INSERT INTO lineamientos (id_lineamiento, normas_legales, enfoque_estrategico, lineamientos, fecha_carga) " \
         "VALUES (%s, %s, %s, %s, %s)"
       
         try: 

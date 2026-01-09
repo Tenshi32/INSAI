@@ -57,9 +57,9 @@
         </center>
 
 
-          <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-          </a>
-      
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+        </a>
+
         <ul class="menu-inner py-1">
 
           <!-- Dashboard -->
@@ -184,14 +184,13 @@
           <!-- Seccion de Servicios -->
           <li class="menu-header small text-uppercase"><span class="menu-header-text">Servicios</span></li>
           <li class="menu-item">
-            <a target="_blank" class="menu-link">
+            <a data-page="ticket" class="menu-link">
               <i class="menu-icon tf-icons bx bx-tickets"></i>
               <div data-i18n="Documentation">Gestor de Ticket</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank"
-              class="menu-link">
+            <a  data-page="auditoria" class="menu-link">
               <i class='menu-icon tf-icons bx bx-file-detail'></i>
               <div data-i18n="Support">Auditoria</div>
             </a>
@@ -209,7 +208,7 @@
             </a>
           </li>
           <li class="menu-item">
-            <a target="_blank" class="menu-link">
+            <a  data-page="perfil" class="menu-link">
               <i class="menu-icon tf-icons bx bx-cog"></i>
               <div data-i18n="Documentation">Gestor de Perfil</div>
             </a>
@@ -232,8 +231,14 @@
             </a>
           </div>
 
+          
+          <div class="navbar-nav-left d-flex align-items-center" id="navbar-collapse">
+            <div class="navbar-nav flex-row align-items-center ms-auto">
+              <div id="ViewPeriodo" class="nav-item d-flex align-items-center">
+              </div>
+            </div>
+          </div>
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
             <ul class="navbar-nav flex-row align-items-center ms-auto">
 
               <!-- Place this tag where you want the button to render. -->
@@ -255,8 +260,8 @@
               </li>
 
               <li class="nav-item lh-1 me-3">
-                <a class="github-button" data-icon="octicon-star" data-size="large" data-show-count="true">
-                  User Name </a>
+                <a class="github-button username" data-icon="octicon-star" data-size="large" data-show-count="true">
+                  </a>
               </li>
 
               <!-- User -->
@@ -276,7 +281,7 @@
                           </div>
                         </div>
                         <div class="flex-grow-1">
-                          <span class="fw-semibold d-block">John Doe</span>
+                          <span class="fw-semibold d-block username">John Doe</span>
                           <small class="text-muted">Admin</small>
                         </div>
                       </div>
@@ -309,7 +314,7 @@
                     <div class="dropdown-divider"></div>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="auth-login-basic.html">
+                    <a id="CerrarSession" class="dropdown-item">
                       <i class='bx bx-arrow-out-right-square-half'></i>
                       <span class="align-middle">Log Out</span>
                     </a>
@@ -387,7 +392,7 @@
 
   <script src="../../libs/jquery-validation/jquery.validate.min.js"></script>
   <script src="../../libs/jquery-validation/additional-methods.min.js"></script>
-  
+
   <script src="../../libs/sweetalert/sweetalert2.js"></script>
   <script src="../../libs/sweetalert/sweetalert2.all.min.js"></script>
   <!-- Main JS -->

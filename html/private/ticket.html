@@ -1,0 +1,158 @@
+<div class="modal fade" id="LineamientoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title fw-bold py-2" id="exampleModalLabel1"> <span class="text-muted fw-light"></span>
+          Creación de Ticket</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+  
+      <form id="formLineamineto" method="POST" onsubmit="return false">
+
+        <div class="modal-body">
+          <input type="hidden" id="created" name="id_lineamiento" />
+
+
+          <div class="row">
+            <span class="text-danger fw-light mb-3">Campos Obligatorio(*)</span>
+
+
+
+              <div class="divider text-start">
+                <div class="divider-text">Periodo del PRE-POA</div>
+              </div>
+              <div class="row">
+
+                <div class="col-12 col-md-4 mb-2">
+                  <div class="form-group">
+                    <label for="cedula" class="form-label">*Fecha de Inicio</label>
+                    <input class="form-control" type="date" name="fecha_inicio" id="fecha_inicio" />
+                  </div>
+                </div>
+                <div class="col-12 col-md-4 mb-2">
+                  <div class="form-group">
+                    <label for="cedula" class="form-label">*Rango</label>
+                    <input class="form-control" type="text" name="rango" id="rango" />
+                  </div>
+                </div>
+                <div class="col-12 col-md-4 mb-2">
+                  <div class="form-group">
+                    <label for="firstName" class="form-label">*Fecha de Cierre</label>
+                    <input class="form-control" type="date" id="fecha_cierre" name="fecha_cierre" />
+                  </div>
+                </div>
+              </div>
+              <div class="divider text-start-center">
+                <div class="divider-text">Datos de los Lineamientos</div>
+              </div>
+              
+              <div class="row">
+                <div class="col-12 col-md-6 mb-2">
+                  <div class="form-group">
+                    <label for="direccion" class="form-label">Normas Legales</label>
+                    <textarea class="form-control" id="normas_legales" name="normas_legales" rows="5"
+                      placeholder="Indique las Normas..." autofocus></textarea>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 mb-2">
+                  <div class="form-group">
+                    <label for="direccion" class="form-label">Enfoque Estrategico</label>
+                    <textarea class="form-control" id="enfoque_estrategico" name="enfoque_estrategico" rows="5"
+                      placeholder="Indique la Estrategia..."></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+
+                <div class="col-12 col-md-12 mb-2">
+                  <div class="form-group">
+                    <label for="direccion" class="form-label">Lineamientos</label>
+                    <textarea class="form-control" id="lineamientos" name="lineamientos" rows="5"
+                      placeholder="Indique los Lineamientos..."></textarea>
+                  </div>
+                </div>
+
+              </div>
+            
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="Crear" class="btn btn-primary">Enviar</button>
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+            Cerrar
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Consulta de</span> Tickets</h4>
+
+<!-- Basic Bootstrap Table -->
+<div class="card">
+  <h5 class="card-header">Tickets</h5>
+
+  <div class="ml-2 card-body">
+    <div class="row">
+      <div class="col-12 col-md-4 mb2">
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#LineamientoModal"
+          class="btn btn-primary me-2">Crear Ticket</button>
+
+      </div>
+      <div class="col-12 col-md-4 mb2"></div>
+
+      <div class="col-12 col-md-4 mb2 d-flex align-items-center">
+        <i class="bx bx-search fs-4 lh-0"></i>
+        <input type="text" name="buscador" id="buscador" class="form-control border-0 shadow-none"
+          placeholder="Buscador..." aria-label="Buscador..." />
+      </div>
+    </div>
+
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Fecha</th>
+            <th>Acción</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0" id="tablaLineamientos">
+          <tr>
+            <td>TK-0001</td>
+            <td>Juan Pérez</td>
+            <td>2026-01-09</td>
+            <td>Reporte</td>
+            <td>Falla en módulo X</td>
+            <td><span class="badge bg-label-primary me-1">Abierto</span></td>
+            <td>
+              <div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                  <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Editar</a>
+                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Eliminar</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Js de Departamento -->
+<script src="../../assets/js/form-basic-inputs.js"></script>
+<script src="../../js/pages/lineamiento.js"></script>

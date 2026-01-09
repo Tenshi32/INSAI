@@ -1,4 +1,4 @@
-<div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="UsuarioModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -21,18 +21,21 @@
 
                 <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                   <span class="d-none d-sm-block">Subir foto</span>
+                  <input type="hidden" name="foto_ruta" id="foto_ruta" value="../../assets/img/avatars/1.png">
                   <i class="bx bx-upload d-block d-sm-none"></i>
-                  <input type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg" />
+                  <input type="file" id="upload" name="foto_archivo" class="account-file-input" hidden accept="image/png, image/jpeg" />
                 </label>
-
-                <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                
+                <button type="button" id="resetear" class="btn btn-outline-secondary account-image-reset mb-4">
                   <i class="bx bx-reset d-block d-sm-none"></i>
                   <span class="d-none d-sm-block">Resetear</span>
                 </button>
-
+                
                 <p class="text-muted mb-0">Formato permito JPG, PNG, la imagen no debe exceder de 5M</p>
               </div>
             </div>
+
+            <input type="hidden" name="created" id="created">
 
             <div class="row">
               <div class="col-12 col-md-4 mb-2">
@@ -59,79 +62,92 @@
 
             <div class="row">
               <div class="col-12 col-md-4 mb-2">
-                <label for="email" class="form-label">Correo Electronico</label>
-                <input class="form-control" type="text" id="email" name="email" placeholder="hostpc01@example.com" />
-
-              </div>
-              <div class="col-12 col-md-4 mb-2">
-                <label class="form-label" for="phoneNumber">número de teléfono</label>
-                <div class="input-group input-group-merge">
-                  <span class="input-group-text"></span>
-                  <input type="text" id="numerocel" name="numerocel" class="form-control"
-                    placeholder="0412 887.25.63" />
+                <div class="form-group">
+                  <label for="email" class="form-label">Correo Electronico</label>
+                  <input class="form-control" type="text" id="email" name="email" placeholder="hostpc01@example.com" />
                 </div>
               </div>
               <div class="col-12 col-md-4 mb-2">
-                <label for="fechan" class="form-label">fecha de nacimiento</label>
-                <input type="text" class="form-control" id="fechan" name="fechan" placeholder="12/12/1980" />
+                <div class="form-group">
+                  <label class="form-label" for="phoneNumber">número de teléfono</label>
+
+
+                  <input type="text" id="numerocel" name="numerocel" class="form-control"
+                    placeholder="0412 887.25.63" />
+
+                </div>
+              </div>
+              <div class="col-12 col-md-4 mb-2">
+                <div class="form-group">
+                  <label for="fechan" class="form-label">fecha de nacimiento</label>
+                  <input type="date" class="form-control" id="fechan" name="fechan"/>
+                </div>
               </div>
             </div>
             <div class="row">
               <div class="col-12 col-md-12 mb-2">
-                <label for="direccion" class="form-label">dirección</label>
-                <input type="text" class="form-control" id="direccion" name="direccion"
-                  placeholder="Indique su dirección" />
+                <div class="form-group">
+                  <label for="direccion" class="form-label">dirección</label>
+                  <input type="text" class="form-control" id="direccion" name="direccion"
+                    placeholder="Indique su dirección" />
+                </div>
               </div>
 
               <div class="col-12 col-md-4 mb-2">
-                <label class="form-label" for="country">estado</label>
-                <select id="estado" class="select2 form-select">
-                  <option value="estado">selecciona el estado</option>
-                  <option value="Aragua">Aragua</option>
-                  <option value="Carabobo">Carabobo</option>
-                  <option value="Distrito Capital">Distrito Capital</option>
-                  <option value="Apure">Apure</option>
-                  <option value="Bolívar">Bolívar</option>
-                  <option value="Amazonas">Amazonas</option>
-                  <option value="Monagas">Monagas</option>
-                  <option value="Mérida">Mérida</option>
-                  <option value="Trujillo">Trujillo</option>
-                  <option value="ITáchira">Táchira</option>
-                  <option value="Portuguesa">Portuguesa</option>
-                  <option value="Lara">Lara</option>
-                  <option value="Falcón">Falcón</option>
-                  <option value="Sucre">Sucre</option>
-                  <option value="Nueva Esparta">Nueva Esparta</option>
-                  <option value="Zulia">Zulia</option>
-                  <option value="Delta Amacuro">Delta Amacuro</option>
-                  <option value="Guárico">Guárico</option>
-                  <option value="Barinas">Barinas</option>
-                  <option value="Anzoátegui">Anzoátegui</option>
-                  <option value="Cojedes">Cojedes</option>
-                  <option value="Miranda">Miranda</option>
-                  <option value="Vargas">Vargas</option>
-                  <option value="Yaracuy">Yaracuy</option>
-                </select>
+                <div class="form-group">
+                  <label class="form-label" for="country">estado</label>
+                  <select id="estado" class="select2 form-select">
+                    <option value="estado">selecciona el estado</option>
+                    <option value="Aragua">Aragua</option>
+                    <option value="Carabobo">Carabobo</option>
+                    <option value="Distrito Capital">Distrito Capital</option>
+                    <option value="Apure">Apure</option>
+                    <option value="Bolívar">Bolívar</option>
+                    <option value="Amazonas">Amazonas</option>
+                    <option value="Monagas">Monagas</option>
+                    <option value="Mérida">Mérida</option>
+                    <option value="Trujillo">Trujillo</option>
+                    <option value="ITáchira">Táchira</option>
+                    <option value="Portuguesa">Portuguesa</option>
+                    <option value="Lara">Lara</option>
+                    <option value="Falcón">Falcón</option>
+                    <option value="Sucre">Sucre</option>
+                    <option value="Nueva Esparta">Nueva Esparta</option>
+                    <option value="Zulia">Zulia</option>
+                    <option value="Delta Amacuro">Delta Amacuro</option>
+                    <option value="Guárico">Guárico</option>
+                    <option value="Barinas">Barinas</option>
+                    <option value="Anzoátegui">Anzoátegui</option>
+                    <option value="Cojedes">Cojedes</option>
+                    <option value="Miranda">Miranda</option>
+                    <option value="Vargas">Vargas</option>
+                    <option value="Yaracuy">Yaracuy</option>
+                  </select>
+                </div>
               </div>
               <div class="col-12 col-md-4 mb-2">
-                <label for="municipio" class="form-label">municipio</label>
-                <select id="municipio" class="select2 form-select">
-                  <option value="">selecciona el municipio</option>
-                  <option value="">Mario Briceño Irragory</option>
-                  <option value="">Caña de Azúcar</option>
-                  <option value="">Ejemplo1</option>
-                  <option value="">Ejemplo2</option>
-                </select>
+                <div class="form-group">
+                  <label for="municipio" class="form-label">municipio</label>
+                  <select id="municipio" class="select2 form-select">
+                    <option value="">selecciona el municipio</option>
+                    <option value="">Mario Briceño Irragory</option>
+                    <option value="">Caña de Azúcar</option>
+                    <option value="">Ejemplo1</option>
+                    <option value="">Ejemplo2</option>
+                  </select>
+                </div>
               </div>
               <div class="col-12 col-md-4 mb-2">
-                <label for="parroquia" class="form-label">parroquia</label>
-                <select id="parroquia" class="select2 form-select">
-                  <option value="">selecciona la parroquia</option>
-                  <option value="">Santa Rosa</option>
-                  <option value="">Tovar</option>
-                  <option value="">Ejemplo1</option>
-                  <option value="">Ejemplo2</option>
-                </select>
+                <div class="form-group">
+                  <label for="parroquia" class="form-label">parroquia</label>
+                  <select id="parroquia" class="select2 form-select">
+                    <option value="">selecciona la parroquia</option>
+                    <option value="">Santa Rosa</option>
+                    <option value="">Tovar</option>
+                    <option value="">Ejemplo1</option>
+                    <option value="">Ejemplo2</option>
+                  </select>
+                </div>
               </div>
 
 
@@ -140,7 +156,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" id="Enviar" class="btn btn-primary">Enviar</button>
+          <button type="button" id="Crear" class="btn btn-primary">Enviar</button>
           <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
             Cancelar
           </button>
@@ -160,7 +176,7 @@
     <div class="row">
       <div class="col-12 col-md-4 mb2">
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal"
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UsuarioModal"
           class="btn btn-primary me-2">Crear Usuario</button>
 
       </div>
@@ -184,7 +200,7 @@
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody class="table-border-bottom-0">
+        <tbody class="table-border-bottom-0" id="tablaUsuario">
           <tr>
             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Angular Project</strong></td>
             <td>Albert Cook</td>
@@ -217,3 +233,4 @@
 
 
 <script src="../../assets/js/form-basic-inputs.js"></script>
+<script src="../../js/pages/usuario.js"></script>
