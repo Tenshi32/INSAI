@@ -1,0 +1,143 @@
+<div class="modal fade" id="ComunicatorioModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title fw-bold py-2" id="exampleModalLabel1"> <span class="text-muted fw-light"></span>
+          Creación de Comunicatorio</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="formComunicatorio" method="POST" onsubmit="return false">
+        <div class="modal-body">
+          <div class="row">
+            <span class="text-danger fw-light mb-3">Campos Obligatorio(*)</span>
+
+            <div class="col-12 col-md-5 mb-2">
+              <div class="row">
+                <div class="col-12 col-md-12 mb-2">
+                  <div class="form-group">
+                    <label class="form-label" for="tipo">*Tipo</label>
+                    <select id="tipo" name="tipo" class="select2 form-select">
+                      <option value="">selecciona el tipo</option>
+                      <option value="Soporte">Soporte</option>
+                      <option value="Mantenimiento">Mantenimiento</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12 col-md-12 mb-2">
+                  <div class="form-group">
+                    <label class="form-label" for="prioridad">*Prioridad</label>
+                    <select id="prioridad" name="prioridad" class="select2 form-select">
+                      <option value="">selecciona la prioridad</option>
+                      <option value="Alta">Alta</option>
+                      <option value="Media">Media</option>
+                      <option value="Baja">Baja</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12 col-md-12 mb-2">
+                  <div class="form-group">
+                    <label class="form-label" for="departamento">*Departamento</label>
+                    <select id="departamento" name="departamento" class="select2 form-select">
+                      <option value="">seleccione el departamento</option>
+                      <option value="IT">IT</option>
+                      <option value="Ventas">Ventas</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-7 mb-2">
+              <div class="row">
+                <div class="col-12 col-md-12 mb-2">
+                  <div class="form-group">
+                    <label for="descripcion" class="form-label">*Descripción</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="10"
+                      placeholder="Indique su comunicatorio..."></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="Crear" class="btn btn-primary">Enviar</button>
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Consulta de</span> Comunicatorios</h4>
+
+<!-- Basic Bootstrap Table -->
+<div class="card">
+  <h5 class="card-header">Comunicatorios</h5>
+
+  <div class="ml-2 card-body">
+    <div class="row">
+      <div class="col-12 col-md-4 mb2">
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ComunicatorioModal"
+          class="btn btn-primary me-2">Crear Comunicatorio</button>
+
+      </div>
+      <div class="col-12 col-md-4 mb2"></div>
+
+      <div class="col-12 col-md-4 mb2 d-flex align-items-center">
+        <i class="bx bx-search fs-4 lh-0"></i>
+        <input type="text" name="buscador" id="buscador" class="form-control border-0 shadow-none"
+          placeholder="Buscador..." aria-label="Buscador..." />
+      </div>
+    </div>
+
+
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Prioridad</th>
+            <th>Departamento</th>
+            <th>Estado</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0" id="tablaComunicatorios">
+          <tr>
+            <td>CM-2001</td>
+            <td>Soporte</td>
+            <td>Alta</td>
+            <td>IT</td>
+            <td><span class="badge bg-label-primary me-1">Pendiente</span></td>
+            <td>
+              <div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                  <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Editar</a>
+                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Eliminar</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<script src="../../assets/js/form-basic-inputs.js"></script>
+<script src="../../js/pages/comunicatorio.js"></script>
