@@ -1,46 +1,38 @@
-
-// Función para consultar departamentos y llenar la tabla
+// Evento GET para Consulta 
 function consultarDepartamentos() {
-    // 1. URL de tu servidor Flask (ajusta el puerto si es 5000 o 5500)
-    const url = "http://127.0.0.1:5000/Departamento";
+  // 1. URL de tu servidor Flask
+  const url = "http://localhost:5000/Departamento/Consultar"
 
-    fetch(url, {
-        method: "GET", // Para consultar siempre usamos GET
-    })
+  let contenido = "";
 
-    .then(response => {
-        if (!response.ok) throw new Error("Error en la red");
-        return response.json(); // Convertimos la respuesta de Python a JSON
-    })
-    
-    .then(data => {
-        // 2. Referencia al cuerpo de tu tabla
-        const tabla = document.getElementById("tablaDepartamentos");
+  receptor = document.getElementById("tablaDepartamentos")
 
-        let contenido = "";
-        let estado = '';
-        let accion = '';
+  MethodGet(url, function(lista) {
 
-        // Convertimos el objeto { "0": {...} } en un array [ {...} ]
-        const listaDepartamentos = Object.values(data);
+    let contenido = "";
 
-        // 3. Recorremos los datos que vienen de la base de datos
-        listaDepartamentos.forEach(item => {
+    lista.forEach(item => {
+      // Manejo de estados (Activo/Inactivo)
+      let estadoBadge = (item.statu !== "0")
+          ? '<span class="badge bg-label-primary me-1">Activo</span>'
+          : '<span class="badge bg-label-danger me-1">Inactivo</span>';
 
-          if (item.status !== "0") {
-              estado = '<span class="badge bg-label-primary me-1">Active</span>';
-              accion = 'Desactivar';
-          } else {
-              estado = '<span class="badge bg-label-danger me-1">Inactive</span>';
-              accion = 'Activar';
-          }
+      let textoAccion = (item.statu !== "0") ? 'Desactivar' : 'Activar';
 
-            contenido += `
+      // 1. Convertimos el string raro a un objeto Date de JS
+      const fechaI = new Date(item.fecha_inicio);
+      const fechaF = new Date(item.fecha_final);
+
+      // 2. Formateamos a estilo latino (día/mes/año)
+      item.fecha_inicio = fechaI.toLocaleDateString('es-ES');
+      item.fecha_final = fechaF.toLocaleDateString('es-ES');
+
+      contenido += `
                 <tr>
                     <td>${item.id_departamento}</td>
                     <td>${item.nombre}</td>
                     <td>${item.descripcion}</td>
-                    <td>${estado}</td>
+                    <td>${estadoBadge}</td>
                     <td>
                         <div class="dropdown">
                           <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -56,27 +48,112 @@ function consultarDepartamentos() {
                                data-descripcion="${item.descripcion}">
                                <i class="bx bx-edit-alt me-1"></i> Editar
                             </a>
-                            <a class="dropdown-item Toggle" data-unico="${item.id_departamento}" data-status="${item.status}"><i class='bx  bx-toggle-big-right me-1'></i> ${accion}</a>
+                            <a class="dropdown-item Toggle" data-unico="${item.id_departamento}" data-status="${item.status}"><i class='bx  bx-toggle-big-right me-1'></i> ${textoAccion}</a>
                           </div>
                         </div>
                     </td>
                 </tr>
             `;
-        });
 
-        // 4. Inyectamos las filas nuevas en la tabla
-        tabla.innerHTML = contenido;
-        document.getElementById("formDepartamento").reset();
     })
-    .catch(error => {
-        console.error("Hubo un problema con la consulta:", error);
-    });
+
+    const form = document.getElementById("formDepartamento"); 
+    if(form) form.reset();
+    
+    receptor.innerHTML = contenido;
+  })
+
 }
+
+// Evento POST para crear
+$(document).on("click", "#Crear", function () {
+
+  if ($("#formDepartamento").valid()) {
+
+    const FormnDepa = {
+      UrlControl: "http://localhost:5000/Departamento/Crear",
+      Formulario: document.getElementById("formDepartamento"),
+      Method: "POST",
+    };
+
+    methodSend(FormnDepa,  function (params) {
+      consultarDepartamentos
+      $("#DepartamentoModal").modal("hide");
+    });
+    
+  }
+  
+});
+
+// Evento PUT para activar/desactivar 
+$(document).on("click", ".Toggle", function (event) {
+  
+  const id = $(this).data("unico");
+  const statusActual = $(this).data("status");
+  
+  // Calculamos el nuevo estado (si es 1 pasa a 0, si es 0 pasa a 1)
+  const nuevoStatus = (statusActual == "1") ? "0" : "1";
+
+  // Creamos el contenedor de datos manual
+  const datosManuales = new FormData();
+  datosManuales.append("id_departamento", id);
+  datosManuales.append("status", nuevoStatus);
+
+    const FormnDepa = {
+      UrlControl: "http://localhost:5000/Departamento/Toggle",
+      Formulario: datosManuales,
+      Method: "PUT",
+    };
+
+    methodSend(FormnDepa,  function (params) {
+      consultarDepartamentos
+    });
+
+})
+
+// Evento PUT para edición 
+$(document).on("click", ".Editar", function (event) {
+
+   // 1. Obtener datos del atributo data-
+    const d = $(this).data();
+
+    // 2. Llenar los campos del formulario
+    $("#created").val(d.id); // Usamos el input hidden para el ID
+    $("#codigo").val(d.codigo);
+    $("#nombre").val(d.nombre);
+    $("#ubicacion").val(d.ubicacion);
+    $("#descripcion").val(d.descripcion);
+
+    // 3. Cambiar el botón "Enviar" para que sea de "Editar"
+    $("#Crear").text("Editar").removeClass("btn-primary")
+    .addClass("btn-warning").off("click").on("click", function() {
+
+      if ($("#formDepartamento").valid()) {
+
+        const FormnDepa = {
+          UrlControl: "http://localhost:5000/Departamento/Editar",
+          Formulario: document.getElementById("formDepartamento"),
+          Method: "PUT",
+        };
+      
+        methodSend(FormnDepa,  function (params) {
+          consultarDepartamentos
+          $("#DepartamentoModal").modal("hide");
+          $("#Crear").text("Enviar").removeClass("btn-warning").addClass("btn-primary").attr('data-action','create');
+        });
+      }
+
+    });
+    
+    // 4. Abrir el modal manualmente
+    $("#DepartamentoModal").modal("show");  
+});
 
 $(document).ready(function () {
 
   consultarDepartamentos()
-  // Validación del formulario de departamento
+
+  // Validación del formulario
   $("#formDepartamento").validate({
     //Reglas/Validaciones
     rules: {
@@ -155,89 +232,4 @@ $(document).ready(function () {
     },
   });
 
-  // Evento para crear departamento
-  $("#Crear").click(function () {
-
-    if ($("#formDepartamento").valid()) {
-
-      const FormnDepa = {
-        UrlControl: "http://127.0.0.1:5000/Departamento",
-        Formulario: document.getElementById("formDepartamento"),
-        Method: "POST",
-      };
-
-      methodSend(FormnDepa, consultarDepartamentos);
-      
-    }
-    
-  });
-
-
-});
-// Evento para activar/desactivar departamento
-$(document).on("click", ".Toggle", function (event) {
-  
-    const id = $(this).data("unico");
-    const statusActual = $(this).data("status");
-  
-    // Calculamos el nuevo estado (si es 1 pasa a 0, si es 0 pasa a 1)
-    const nuevoStatus = (statusActual == "1") ? "0" : "1";
-
-    // Creamos el contenedor de datos manual
-    const datosManuales = new FormData();
-    datosManuales.append("id_departamento", id);
-    datosManuales.append("status", nuevoStatus);
-
-      const FormnDepa = {
-        UrlControl: "http://127.0.0.1:5000/Departamento",
-        Formulario: datosManuales,
-        Method: "DELETE",
-      };
-
-      methodSend(FormnDepa, consultarDepartamentos);
-
-})
-
-// Evento para llenar el formulario de edición
-$(document).on("click", ".Editar", function (event) {
-
-    // 1. Obtener datos del atributo data-
-    const id = $(this).data("id");
-    const codigo = $(this).data("codigo");
-    const nombre = $(this).data("nombre");
-    const ubicacion = $(this).data("ubicacion");
-    const descripcion = $(this).data("descripcion");
-
-    // 2. Llenar los campos del formulario
-    $("#created").val(id); // Usamos el input hidden para el ID
-    $("#codigo").val(codigo);
-    $("#nombre").val(nombre);
-    $("#ubicacion").val(ubicacion);
-    $("#descripcion").val(descripcion);
-
-    // 3. Cambiar el botón "Enviar" para que sea de "Editar"
-    $("#Crear")
-        .text("Editar")
-        .removeClass("btn-primary")
-        .addClass("btn-warning")
-        .off("click") 
-        // Quitamos eventos anteriores
-        .on("click", function() {
-
-            if ($("#formDepartamento").valid()) {
-
-              const FormnDepa = {
-                UrlControl: "http://127.0.0.1:5000/Departamento",
-                Formulario: document.getElementById("formDepartamento"),
-                Method: "PUT",
-              };
-            
-              methodSend(FormnDepa, consultarDepartamentos);
-              
-            }
-
-          });
-          
-          // 4. Abrir el modal manualmente (si no se abre solo por el dropdown)
-          $("#DepartamentoModal").modal("show"); 
 });

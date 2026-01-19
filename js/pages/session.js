@@ -8,11 +8,17 @@ $("#IniciarSession").on("click", function () {
         Method: "POST",
     };
 
-    methodSendLogin(config, function(data) {
+    methodSend(config, function(data) {
+   
+        sessionStorage.setItem('usuario_nombre', data.datos.usuario.usuario_nombre);
+        sessionStorage.setItem('nivel_nombre', data.datos.usuario.nivel_nombre);
+        sessionStorage.setItem('departamento_nombre', data.datos.usuario.departamento_nombre);
 
-        sessionStorage.setItem('usuario_nombre', data.datos.usuario_nombre);
-        sessionStorage.setItem('usuario_id', data.datos.usuario_id);
-        
+        sessionStorage.setItem('id_departamento', data.datos.usuario.id_departamento);
+        sessionStorage.setItem('id_nivel', data.datos.usuario.id_nivel);
+        sessionStorage.setItem('id_usuario', data.datos.usuario.id_usuario);
+        sessionStorage.setItem('ruta_foto', data.datos.usuario.ruta_foto);
+
         window.location.href = "../private/index.html";
     });
   }
@@ -27,7 +33,7 @@ $("#CerrarSession").on("click", function () {
         Method: "POST",
     };
 
-    methodSend(config, function() {
+    methodSend(config, function(param) {
     });
   
 });

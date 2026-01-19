@@ -1,7 +1,7 @@
-from model.auditoria_model import AuditoriaModel
+from model import *
+from flask import session
 from datetime import datetime, date
 import random
-
 
 class AuditoriaController:
 

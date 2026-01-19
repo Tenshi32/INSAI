@@ -1,4 +1,6 @@
+
 from model.db_connect import DbConnect
+import bcrypt
 import bcrypt
 
 class SeguridadModel:
@@ -29,8 +31,8 @@ class SeguridadModel:
 
         datos[2] = self.hashear_contrasena(datos[2])
 
-        sql = "INSERT INTO seguridad (id_seguridad, usuario, passwrd, ruta_foto, cont_fail, token, remember) " \
-        "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO seguridad (id_seguridad, usuario, passwrd, ruta_foto, cont_fail) " \
+        "VALUES (%s, %s, %s, %s, %s)"
       
         try: 
             self.cursor.execute(sql, tuple(datos))

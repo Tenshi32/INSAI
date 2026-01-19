@@ -10,7 +10,7 @@
 }
 .authentication-wrapper.authentication-basic {
   align-items: center;
-  justify-content: right;
+  justify-content: center;
   margin-block-end: 4px;
   float:initial;
 }

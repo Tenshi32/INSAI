@@ -1,3 +1,4 @@
+
 from model.db_connect import DbConnect
 
 class UsuarioModel:

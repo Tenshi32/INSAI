@@ -26,8 +26,8 @@ class ComunicatorioController:
         datos["fecha"] = date.today().strftime('%Y-%m-%d')
         valores = [
             datos['codigo'],
-            datos['codigo'],
-            datos['codigo'],
+            datos['id_lineamiento'],
+            datos['departamento'],
             datos['tipo'],
             datos['prioridad'],
             datos['fecha'],
@@ -45,11 +45,11 @@ class ComunicatorioController:
                 ahora.strftime("%H:%M:%S"),
                 ahora.strftime('%Y-%m-%d'),
                 "Creacion de Comunicatorio",
-                "Se Creo un Comunicatorio con el id: " + str(datos['codigo'])
+                f"Se Creo un Comunicatorio con el id: {datos['codigo']}"
             ]
             self.auditoria.create_auditoria(valores)
 
-            return {"status": True, "mensaje": "Registro creado id: " + datos['codigo']}
+            return {"status": True, "mensaje": f"Registro creado id: {datos['codigo']}" }
         
         else:
 

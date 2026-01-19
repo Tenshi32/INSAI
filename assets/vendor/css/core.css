@@ -1157,7 +1157,7 @@ progress {
 
   .col-md-5 {
     flex: 0 0 auto;
-    width: 41.66666667%;
+    width: 30%;
   }
 
   .col-md-6 {
@@ -1167,7 +1167,7 @@ progress {
 
   .col-md-7 {
     flex: 0 0 auto;
-    width: 58.33333333%;
+    width: 70%;
   }
 
   .col-md-8 {
@@ -14979,6 +14979,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
 }
 
 .menu-item {
+  justify-items: center;
   align-items: flex-start;
   justify-content: flex-start;
 }
@@ -15078,6 +15079,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
 
 .menu-vertical {
   flex-direction: column;
+  padding: 30px;
 }
 .menu-vertical:not(.menu-no-animation) {
   transition: width 0.3s;
@@ -15086,7 +15088,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
 .menu-vertical .menu-block,
 .menu-vertical .menu-inner > .menu-item,
 .menu-vertical .menu-inner > .menu-header {
-  width: 16.25rem;
+ width: 14rem;
 }
 .menu-vertical .menu-inner {
   flex-direction: column;
@@ -15184,6 +15186,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
 }
 .menu-collapsed:not(:hover) .menu-inner > .menu-header .menu-header-text,
 .menu-collapsed:not(:hover) .menu-block .menu-header-text {
+  display: flex;
   overflow: hidden;
   opacity: 0;
 }

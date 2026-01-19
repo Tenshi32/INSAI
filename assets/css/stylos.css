@@ -54,7 +54,7 @@ body {
     position: absolute;
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 90px;
 }
 .container-membrete img{
     justify-content: center;

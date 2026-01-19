@@ -1,4 +1,16 @@
+function RastrearDocumentos(Doc) {
+  $.ajax({
+    type: "POST",
+    url: Doc["url"],
+    data: Doc.data,
 
+    success: function (r) {
+      $("#MostrarDocumento").html(r);
+
+      $("#CargarDocumento").hide();
+    },
+  });
+}
 
 function togglepassword() {
   var password = document.getElementById("Passwd");
@@ -12,51 +24,12 @@ function togglepassword() {
   }
 }
 
-//metodo para actualizar informacion
+////////////////////////////////////////////////////
+
+//Metodo para Enviar
 function methodSend(Obj, callback = null) {
   event.preventDefault();
 
-
-  const data = (Obj["Formulario"] instanceof FormData) 
-             ? Obj["Formulario"] 
-             : new FormData(Obj["Formulario"]);
-
-  fetch(Obj["UrlControl"], {
-    method: Obj["Method"],
-    body: data,
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-
-      if (data.status == true) {
-
-        Swal.fire(data.mensaje, "", "success");
-        setTimeout(1000);
-
-        // Si pasamos una función, la ejecutamos ahora
-        if (callback && typeof callback === "function") {
-          callback(); 
-        }
-
-      } else if (data.status == false) {
-        Swal.fire("ERROR!", data.mensaje, "error");
-      } else {
-        Swal.fire("ERROR!", data.message, "warning");
-      }
-    })
-
-    .catch((error) => {
-      console.error("Error:", error);
-      Swal.fire("ERROR!", "No se pudo conectar con el servidor", "error");
-    });
-
-  return true;
-}
-
-//metodo para actualizar informacion
-function methodSendLogin(Obj, callback = null) {
-  event.preventDefault();
 
   const data = (Obj["Formulario"] instanceof FormData) 
              ? Obj["Formulario"] 
@@ -85,6 +58,31 @@ function methodSendLogin(Obj, callback = null) {
       } else {
         Swal.fire("ERROR!", data.message, "warning");
       }
+    })
+
+    .catch((error) => {
+      console.error("Error:", error);
+      Swal.fire("ERROR!", "No se pudo conectar con el servidor", "error");
+    });
+
+  return true;
+}
+
+//Metodo para Buscar
+function MethodGet(url, callback) {
+    fetch(url, {
+        method: "GET", 
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Error en la red");
+        return response.json(); 
+    })
+    .then(data => {
+
+      listaComunicatorios = Object.values(data);
+
+      callback(listaComunicatorios);
+
     })
 
     .catch((error) => {
@@ -134,20 +132,6 @@ function methodSendFile(Obj, callback = null) {
   return true;
 }
 
-function RastrearDocumentos(Doc) {
-  $.ajax({
-    type: "POST",
-    url: Doc["url"],
-    data: Doc.data,
-
-    success: function (r) {
-      $("#MostrarDocumento").html(r);
-
-      $("#CargarDocumento").hide();
-    },
-  });
-}
-
 // Función para cargar el contenido
 async function loadContent(pageName, elementClicked = null) {
 
@@ -182,8 +166,6 @@ async function loadContent(pageName, elementClicked = null) {
 
           const html = await response.text();
           contentArea.hide().html(html).fadeIn(500);
-
-          console.log(html);
           
         } else {
 

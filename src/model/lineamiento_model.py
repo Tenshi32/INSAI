@@ -12,8 +12,15 @@ class LineamientoModel:
 
 
     def get_lineamiento(self, id):
-        sql = "SELECT * FROM lineaminetos WHERE lineaminetos = %s"
+        sql = "SELECT * FROM lineaminetos WHERE id_lineamientos = %s"
         self.cursor.execute(sql, (id))
+
+        row = self.cursor.fetchone()
+        return row
+    
+    def lineamiento_active(self):
+        sql = "SELECT * FROM lineamientos WHERE status = '1'"
+        self.cursor.execute(sql)
 
         row = self.cursor.fetchone()
         return row

@@ -1,5 +1,4 @@
-from model.lineamiento_model import LineamientoModel
-from model.periodo_model import PeriodoModel
+from model import *
 from datetime import date
 import random
 
@@ -15,6 +14,9 @@ class LineamientoController:
         if not id:
             return None
         return self.modelo.get_lineamiento(id)
+
+    def active_lineamiento(self):
+        return self.modelo.lineamiento_active()
 
     def crear(self, datos: dict):
         numero = random.randint(10**4, 10**10 - 1)

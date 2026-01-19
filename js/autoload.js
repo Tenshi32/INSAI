@@ -9,9 +9,6 @@ $(document).ready(function() {
     loadContent(pageToLoad, $("a[data-page='home']") );
     consultarLineamientos()
 
-    const nombre = sessionStorage.getItem('usuario_nombre');
-    $('.username').text(nombre);
-    
 });
 
 document.addEventListener('keyup', e => {
@@ -60,7 +57,16 @@ function consultarLineamientos() {
     });
 }
 
-function SessionActiva(){
-  const nombre = sessionStorage.getItem('usuario_nombre') || '';
-  $('.username').text(nombre);
-}
+$("#CerrarSession").on("click", function () {
+
+  sessionStorage.clear();
+
+});
+
+caches.keys().then(function(names) {
+    for (let name of names) {
+        caches.delete(name);
+    }
+}).then(() => {
+    console.log("Caché de Service Workers eliminado.");
+});

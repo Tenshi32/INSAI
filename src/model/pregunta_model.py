@@ -19,7 +19,7 @@ class PreguntaModel:
         return row
  
     def create_pregunta(self, datos):
-        sql = "INSERT INTO pregunta (id_pregunta, pregunta1, repuesta1, pregunta2, repuesta2, pregunta3, repuesta3) " \
+        sql = "INSERT INTO preguntas (id_pregunta, pregunta1, repuesta1, pregunta2, repuesta2, pregunta3, repuesta3) " \
         "VALUES (%s, %s, %s, %s, %s, %s, %s)"
       
         try: 

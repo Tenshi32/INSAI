@@ -1,4 +1,4 @@
-from db_connect import DbConnect
+from model.db_connect import DbConnect
 
 
 class CabeceraDataModel:
@@ -23,11 +23,12 @@ class CabeceraDataModel:
         row = self.cursor.fetchone()
         return row
     
-    def get_full_cabecera_data(self, id):
-        sql = "SELECT cd.*, l.*, d.*, o.*, tp.* FROM cabeceras_data cd "\
-              "JOIN lineaminetos l ON cd.id_lineamiento = l.id_lineamiento "\
+    def get_full_cabecera_data(self):
+        sql = "SELECT cd.*, c.*, l.*, d.*, o.*, tp.* FROM cabeceras_data cd "\
+              "JOIN lineamientos l ON cd.id_lineamiento = l.id_lineamiento "\
+              "JOIN cabeceras c ON cd.id_cabecera = c.id_cabecera "\
               "JOIN departamentos d ON cd.id_departamento = d.id_departamento "\
-              "JOIN observado o ON cd.id_observado = o.id_observado "\
+              "JOIN observaciones o ON cd.id_observado = o.id_observacion "\
               "JOIN tipo_poa tp ON cd.id_tipo_poa = tp.id_tipo_poa " \
               "ORDER BY cd.id_cabecera DESC"
         self.cursor.execute(sql)
@@ -35,6 +36,20 @@ class CabeceraDataModel:
         return all_cabeceras
  
     def create_cabecera_data(self, datos):
+        sql = "INSERT INTO cabeceras_data (id_cabecera_data, id_cabecera, id_lineamiento, id_departamento, id_observado, id_tipo_poa) " \
+        "VALUES (%s, %s, %s, %s, %s, %s)"
+      
+        try: 
+            self.cursor.execute(sql, tuple(datos))
+            self.conn.commit()
+            return self.cursor.lastrowid
+
+        except Exception as e:
+            self.conn.rollback()
+            print(f"Error inesperado: {e}")
+            return None
+    
+    def edit_cabecera_data(self, datos):
         sql = "INSERT INTO cabeceras_data (id_cabecera, id_lineamiento, id_departamento, id_observado, id_tipo_poa) " \
         "VALUES (%s, %s, %s, %s, %s)"
       

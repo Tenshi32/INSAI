@@ -22,12 +22,12 @@ class UsuarioController:
 
         valores = [
             datos['id_usuario'],
-            datos.get('firstName') or datos.get('nombre'),
-            datos.get('lastName') or datos.get('apellido'),
-            datos.get('fechan') or datos.get('fecha_nacimiento'),
-            datos.get('email'),
-            datos.get('numerocel') or datos.get('telefono'),
-            datos.get('profesion', 'Dev')
+            datos['firstName'],
+            datos['lastName'],
+            datos['fechan'],
+            datos['email'],
+            datos['numerocel'],
+            'Dev'
         ]
 
         retorno = self.modelo.create_usuario(valores)

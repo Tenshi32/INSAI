@@ -20,8 +20,9 @@ class ComunicatorioModel:
         return row
     
     def get_comunicatorios(self):
-        sql = "SELECT c.*, l.* FROM comunicatorios c "\
-              "JOIN lineamientos l ON c.id_lineamiento = l.id_lineamiento "
+        sql = "SELECT c.*, l.*, d.*  FROM comunicatorios c "\
+              "JOIN lineamientos l ON c.id_lineamiento = l.id_lineamiento "\
+              "JOIN departamentos d ON c.id_departamento = d.id_departamento "
         self.cursor.execute(sql)
 
         row = self.cursor.fetchall()
