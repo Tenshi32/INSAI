@@ -36,6 +36,10 @@ function consultarAuditorias() {
 }
 
 $(document).ready(function () {
+  var checkbox = document.getElementById('#checkbox')
+  if (checkbox !== null) {
+    checkbox.indeterminate = true
+  }
   consultarAuditorias()
 
   $(document).on('click', '.VerDetalle', function (event) {
@@ -74,5 +78,4 @@ $(document).ready(function () {
     // 4. Abrir el modal
     $('#LineamientoModal').modal('show')
   })
-  
 })
