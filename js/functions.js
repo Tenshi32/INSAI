@@ -38,6 +38,7 @@ function methodSend(Obj, callback = null) {
   fetch(Obj["UrlControl"], {
     method: Obj["Method"],
     body: data,
+    credentials: "include" 
   })
     .then((response) => response.json())
     .then((data) => {
@@ -71,7 +72,8 @@ function methodSend(Obj, callback = null) {
 //Metodo para Buscar
 function MethodGet(url, callback) {
     fetch(url, {
-        method: "GET", 
+        method: "GET",
+        credentials: "include"  
     })
     .then(response => {
         if (!response.ok) throw new Error("Error en la red");
@@ -105,6 +107,7 @@ function methodSendFile(Obj, callback = null) {
   fetch(Obj["UrlControl"], {
     method: Obj["Method"],
     body: data,
+    credentials: "include" 
   })
     .then((response) => response.json())
     .then((data) => {

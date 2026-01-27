@@ -53,6 +53,11 @@ gulpfile.tmp.*
 # Assets
 # **/static/vendor
 
+__pycache__/
+*.pyc
+.vscode/
+assets/img/avatars/*.jpeg
+
 # HTML files
 /html-starter
 /html-demo

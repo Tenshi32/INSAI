@@ -1,54 +1,95 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const btn = document.getElementById('btnImportar')
-  const container = document.getElementById('importContainer')
-  if (!btn || !container) return
-
-  btn.addEventListener('click', function (e) {
-    // Prevent default Bootstrap modal trigger from interfering with our action
-    // (we still allow modal behavior)
-    // e.preventDefault()
-
-    // If input already exists, just open file picker
-    const existing = container.querySelector('input[type="file"][name="sql_file"]')
-    if (existing) {
-      existing.click()
-      return
+// Evento POST para crear
+$(document).on('click', '#Generar', function () {
+  if ($('#formDepartamento').valid()) {
+    const FormnDepa = {
+      UrlControl: 'http://localhost:5000/Database/Exportar',
+      Formulario: document.getElementById('formBaseData'),
+      Method: 'POST'
     }
 
-    const wrapper = document.createElement('div')
-    wrapper.className = 'mt-3'
-
-    const label = document.createElement('label')
-    label.className = 'form-label'
-    label.setAttribute('for', 'sql_file')
-    label.textContent = 'Seleccionar archivo SQL'
-
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = '.sql'
-    input.className = 'form-control'
-    input.name = 'sql_file'
-    input.id = 'sql_file'
-
-    // Optional: handle file selection
-    input.addEventListener('change', function () {
-      if (!input.files || input.files.length === 0) return
-      const file = input.files[0]
-      const info = document.createElement('div')
-      info.className = 'mt-2 small text-muted'
-      info.textContent = `Archivo seleccionado: ${file.name} (${Math.round(file.size/1024)} KB)`
-      // remove old info
-      const old = container.querySelector('.file-info')
-      if (old) old.remove()
-      info.classList.add('file-info')
-      container.appendChild(info)
+    methodSend(FormnDepa, function (params) {
+      consultarDepartamentos
+      $('#DepartamentoModal').modal('hide')
     })
+  }
+})
 
-    wrapper.appendChild(label)
-    wrapper.appendChild(input)
-    container.appendChild(wrapper)
+$(document).ready(function () {
+  $('#BaseDataModal').on('show.bs.modal', function (event) {
+    // Botón que disparó el modal
+    const boton = $(event.relatedTarget)
+    const esImportar = boton.attr('id') === 'btnImportar'
 
-    // open file picker immediately
-    input.click()
+    const modal = $(this)
+    const contenedor = modal.find('#camposDinamicos')
+    const btnGenerar = modal.find('#Generar')
+
+    if (esImportar) {
+      // --- CONFIGURACIÓN PARA IMPORTAR ---
+      modal.find('#tituloModalBase').text('Importar Base de Datos')
+      btnGenerar.text('Importar').removeClass('btn-primary').addClass('btn-success')
+      btnGenerar.attr('data-url', 'http://localhost:5000/Database/Importar')
+
+      // Agregamos el campo de archivo
+      contenedor.html(`
+                <div class="form-group mb-3">
+                    <label class="form-label">Seleccione archivo .sql</label>
+                    <input type="file" name="archivo_sql" id="archivo_sql" class="form-control" accept=".sql" required>
+                </div>
+            `)
+    } else {
+      // --- CONFIGURACIÓN PARA EXPORTAR ---
+      modal.find('#tituloModalBase').text('Exportar Base de Datos')
+      btnGenerar.text('Exportar').removeClass('btn-success').addClass('btn-primary')
+      btnGenerar.attr('data-url', 'http://localhost:5000/Database/Exportar')
+
+      // Eliminamos el campo (vaciamos el contenedor)
+      contenedor.empty()
+    }
+  })
+  $('#formBaseData').validate({
+    // --- REGLAS DE VALIDACIÓN ---
+    rules: {
+      email_username: {
+        required: true,
+        minlength: 7,
+        maxlength: 20
+      },
+      password: {
+        required: true,
+        minlength: 2,
+        maxlength: 50
+      }
+    },
+
+    // --- MENSAJES PERSONALIZADOS ---
+    messages: {
+      email_username: {
+        required: 'La cédula es obligatoria',
+        minlength: 'La cédula debe tener al menos 7 dígitos',
+        maxlength: 'La cédula no debe exceder los 20 caracteres'
+      },
+      password: {
+        required: 'El nombre es obligatorio',
+        minlength: 'Mínimo 2 caracteres',
+        maxlength: 'Máximo 50 caracteres'
+      }
+    },
+
+    // --- DISEÑO DE ERRORES (BOOTSTRAP 5) ---
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback animated fadeIn') // Animación suave
+      // Coloca el mensaje de error después del input dentro del form-group
+      element.closest('.form-group').append(error)
+    },
+
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid').removeClass('is-valid')
+    },
+
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid').addClass('is-valid')
+    }
   })
 })

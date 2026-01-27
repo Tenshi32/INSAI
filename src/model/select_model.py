@@ -13,12 +13,16 @@ class SelectModel:
 
 
     def get_select(self, col1, col2, tabla):
-        sql = f"SELECT {col1}, {col2} FROM {tabla}"
-        self.cursor.execute(sql)
+        
+        try:
+            sql = f"SELECT {col1}, {col2} FROM {tabla}"
+            self.cursor.execute(sql)
 
-        rows = self.cursor.fetchall()
-        return rows
-    
+            rows = self.cursor.fetchall()
+            return rows
+        finally:
+            self.cursor.close()
+        
     def get_select_where(self, col1, col2, col3, tabla, id):
         sql = f"SELECT {col1}, {col2}, {col3} FROM {tabla} WHERE {col1} = ?"
         self.cursor.execute(sql, (id))

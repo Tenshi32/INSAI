@@ -302,9 +302,9 @@ $(document).on("click", ".Editar", function (event) {
 $(document).ready(function () {
 
     consultarUsuarios()
-    SelectDepartamento()
-    SelectPreguntas()
-    SelectNivel()
+    setTimeout(SelectDepartamento, 100);
+    setTimeout(SelectPreguntas, 200);
+    setTimeout(SelectNivel, 300);
  
     const $form = $("#formUsuario");
     if ($form.length) {
