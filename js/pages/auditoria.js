@@ -1,12 +1,24 @@
 // Evento GET para Consulta
 function consultarAuditorias() {
-  // 1. URL de tu servidor Flask
-  const url = 'http://localhost:5000/Auditoria/Consultar'
 
+    $('#tablaAuditoriaPrincipal').DataTable({
+      "paging": true,          // Habilita paginación
+      "lengthChange": true,    // Permite cambiar cuántos registros ver
+      "ordering": true,        // Permite ordenar por columnas
+      "info": true,            // Muestra el texto "Mostrando X de Y"
+      "autoWidth": false,     // Deshabilita el ajuste automático de ancho
+      "dom": '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>', 
+      // Esta línea "dom" es para que los controles se vean ordenados como en Sneat
+    });
+    
+  // 1. URL de tu servidor Flask
+  let url = 'http://localhost:5000/Auditoria/Consultar'
+
+  let contenido = ''
+  
   receptor = document.getElementById('tablaAuditoria')
 
   MethodGet(url, function (lista) {
-    let contenido = ''
 
     lista.forEach(item => {
       contenido += `
@@ -36,10 +48,7 @@ function consultarAuditorias() {
 }
 
 $(document).ready(function () {
-  var checkbox = document.getElementById('#checkbox')
-  if (checkbox !== null) {
-    checkbox.indeterminate = true
-  }
+
   consultarAuditorias()
 
   $(document).on('click', '.VerDetalle', function (event) {

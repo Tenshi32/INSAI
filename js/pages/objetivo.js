@@ -1,15 +1,13 @@
 // Evento GET para Consulta
 function consultarObjetivos() {
-  // 1. URL de tu servidor Flask
-  const url = "http://localhost:5000/CabeceraData/Consultar"
+ 
+  let url = "http://localhost:5000/CabeceraData/Consultar"
 
   let contenido = "";
 
   receptor = document.getElementById("tablaPOA")
 
   MethodGet(url, function(lista) {
-
-    let contenido = "";
 
     lista.forEach(item => {
 

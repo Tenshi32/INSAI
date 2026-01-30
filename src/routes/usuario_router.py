@@ -10,25 +10,25 @@ UPLOAD_FOLDER = 'assets/img/avatars'
 
 @usuario_bp.route('/Consultar', methods=['GET'])
 def consultar():
-    return jsonify(ctrl.buscar_usuarios())
+    return jsonify(ctrl.listar())
 
 @usuario_bp.route('/Crear', methods=['POST'])
 def crear():
     datos_recibidos = request.form.to_dict()
     print("Datos que llegaron para crear:", datos_recibidos)
-    return jsonify(ctrl.crear_usuario(datos_recibidos))
+    return jsonify(ctrl.crear(datos_recibidos))
 
 @usuario_bp.route('/Editar', methods=['PUT'])
 def editar():
     datos_recibidos = request.form.to_dict()
     print("Datos que llegaron para editar:", datos_recibidos)
-    return jsonify(ctrl.Edit_usuario(datos_recibidos))
+    return jsonify(ctrl.editar(datos_recibidos))
 
 @usuario_bp.route('/Toggle', methods=['PUT'])
 def toggle():
     datos_recibidos = request.form.to_dict()
     print("Datos que llegaron para toggle:", datos_recibidos)
-    return jsonify(ctrl.Toggle_usuario(datos_recibidos))
+    return jsonify(ctrl.toggle(datos_recibidos))
 
 @usuario_bp.route('/SubirFoto', methods=['POST'])
 def subir_foto():
