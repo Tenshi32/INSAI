@@ -13,12 +13,20 @@ class SelectModel:
 
 
     def get_select(self, col1, col2, tabla):
-        sql = f"SELECT {col1}, {col2} FROM {tabla}"
-        self.cursor.execute(sql)
-
-        rows = self.cursor.fetchall()
-        return rows
-    
+        # Creamos un cursor nuevo para esta petición específica
+        cursor = self.conn.cursor(dictionary=True) 
+        try:
+            sql = f"SELECT {col1}, {col2} FROM {tabla}"
+            cursor.execute(sql)
+            rows = cursor.fetchall()
+            return rows
+        except Exception as e:
+            print(f"Error en la consulta: {e}")
+            return []
+        finally:
+            # Cerramos solo este cursor
+            cursor.close()
+        
     def get_select_where(self, col1, col2, col3, tabla, id):
         sql = f"SELECT {col1}, {col2}, {col3} FROM {tabla} WHERE {col1} = ?"
         self.cursor.execute(sql, (id))

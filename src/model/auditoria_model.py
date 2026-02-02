@@ -23,11 +23,21 @@ class AuditoriaModel:
         return row
  
     def get_all_full_auditoria(self):
-        sql = "SELECT a.id_auditoria, a.id_data, a.hora, a.fecha, a.accion, a.descripcion, " \
-        "u.id_usuario, u.nombre AS usuario_nombre, u.apellido AS usuario_apellido " \
-        "FROM auditoria a JOIN usuarios u ON a.id_data = u.id_usuario " \
-        "ORDER BY fecha DESC, hora DESC"
-
+        sql =(
+                "SELECT "
+                "a.id_auditoria, "
+                "DATE_FORMAT(a.hora, '%H:%i:%s') as hora, "
+                "DATE_FORMAT(a.fecha, '%Y-%m-%d') as fecha, "
+                "a.accion, "
+                "a.descripcion, "
+                "u.nombre AS usuario_nombre, "
+                "u.apellido AS usuario_apellido "
+                "FROM auditoria a "
+                "JOIN usuario_data ua ON a.id_data = ua.id_data "
+                "JOIN usuarios u ON ua.id_usuario = u.id_usuario "
+                "ORDER BY a.fecha DESC, a.hora DESC"
+            )
+        
         try:
             self.cursor.execute(sql)
             all_auditoria = self.cursor.fetchall()
@@ -38,7 +48,7 @@ class AuditoriaModel:
             return []
 
     def create_auditoria (self, datos):
-        sql = "INSERT INTO usuarios (id_data, hora, fecha, accion, descripcion) " \
+        sql = "INSERT INTO auditoria (id_data, hora, fecha, accion, descripcion) " \
         "VALUES (%s, %s, %s, %s, %s)"
       
         try: 

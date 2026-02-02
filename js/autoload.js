@@ -36,7 +36,8 @@ function consultarLineamientos() {
     const url = "http://localhost:5000/Periodo/ViewPeriodo";
 
     fetch(url, {
-        method: "GET", 
+        method: "GET",
+        credentials: "include" 
     })
     .then(response => {
         if (!response.ok) throw new Error("Error en la red");
@@ -44,29 +45,37 @@ function consultarLineamientos() {
     })
     .then(data => {
       const tabla = document.getElementById("ViewPeriodo");
-
+      
       if (data != null){
         contenido = `Periodo Actual: <button type='button' class='btn btn-warning rounded-pill btn-lg'> ${data.rango}</button>`;
       } else {
+
         contenido = `No hay un periodo activo actualmente.`;
+        $("#menu-prepoa").hide();
+        $("#menu-poa").hide();
+
       }
       tabla.innerHTML = contenido;
     })
     .catch(error => {
         console.error("Hubo un problema con la consulta:", error);
+        $("#menu-prepoa").hide();
+        $("#menu-poa").hide();
     });
 }
 
-$("#CerrarSession").on("click", function () {
-
-  sessionStorage.clear();
-
-});
-
-caches.keys().then(function(names) {
-    for (let name of names) {
-        caches.delete(name);
+// funcion para borrar el cache 
+function clearCache() {
+    if ('caches' in window) {
+        caches.keys().then(function(names) {
+            for (let name of names)
+                caches.delete(name);
+        });
     }
-}).then(() => {
-    console.log("Caché de Service Workers eliminado.");
+    console.log('Cache cleared!');
+}
+
+// Llamar a la función para borrar el caché al cargar la página
+window.addEventListener('load', function() {
+    clearCache();
 });

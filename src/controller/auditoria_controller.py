@@ -17,26 +17,27 @@ class AuditoriaController:
         return self.modelo.get_auditoria(id_auditoria)
 
     def crear(self, datos: dict):
-        if 'id_auditoria' not in datos:
-            datos['id_auditoria'] = str(random.randint(10**5, 10**10 - 1))
-        if 'fecha' not in datos:
-            datos['fecha'] = date.today().strftime('%Y-%m-%d')
-        if 'hora' not in datos:
-            datos['hora'] = datetime.now().strftime('%H:%M:%S')
+            
+        try:
+            if 'fecha' not in datos:
+                datos['fecha'] = date.today().strftime('%Y-%m-%d')
+            if 'hora' not in datos:
+                datos['hora'] = datetime.now().strftime('%H:%M:%S')
 
-        valores = [
-            datos.get('id_data'),
-            datos.get('hora'),
-            datos.get('fecha'),
-            datos.get('accion'),
-            datos.get('descripcion')
-        ]
+            valores = [
+                datos['id_data'],
+                datos['hora'],
+                datos['fecha'],
+                datos['accion'],
+                datos['descripcion']
+            ]
 
-        retorno = self.modelo.create_auditoria(valores)
-
-        if retorno is not None:
-            return {"status": True, "mensaje": f"Auditoría creada id: {datos['id_auditoria']}"}
-        return {"status": False, "mensaje": "No se pudo crear la auditoría"}
+            retorno = self.modelo.create_auditoria(valores)
+            # Si el modelo devuelve algo (usualmente el ID insertado), es True
+            return retorno is not None
+        except Exception as e:
+            print(f"Error silencioso en auditoría: {e}")
+            return False
 
     def editar(self, datos: dict):
         if not hasattr(self.modelo, 'update_auditoria'):

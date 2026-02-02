@@ -1,15 +1,13 @@
 // Evento GET para Consulta 
 function consultarLineamientos() {
   // 1. URL de tu servidor Flask
-  const url = "http://localhost:5000/Lineamiento/Consultar"
+  let url = "http://localhost:5000/Lineamiento/Consultar"
 
   let contenido = "";
 
   receptor = document.getElementById("tablaLineamientos")
 
   MethodGet(url, function(lista) {
-
-    let contenido = "";
 
     lista.forEach(item => {
       // Manejo de estados (Activo/Inactivo)

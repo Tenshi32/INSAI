@@ -64,15 +64,14 @@ function consultarComunicatorios() {
 
 function SelectDepartamento() {
   // 1. URL de tu servidor Flask
-  const url = "http://localhost:5000/Select/Consultar?tabla=departamentos&col1=id_departamento&col2=nombre"
+  let url = "http://localhost:5000/Select/Consultar?tabla=departamentos&col1=id_departamento&col2=nombre"
+  
+  let contenido = "<option value=''>seleccione una opción</option> ";
 
-  let contenido = "";
-
-  const receptor = document.getElementById("departamento")
+  let receptor = document.getElementById("departamento")
 
   MethodGet(url, function(lista) {
 
-    let contenido = "<option value=''>seleccione una opción</option> ";
 
     lista.forEach(item => {
 
@@ -193,9 +192,11 @@ $(document).ready(function () {
   consultarComunicatorios()
   SelectDepartamento()
   GetLineamiento()
+  
   // Validación del formulario
   const $form = $("#formComunicatorio");
   if ($form.length) {
+    
     $form.validate({
   // Reglas de validación
   rules: {

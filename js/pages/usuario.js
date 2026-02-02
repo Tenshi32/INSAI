@@ -62,79 +62,80 @@ $(document).on("click", "#resetear", function(event) {
     
 });
 
-let usuariosLocales = [];
 
 // Evento GET para Consulta 
 function consultarUsuarios() {
-  // 1. URL de tu servidor Flask
-  const url = "http://localhost:5000/UsuarioData/Consultar"
-  let contenido = "";
+    // 1. URL de tu servidor Flask
+    let url = "http://localhost:5000/UsuarioData/Consultar"
+
+    let usuariosLocales = [];
   
-  const receptor = document.getElementById("tablaUsuario")
-  
-  MethodGet(url, function(lista) {
-  usuariosLocales = lista;
-
-    console.log(lista);
-
-    let contenido = "";
-
-    lista.forEach(item => {
-      // Manejo de estados (Activo/Inactivo)
-      let estado = (item.statu !== "0")
-          ? '<span class="badge bg-label-primary me-1">Activo</span>'
-          : '<span class="badge bg-label-danger me-1">Inactivo</span>';
-
-      let accion = (item.statu !== "0") ? 'Desactivar' : 'Activar';
-
-      // 1. Convertimos el string raro a un objeto Date de JS
-      const fechaI = new Date(item.fecha_inicio);
-      const fechaF = new Date(item.fecha_final);
-
-      // 2. Formateamos a estilo latino (día/mes/año)
-      item.fecha_inicio = fechaI.toLocaleDateString('es-ES');
-      item.fecha_final = fechaF.toLocaleDateString('es-ES');
-
-        contenido += `
-            <tr>
-                <td>${item.id_usuario}</td>
-                <td>${item.nombre} ${item.apellido}</td>
-                <td>${item.email}</td>
-                <td>${estado}</td>
-                <td>
-                    <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i class="bx bx-dots-vertical-rounded"></i>
-                      </button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item Edit" 
-                           style="cursor:pointer;"
-                           data-id="${item.id_usuario}"
-                           data-cedula="${item.id_usuario}" 
-                           data-nombre="${item.nombre}"
-                           data-apellido="${item.apellido}"
-                           data-email="${item.email}"
-                           data-telefono="${item.telefono}"
-                           data-fechan="${item.fecha_nacimiento}"
-                           data-direccion="${item.direccion}"
-                           data-profesion="${item.profesion}">
-                           <i class="bx bx-edit-alt me-1"></i> Editar
-                        </a>
-                        <a class="dropdown-item Toggle" data-unico="${item.id_usuario}" data-status="${item.statu}">
-                            <i class='bx bx-toggle-big-right me-1'></i> ${accion}
-                        </a>
-                      </div>
-                    </div>
-                </td>
-            </tr>`;
-
-    })
-
-    const form = document.getElementById("formUsuario"); 
-    if(form) form.reset();
+    let receptor = document.getElementById("tablaUsuario")
     
-    receptor.innerHTML = contenido;
-  })
+    let contenido = "";
+    
+    MethodGet(url, function(lista) {
+    usuariosLocales = lista;
+
+      console.log(lista);
+
+
+      lista.forEach(item => {
+        // Manejo de estados (Activo/Inactivo)
+        let estado = (item.statu !== "0")
+            ? '<span class="badge bg-label-primary me-1">Activo</span>'
+            : '<span class="badge bg-label-danger me-1">Inactivo</span>';
+
+        let accion = (item.statu !== "0") ? 'Desactivar' : 'Activar';
+
+        // 1. Convertimos el string raro a un objeto Date de JS
+        const fechaI = new Date(item.fecha_inicio);
+        const fechaF = new Date(item.fecha_final);
+
+        // 2. Formateamos a estilo latino (día/mes/año)
+        item.fecha_inicio = fechaI.toLocaleDateString('es-ES');
+        item.fecha_final = fechaF.toLocaleDateString('es-ES');
+
+          contenido += `
+              <tr>
+                  <td>${item.id_usuario}</td>
+                  <td>${item.nombre} ${item.apellido}</td>
+                  <td>${item.email}</td>
+                  <td>${estado}</td>
+                  <td>
+                      <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item Edit" 
+                             style="cursor:pointer;"
+                             data-id="${item.id_usuario}"
+                             data-cedula="${item.id_usuario}" 
+                             data-nombre="${item.nombre}"
+                             data-apellido="${item.apellido}"
+                             data-email="${item.email}"
+                             data-telefono="${item.telefono}"
+                             data-fechan="${item.fecha_nacimiento}"
+                             data-direccion="${item.direccion}"
+                             data-profesion="${item.profesion}">
+                             <i class="bx bx-edit-alt me-1"></i> Editar
+                          </a>
+                          <a class="dropdown-item Toggle" data-unico="${item.id_usuario}" data-status="${item.statu}">
+                              <i class='bx bx-toggle-big-right me-1'></i> ${accion}
+                          </a>
+                        </div>
+                      </div>
+                  </td>
+              </tr>`;
+
+      })
+
+      const form = document.getElementById("formUsuario"); 
+      if(form) form.reset();
+
+      receptor.innerHTML = contenido;
+    })
 
 }
 
@@ -302,9 +303,9 @@ $(document).on("click", ".Editar", function (event) {
 $(document).ready(function () {
 
     consultarUsuarios()
-    SelectDepartamento()
-    SelectPreguntas()
-    SelectNivel()
+    setTimeout(SelectDepartamento, 100);
+    setTimeout(SelectPreguntas, 200);
+    setTimeout(SelectNivel, 300);
  
     const $form = $("#formUsuario");
     if ($form.length) {
