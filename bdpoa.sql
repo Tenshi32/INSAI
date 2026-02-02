@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-12-2025 a las 16:08:59
+-- Tiempo de generación: 02-02-2026 a las 23:24:04
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `insai_poa`
+-- Base de datos: `bdpoa`
 --
 
 -- --------------------------------------------------------
@@ -36,6 +36,32 @@ CREATE TABLE `auditoria` (
   `descripcion` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `auditoria`
+--
+
+INSERT INTO `auditoria` (`id_auditoria`, `id_data`, `hora`, `fecha`, `accion`, `descripcion`) VALUES
+(6, 1, '13:48:29', '2026-01-26', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(7, 1, '13:48:44', '2026-01-26', 'Cierre de Sesión', 'El usuario ADMINISTRADOR User ha cerrado sesión.'),
+(8, 1, '13:50:54', '2026-01-26', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(9, 1, '14:12:27', '2026-01-26', 'Cierre de Sesión', 'El usuario ADMINISTRADOR User ha cerrado sesión.'),
+(10, 1, '14:12:40', '2026-01-26', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(11, 1, '14:14:50', '2026-01-26', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(12, 1, '14:55:33', '2026-01-26', 'Cierre de Sesión', 'El usuario ADMINISTRADOR User ha cerrado sesión.'),
+(13, 1, '14:55:57', '2026-01-26', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(14, 1, '19:03:19', '2026-01-27', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(15, 1, '19:13:36', '2026-01-27', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(16, 1, '11:29:12', '2026-01-28', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(17, 1, '11:29:17', '2026-01-28', 'Cierre de Sesión', 'El usuario ADMINISTRADOR User ha cerrado sesión.'),
+(18, 1, '11:31:15', '2026-01-28', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(19, 1, '13:23:13', '2026-01-30', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(20, 1, '14:49:30', '2026-01-30', 'Cierre de Sesión', 'El usuario ADMINISTRADOR User ha cerrado sesión.'),
+(21, 1, '14:49:53', '2026-01-30', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(22, 1, '16:11:20', '2026-01-30', 'Cierre de Sesión', 'El usuario ADMINISTRADOR User ha cerrado sesión.'),
+(23, 1, '16:11:51', '2026-01-30', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(24, 1, '18:13:52', '2026-02-02', 'Inicio de Sesión', 'El usuario ADMINISTRADOR User ha iniciado sesión.'),
+(25, 1, '18:17:51', '2026-02-02', 'Cierre de Sesión', 'El usuario ADMINISTRADOR User ha cerrado sesión.');
+
 -- --------------------------------------------------------
 
 --
@@ -51,6 +77,14 @@ CREATE TABLE `cabeceras` (
   `actividad` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `cabeceras`
+--
+
+INSERT INTO `cabeceras` (`id_cabecera`, `proyecto`, `enfoque_estrategico`, `sector`, `objetivos`, `actividad`) VALUES
+(103941775055, 'fasdfas', 'fasdfasdf', 'asdfasd', 'fasdfasdfasdfasd', 'adsfasdf'),
+(431991041760, 'dfasdfasd', 'fasdf', 'sadfas', 'dfasdfasdf', 'fsadfasdfasdf');
+
 -- --------------------------------------------------------
 
 --
@@ -65,6 +99,14 @@ CREATE TABLE `cabeceras_data` (
   `id_observado` bigint(12) NOT NULL,
   `id_tipo_poa` int(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cabeceras_data`
+--
+
+INSERT INTO `cabeceras_data` (`id_cabecera_data`, `id_cabecera`, `id_lineamiento`, `id_departamento`, `id_observado`, `id_tipo_poa`) VALUES
+(103941775055, 103941775055, 716676362997, 423423, 1, 1),
+(431991041760, 431991041760, 716676362997, 423423, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -102,9 +144,20 @@ CREATE TABLE `comprobantes_data` (
 CREATE TABLE `comunicatorios` (
   `id_comunicatorio` bigint(12) NOT NULL,
   `id_lineamiento` bigint(12) NOT NULL,
+  `id_departamento` bigint(12) NOT NULL,
+  `tipo` varchar(200) NOT NULL,
+  `prioridad` varchar(200) NOT NULL,
   `fecha_carga` date NOT NULL,
-  `descripcion` varchar(100) NOT NULL
+  `descripcion` varchar(100) NOT NULL,
+  `status` enum('0','1') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `comunicatorios`
+--
+
+INSERT INTO `comunicatorios` (`id_comunicatorio`, `id_lineamiento`, `id_departamento`, `tipo`, `prioridad`, `fecha_carga`, `descripcion`, `status`) VALUES
+(76528487936, 716676362997, 1, 'Soporte', 'Media', '2026-01-13', 'oi hfggjhlkgjhñslkgjhñsldkjgdfñlkgjdfñlkgjsdñlfkgjñdlfkgjsdlfkgjsñlfdkjgldfkj', '0');
 
 -- --------------------------------------------------------
 
@@ -129,8 +182,22 @@ CREATE TABLE `controles` (
 CREATE TABLE `departamentos` (
   `id_departamento` int(12) NOT NULL,
   `nombre` varchar(20) NOT NULL,
-  `descripcion` varchar(100) NOT NULL
+  `descripcion` varchar(100) NOT NULL,
+  `ubicacion` varchar(100) NOT NULL,
+  `status` enum('1','0') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `departamentos`
+--
+
+INSERT INTO `departamentos` (`id_departamento`, `nombre`, `descripcion`, `ubicacion`, `status`) VALUES
+(1, 'Todos', 'Todos los Departamentos', '', '1'),
+(16452, 'rwqerqwe', 'rqwerqwer231', 'qwerfasdf', '1'),
+(423423, 'sdfasdf', 'asdfasdfasdf', 'sdfasdf', '1'),
+(3421342, 'fsdfas', 'dfasdfasdf', 'qwer', '1'),
+(4352344, 'wretweretwertrt', 'retwertwertwert', 'wretwertwertwert', '1'),
+(67867896, 'fghdfg3h42342', 'dfghdfghdfgsakdfh32dfasdfasdf', 'sdfs23432', '1');
 
 -- --------------------------------------------------------
 
@@ -184,10 +251,18 @@ INSERT INTO `estados` (`id_estado`, `estado`, `iso_3166`) VALUES
 CREATE TABLE `lineamientos` (
   `id_lineamiento` bigint(12) NOT NULL,
   `normas_legales` varchar(200) NOT NULL,
-  `enfoque_estrategico` varchar(100) NOT NULL,
+  `enfoque_estrategico` varchar(200) NOT NULL,
   `lineamientos` varchar(200) NOT NULL,
-  `fecha_carga` date NOT NULL
+  `fecha_carga` date NOT NULL,
+  `status` enum('0','1','2') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `lineamientos`
+--
+
+INSERT INTO `lineamientos` (`id_lineamiento`, `normas_legales`, `enfoque_estrategico`, `lineamientos`, `fecha_carga`, `status`) VALUES
+(716676362997, 'sdkjflasdkhfakdsjfhlaskdjfh', 'jhlsdkfjhlgkhsdflghsadljkfsdljkf', 'lfkjghsdlfkjghsdflghsdflkghdsfkgsdfkjl', '2026-01-09', '1');
 
 -- --------------------------------------------------------
 
@@ -587,20 +662,20 @@ INSERT INTO `municipios` (`id_municipio`, `municipio`, `id_estado`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `niveles`
+-- Estructura de tabla para la tabla `nivel`
 --
 
-CREATE TABLE `niveles` (
+CREATE TABLE `nivel` (
   `id_nivel` int(12) NOT NULL,
   `nombre` varchar(20) NOT NULL,
   `descripcion` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `niveles`
+-- Volcado de datos para la tabla `nivel`
 --
 
-INSERT INTO `niveles` (`id_nivel`, `nombre`, `descripcion`) VALUES
+INSERT INTO `nivel` (`id_nivel`, `nombre`, `descripcion`) VALUES
 (1, 'ADMINISTRADOR ESPECI', 'Director de Tecnología (OTI). Gestión total de usuarios y permisos, configuración, mantenimiento,  seguridad y auditoria de sistema.'),
 (2, 'ADMINISTRADOR', 'Directora de la Oficina de Planificación Estratégica. (OPE). Gestión total de usuarios y permisos en su unidad administrativa. Copia de seguridad de la base de datos del (POA).'),
 (3, ' ANALISTA', 'Analista de Planificación (OPE). Tiene permisos para realizar tareas administrativas y gestiones especifica en su unidad administrativa pero sin acceso total.'),
@@ -622,6 +697,13 @@ CREATE TABLE `observaciones` (
   `statu` enum('1','0') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `observaciones`
+--
+
+INSERT INTO `observaciones` (`id_observacion`, `observacion`, `fecha_create`, `fecha_update`, `statu`) VALUES
+(1, '', '0000-00-00', '0000-00-00', '0');
+
 -- --------------------------------------------------------
 
 --
@@ -636,6 +718,13 @@ CREATE TABLE `periodos` (
   `fecha_final` date NOT NULL,
   `statu` enum('1','0') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `periodos`
+--
+
+INSERT INTO `periodos` (`id_periodo`, `id_lineamiento`, `rango`, `fecha_inicio`, `fecha_final`, `statu`) VALUES
+(716676362997, 716676362997, '2026-2027', '2026-01-08', '2027-01-08', '1');
 
 -- --------------------------------------------------------
 
@@ -673,14 +762,8 @@ CREATE TABLE `preguntas` (
 --
 
 INSERT INTO `preguntas` (`id_pregunta`, `pregunta1`, `repuesta1`, `pregunta2`, `repuesta2`, `pregunta3`, `repuesta3`) VALUES
-(2, 'p1x', 'r1x', 'p2x', 'r2x', 'p3x', 'r3x'),
-(3, 'p1x', 'r1x', 'p2x', 'r2x', 'p3x', 'r3x'),
 (4, 'p1x', 'r1x', 'p2x', 'r2x', 'p3x', 'r3x'),
-(5, 'p1x', 'r1x', 'p2x', 'r2x', 'p3x', 'r3x'),
-(6, 'p1x', 'r1x', 'p2x', 'r2x', 'p3x', 'r3x'),
-(7, 'p1x', 'r1x', 'p2x', 'r2x', 'p3x', 'r3x'),
-(8, 'p1x', 'r1x', 'p2x', 'r2x', 'p3x', 'r3x'),
-(9, 'test_upd', 'test', 'test', '', '', '');
+(29772294, '1', 'ninguno', '2', 'gatos', '3', 'nose');
 
 -- --------------------------------------------------------
 
@@ -707,7 +790,7 @@ CREATE TABLE `seguridad` (
   `ruta_foto` varchar(100) NOT NULL,
   `cont_fail` int(3) NOT NULL,
   `token` varchar(100) NOT NULL,
-  `remember` enum('1','0') NOT NULL,
+  `remember` enum('0','1') NOT NULL,
   `fecha_create` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -717,7 +800,8 @@ CREATE TABLE `seguridad` (
 --
 
 INSERT INTO `seguridad` (`id_seguridad`, `usuario`, `passwrd`, `ruta_foto`, `cont_fail`, `token`, `remember`, `fecha_create`, `fecha_update`) VALUES
-(2, 'test_upd', 'test', 'test', 0, '', '1', '2025-10-13 22:05:41', '2025-10-13 22:05:41');
+(4, 'test_upd', '$2b$12$PAfC4HN9uR76YqvB3Oh0.OtYp20kLvCvSHrjJGmJcmTjCxH1QN3qy', 'test', 0, '', '0', '2025-10-13 22:05:41', '2026-01-09 19:40:00'),
+(29772294, 'angel65', '$2b$12$.7w8aJnWdDfnmcCZoyQbOeIyOuy9QegEC1F2nj30GsKPP4ybNVo6.', '../../assets/img/avatars/5be25efd411d6.jpeg', 0, '', '0', '2026-01-14 02:43:51', '2026-01-14 15:26:16');
 
 -- --------------------------------------------------------
 
@@ -759,6 +843,29 @@ INSERT INTO `tipo_poa` (`id_tipo_poa`, `nombre`, `descripcion`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tipo_pregunta`
+--
+
+CREATE TABLE `tipo_pregunta` (
+  `id_tipo_pregunta` int(11) NOT NULL,
+  `tipo_pregunta` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tipo_pregunta`
+--
+
+INSERT INTO `tipo_pregunta` (`id_tipo_pregunta`, `tipo_pregunta`) VALUES
+(1, 'Cuál es el modelo de su carro favorito ?'),
+(2, 'Cuál es su mascota favorita ?'),
+(3, 'En que ciudad nacio su padre ?'),
+(4, 'Nombre de su primer jefe ?'),
+(5, 'Cuál es el nombre de su abuela materna ?'),
+(6, 'Cuál es su color favorito ?');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `ubicaciones`
 --
 
@@ -769,19 +876,6 @@ CREATE TABLE `ubicaciones` (
   `estado_sede` varchar(100) NOT NULL,
   `municipio_sede` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `ubicaciones`
---
-
-INSERT INTO `ubicaciones` (`id_ubicacion`, `id_estado`, `id_municipio`, `estado_sede`, `municipio_sede`) VALUES
-(1, 1, 1, 'estado2', 'municipio2'),
-(2, 1, 1, 'estado2', 'municipio2'),
-(3, 1, 1, 'estado2', 'municipio2'),
-(4, 5, 3, 'estado2', 'municipio2'),
-(5, 5, 3, 'estado2', 'municipio2'),
-(6, 5, 3, 'estado2', 'municipio2'),
-(7, 5, 3, 'estado2', 'municipio2');
 
 -- --------------------------------------------------------
 
@@ -795,8 +889,9 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(20) NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `email` varchar(100) NOT NULL,
-  `telefono` int(11) NOT NULL,
-  `profesion` varchar(20) NOT NULL,
+  `telefono` varchar(15) NOT NULL,
+  `profesion` varchar(100) NOT NULL,
+  `direccion` varchar(100) NOT NULL,
   `statu` enum('1','0','2') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -804,14 +899,9 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `fecha_nacimiento`, `email`, `telefono`, `profesion`, `statu`) VALUES
-(1, 'TestUpd', 'User', '2000-01-01', 'testupd@example.com', 0, 'Dev', ''),
-(2, 'TestUpd', 'User', '2000-01-01', 'testupd@example.com', 0, 'Dev', ''),
-(3, 'TestUpd', 'User', '2000-01-01', 'testupd@example.com', 0, 'Dev', ''),
-(4, 'TestUpd', 'User', '2000-01-01', 'testupd@example.com', 0, 'Dev', '0'),
-(5, 'TestUpd', 'User', '2000-01-01', 'testupd@example.com', 0, 'Dev', '0'),
-(6, 'TestUpd', 'User', '2000-01-01', 'testupd@example.com', 0, 'Dev', '0'),
-(7, 'TestUpd', 'User', '2000-01-01', 'testupd@example.com', 0, 'Dev', '0');
+INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `fecha_nacimiento`, `email`, `telefono`, `profesion`, `direccion`, `statu`) VALUES
+(4, 'TestUpd', 'User', '2000-01-01', 'testupd@example.com', '0', 'Dev', '', '1'),
+(29772294, 'Angel Rafael', 'Leon Armas', '2003-02-19', 'leonarmasprint@gmail.com', '04243321074', 'Dev', '', '1');
 
 -- --------------------------------------------------------
 
@@ -827,6 +917,14 @@ CREATE TABLE `usuario_data` (
   `id_departamento` int(12) NOT NULL,
   `id_nivel` int(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuario_data`
+--
+
+INSERT INTO `usuario_data` (`id_data`, `id_usuario`, `id_seguridad`, `id_pregunta`, `id_departamento`, `id_nivel`) VALUES
+(1, 4, 4, 4, 67867896, 2),
+(16, 29772294, 29772294, 29772294, 423423, 1);
 
 -- --------------------------------------------------------
 
@@ -889,7 +987,8 @@ ALTER TABLE `comprobantes_data`
 --
 ALTER TABLE `comunicatorios`
   ADD PRIMARY KEY (`id_comunicatorio`),
-  ADD KEY `id_lineamiento` (`id_lineamiento`);
+  ADD KEY `id_lineamiento` (`id_lineamiento`),
+  ADD KEY `id_departamento` (`id_departamento`);
 
 --
 -- Indices de la tabla `controles`
@@ -940,9 +1039,9 @@ ALTER TABLE `municipios`
   ADD KEY `id_estado` (`id_estado`);
 
 --
--- Indices de la tabla `niveles`
+-- Indices de la tabla `nivel`
 --
-ALTER TABLE `niveles`
+ALTER TABLE `nivel`
   ADD PRIMARY KEY (`id_nivel`);
 
 --
@@ -998,6 +1097,12 @@ ALTER TABLE `tipo_poa`
   ADD PRIMARY KEY (`id_tipo_poa`);
 
 --
+-- Indices de la tabla `tipo_pregunta`
+--
+ALTER TABLE `tipo_pregunta`
+  ADD PRIMARY KEY (`id_tipo_pregunta`);
+
+--
 -- Indices de la tabla `ubicaciones`
 --
 ALTER TABLE `ubicaciones`
@@ -1038,19 +1143,19 @@ ALTER TABLE `vista_lineamientos`
 -- AUTO_INCREMENT de la tabla `auditoria`
 --
 ALTER TABLE `auditoria`
-  MODIFY `id_auditoria` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_auditoria` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `cabeceras`
 --
 ALTER TABLE `cabeceras`
-  MODIFY `id_cabecera` bigint(12) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cabecera` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=904770454183;
 
 --
 -- AUTO_INCREMENT de la tabla `cabeceras_data`
 --
 ALTER TABLE `cabeceras_data`
-  MODIFY `id_cabecera_data` bigint(12) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cabecera_data` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=904770454183;
 
 --
 -- AUTO_INCREMENT de la tabla `comprobantes`
@@ -1068,7 +1173,7 @@ ALTER TABLE `comprobantes_data`
 -- AUTO_INCREMENT de la tabla `comunicatorios`
 --
 ALTER TABLE `comunicatorios`
-  MODIFY `id_comunicatorio` bigint(12) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_comunicatorio` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=739728259928;
 
 --
 -- AUTO_INCREMENT de la tabla `controles`
@@ -1086,7 +1191,7 @@ ALTER TABLE `estados`
 -- AUTO_INCREMENT de la tabla `lineamientos`
 --
 ALTER TABLE `lineamientos`
-  MODIFY `id_lineamiento` bigint(12) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_lineamiento` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=716676362998;
 
 --
 -- AUTO_INCREMENT de la tabla `metas_data`
@@ -1107,22 +1212,22 @@ ALTER TABLE `municipios`
   MODIFY `id_municipio` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=463;
 
 --
--- AUTO_INCREMENT de la tabla `niveles`
+-- AUTO_INCREMENT de la tabla `nivel`
 --
-ALTER TABLE `niveles`
+ALTER TABLE `nivel`
   MODIFY `id_nivel` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `observaciones`
 --
 ALTER TABLE `observaciones`
-  MODIFY `id_observacion` bigint(12) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_observacion` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `periodos`
 --
 ALTER TABLE `periodos`
-  MODIFY `id_periodo` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_periodo` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=716676362998;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -1134,7 +1239,7 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id_pregunta` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_pregunta` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29772295;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -1146,7 +1251,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `seguridad`
 --
 ALTER TABLE `seguridad`
-  MODIFY `id_seguridad` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_seguridad` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29772295;
 
 --
 -- AUTO_INCREMENT de la tabla `tickets`
@@ -1161,6 +1266,12 @@ ALTER TABLE `tipo_poa`
   MODIFY `id_tipo_poa` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de la tabla `tipo_pregunta`
+--
+ALTER TABLE `tipo_pregunta`
+  MODIFY `id_tipo_pregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT de la tabla `ubicaciones`
 --
 ALTER TABLE `ubicaciones`
@@ -1170,13 +1281,13 @@ ALTER TABLE `ubicaciones`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_usuario` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=546454656;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario_data`
 --
 ALTER TABLE `usuario_data`
-  MODIFY `id_data` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_data` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `vista_lineamientos`
@@ -1266,7 +1377,7 @@ ALTER TABLE `usuario_data`
   ADD CONSTRAINT `usuario_data_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
   ADD CONSTRAINT `usuario_data_ibfk_2` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id_pregunta`),
   ADD CONSTRAINT `usuario_data_ibfk_3` FOREIGN KEY (`id_seguridad`) REFERENCES `seguridad` (`id_seguridad`),
-  ADD CONSTRAINT `usuario_data_ibfk_4` FOREIGN KEY (`id_nivel`) REFERENCES `niveles` (`id_nivel`),
+  ADD CONSTRAINT `usuario_data_ibfk_4` FOREIGN KEY (`id_nivel`) REFERENCES `nivel` (`id_nivel`),
   ADD CONSTRAINT `usuario_data_ibfk_5` FOREIGN KEY (`id_departamento`) REFERENCES `departamentos` (`id_departamento`);
 
 --

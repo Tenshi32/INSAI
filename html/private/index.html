@@ -7,7 +7,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+  <title>SISTEMA PARA LA OPTIMIZACION DE INDICADORES POA</title>
 
   <meta name="description" content="" />
 
@@ -20,7 +20,7 @@
     href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
     rel="stylesheet" />
 
-  <!-- Icons. Uncomment required icon fonts -->
+  <!-- ICONOS Y FONTS DE BOXICONS -->
   <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
   <link rel="stylesheet" href="../../assets/vendor/fonts/animations.css" />
   <link rel="stylesheet" href="../../assets/vendor/fonts/transformations.css" />
@@ -34,16 +34,12 @@
   <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
   <link rel="stylesheet" href="../../libs/sweetalert/sweetalert2.css">
 
-
-
   <!-- Page CSS -->
 
   <!-- Helpers -->
   <script src="../../assets/vendor/js/helpers.js"></script>
 
-  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-  <script src="../../assets/js/config.js"></script>
+<script src="../../assets/js/config.js"></script>
 </head>
 
 <body>
@@ -52,22 +48,17 @@
     <div class="layout-container">
       <!-- Menu -->
 
-      <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-        <center><img src="../../assets/img/logos/logo-indinsai.png" alt="logo-indinsai" class="img01" width="80%">
-        </center>
-
+  <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        <center><img src="../../assets/img/logos/logo-indinsai.png" alt="logo-indinsai" class="img01" width="80%"></center>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
         </a>
-
-        <ul class="menu-inner py-1">
-
+      <ul class="menu-inner py-1">
           <!-- TABLERO -->
-           
-          <li class="menu-item active"></li>
-            <a data-page="home" class="menu-link">
-               <i class="menu-icon tf-icons bx bx-home-circle"></i>
-              <div data-i18n="Analytics">INICIO</div>
+      
+          <a data-page="home" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+              <div data-i18n="Analytics"><b>INICIO</b></div>
             </a>
                 <!-- SECCION DE REGISTROS Y CONSULTAS -->
           <li class="menu-header text-uppercase" ><span class="menu-header-text">Registros/Consultas</span></li>
@@ -80,26 +71,26 @@
           </li>
 
           <li class="menu-item">
-            <a data-page="comunicatorio" class="menu-link">
-              <i class='menu-icon tf-icons bx bx-message-exclamation'></i>
-              <div data-i18n="Fluid">Notificaciones</div>
-            </a>
-          </li>
-
-          <li class="menu-item">
             <a data-page="usuario" class="menu-link">
               <i class='menu-icon tf-icons bx bx-group'></i>
               <div data-i18n="Without navbar">Usuarios</div>
             </a>
           </li>
-
-          <li class="menu-item">
+        
+           <li class="menu-item">
             <a data-page="lineamiento" class="menu-link">
               <i class='menu-icon tf-icons bx bx-book-bookmark'></i>
               <div data-i18n="Container">Lineamiento</div>
             </a>
           </li>
 
+          <li class="menu-item">
+            <a data-page="notificaciones" class="menu-link">
+              <i class='menu-icon tf-icons bx bx-message-exclamation'></i>
+              <div data-i18n="Fluid">Notificaciones</div>
+            </a>
+          </li>
+                  
           <li class="menu-item">
             <a data-page="objetivo" class="menu-link">
               <i class='menu-icon tf-icons bx bx-diamonds'></i>
@@ -115,10 +106,9 @@
               <i class="menu-icon tf-icons bx bx-dashboard"></i>
               <div data-i18n="Layouts">PRE-POA</div>
             </a>
-
-            <ul class="menu-sub">
+          <ul class="menu-sub">
               <li class="menu-item">
-                <a href="layouts-without-menu.html" class="menu-link">
+                <a href="layouts-without-menu.html" st76 class="menu-link">
                   <div data-i18n="Without menu">Metas/Actividades</div>
                 </a>
               </li>
@@ -209,7 +199,13 @@
           <li class="menu-item">
             <a  data-page="perfil" class="menu-link">
               <i class="menu-icon tf-icons bx bx-cog"></i>
-              <div data-i18n="Documentation">Gestor de Perfil</div>
+              <div data-i18n="Gestor de Perfil">Gestor de Perfil</div>
+            </a>
+          </li>
+        <li class="menu-item">
+            <a  data-page="manual" class="menu-link">
+              <i class="menu-icon bx-reading"></i>
+              <div data-i18n="Documentation">Manual de usuario</div>
             </a>
           </li>
 
@@ -351,7 +347,7 @@
         </div>
         <!-- / Content -->
 
-        <!-- Footer -->
+        <!-- PIE DE PAGINA -->
         <footer class="content-footer footer bg-footer-theme">
           <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
             <div class="mb-2 mb-md-0">
@@ -365,11 +361,9 @@
 
           </div>
         </footer>
-        <!-- / Footer -->
-
-        <div class="content-backdrop fade"></div>
+                <div class="content-backdrop fade"></div>
       </div>
-      <!-- Content wrapper -->
+      <!-- CONTENEDOR DE CONTENIDO -->
     </div>
     <!-- / Layout page -->
   </div>
