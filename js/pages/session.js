@@ -8,7 +8,7 @@ $(document).ready(function () {
     $('#IniciarSession').on('click', function () {
       if ($('#formAuthentication').valid()) {
         const config = {
-          UrlControl: 'http://localhost:5000/UsuarioData/Login',
+          UrlControl: LOCALURL+'UsuarioData/Login',
           Formulario: document.getElementById('formAuthentication'),
           Method: 'POST'
         }
@@ -74,9 +74,10 @@ $(document).ready(function () {
       }
     })
   } else {
+
     $('#CerrarSession').on('click', function () {
       const config = {
-        UrlControl: 'http://localhost:5000/UsuarioData/Logout',
+        UrlControl: LOCALURL+'UsuarioData/Logout',
         Formulario: new FormData(),
         Method: 'POST'
       }
@@ -86,5 +87,6 @@ $(document).ready(function () {
         window.location.href = '../public/login.html'
       })
     })
+    
   }
 })

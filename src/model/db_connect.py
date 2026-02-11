@@ -1,12 +1,16 @@
 import mysql.connector
 import subprocess
 import bcrypt
+import os
+from dotenv import load_dotenv
+
 
 class DbConnect:
 
     def __init__(self):
+        load_dotenv()
         self.conn = None
-        self.mysql_params = {'host':'localhost','user':'root','password':'','database':'bdpoa'}
+        self.mysql_params = {'host':os.getenv("HOSTDB"),'user':os.getenv("USERDB"),'password':os.getenv("PASSWRDB"),'database':os.getenv("NAMEDB")}
 
     def connect(self):
         try:

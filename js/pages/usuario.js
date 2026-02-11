@@ -8,7 +8,7 @@ $(document).on("change", "#upload", function(event) {
     datosManuales.append("archivo", archivo);
 
     const config = {
-        UrlControl: "http://localhost:5000/Usuario/SubirFoto",
+        UrlControl: LOCALURL+"Usuario/SubirFoto",
         Formulario: datosManuales,
         Method: "POST",
     };
@@ -46,7 +46,7 @@ $(document).on("click", "#resetear", function(event) {
     datos.append("nombre_archivo", nombreArchivo);
 
     const config = {
-        UrlControl: "http://localhost:5000/Usuario/EliminarFoto",
+        UrlControl: LOCALURL+"Usuario/EliminarFoto",
         Formulario: datos,
         Method: "POST", // Usamos POST porque algunos servidores bloquean el body en DELETE
     };
@@ -66,7 +66,7 @@ $(document).on("click", "#resetear", function(event) {
 // Evento GET para Consulta 
 function consultarUsuarios() {
     // 1. URL de tu servidor Flask
-    let url = "http://localhost:5000/UsuarioData/Consultar"
+    let url = LOCALURL+"UsuarioData/Consultar"
 
     let usuariosLocales = [];
   
@@ -141,7 +141,7 @@ function consultarUsuarios() {
 
 function SelectDepartamento() {
   // 1. URL de tu servidor Flask
-  const url = "http://localhost:5000/Select/Consultar?tabla=departamentos&col1=id_departamento&col2=nombre"
+  const url = LOCALURL+"Select/Consultar?tabla=departamentos&col1=id_departamento&col2=nombre"
 
   let contenido = "";
 
@@ -167,7 +167,7 @@ function SelectDepartamento() {
 
 function SelectNivel() {
   // 1. URL de tu servidor Flask
-  const url = "http://localhost:5000/Select/Consultar?tabla=nivel&col1=id_nivel&col2=nombre"
+  const url = LOCALURL+"Select/Consultar?tabla=nivel&col1=id_nivel&col2=nombre"
     
   let contenido = "";
 
@@ -192,7 +192,7 @@ function SelectNivel() {
 
 function SelectPreguntas() {
   // 1. URL de tu servidor Flask
-  const url = "http://localhost:5000/Select/Consultar?tabla=tipo_pregunta&col1=id_tipo_pregunta&col2=tipo_pregunta"
+  const url = LOCALURL+"Select/Consultar?tabla=tipo_pregunta&col1=id_tipo_pregunta&col2=tipo_pregunta"
     
   let contenido = "";
 
@@ -225,7 +225,7 @@ $(document).on("click", "#Crear", function () {
     if ($("#formUsuario").valid()) {
 
         const config = {
-            UrlControl: "http://localhost:5000/UsuarioData/Crear",
+            UrlControl: LOCALURL+"UsuarioData/Crear",
             Formulario: document.getElementById("formUsuario"),
             Method: "POST",
         };
@@ -249,7 +249,7 @@ $(document).on("click", ".Toggle", function (event) {
     datosManuales.append("id_usuario", id);
     datosManuales.append("status", nuevoStatus);
     const envio = {
-        UrlControl: "http://localhost:5000/Usuario/Toggle", // Endpoint sugerido para status
+        UrlControl: LOCALURL+"Usuario/Toggle", // Endpoint sugerido para status
         Formulario: datosManuales,
         Method: "PUT"
     }
@@ -279,7 +279,7 @@ $(document).on("click", ".Editar", function (event) {
     .addClass("btn-warning").off("click").on("click", function() {
         if ($("#formUsuario").valid()) {
                 const config = {
-                    UrlControl: "http://localhost:5000/Usuario/Editar",
+                    UrlControl: LOCALURL+"Usuario/Editar",
                     Formulario: document.getElementById("formUsuario"),
                     Method: "PUT",
                 };

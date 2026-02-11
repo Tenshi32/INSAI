@@ -1,7 +1,7 @@
 // Evento GET para Consulta 
 function consultarDepartamentos() {
   // 1. URL de tu servidor Flask
-  const url = "http://localhost:5000/Departamento/Consultar"
+  const url = LOCALURL+"Departamento/Consultar"
 
   let contenido = "";
 
@@ -71,7 +71,7 @@ $(document).on("click", "#Crear", function () {
   if ($("#formDepartamento").valid()) {
 
     const FormnDepa = {
-      UrlControl: "http://localhost:5000/Departamento/Crear",
+      UrlControl: LOCALURL+"Departamento/Crear",
       Formulario: document.getElementById("formDepartamento"),
       Method: "POST",
     };
@@ -100,7 +100,7 @@ $(document).on("click", ".Toggle", function (event) {
   datosManuales.append("status", nuevoStatus);
 
     const FormnDepa = {
-      UrlControl: "http://localhost:5000/Departamento/Toggle",
+      UrlControl: LOCALURL+"Departamento/Toggle",
       Formulario: datosManuales,
       Method: "PUT",
     };
@@ -131,7 +131,7 @@ $(document).on("click", ".Editar", function (event) {
       if ($("#formDepartamento").valid()) {
 
         const FormnDepa = {
-          UrlControl: "http://localhost:5000/Departamento/Editar",
+          UrlControl: LOCALURL+"Departamento/Editar",
           Formulario: document.getElementById("formDepartamento"),
           Method: "PUT",
         };

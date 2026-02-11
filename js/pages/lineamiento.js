@@ -1,7 +1,7 @@
 // Evento GET para Consulta 
 function consultarLineamientos() {
   // 1. URL de tu servidor Flask
-  let url = "http://localhost:5000/Lineamiento/Consultar"
+  let url = LOCALURL+"Lineamiento/Consultar"
 
   let contenido = "";
 
@@ -76,7 +76,7 @@ $(document).on("click", "#Crear", function () {
   if ($("#formLineamineto").valid()) {
 
     const FormnDepa = {
-      UrlControl: "http://localhost:5000/Lineamiento/Crear",
+      UrlControl: LOCALURL+"Lineamiento/Crear",
       Formulario: document.getElementById("formLineamineto"),
       Method: "POST",
     };
@@ -105,7 +105,7 @@ $(document).on("click", ".Toggle", function (event) {
     datosManuales.append("status", nuevoStatus);
 
     const FormnDepa = {
-      UrlControl: "http://localhost:5000/Lineamiento/Toggle",
+      UrlControl: LOCALURL+"Lineamiento/Toggle",
       Formulario: datosManuales,
       Method: "PUT",
     };
@@ -136,7 +136,7 @@ $(document).on("click", ".Editar", function (event) {
       if ($("#formLineamineto").valid()) {
 
         const FormnDepa = {
-          UrlControl: "http://localhost:5000/Lineamiento/Editar",
+          UrlControl: LOCALURL+"Lineamiento/Editar",
           Formulario: document.getElementById("formLineamineto"),
           Method: "PUT",
         };

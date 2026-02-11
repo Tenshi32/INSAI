@@ -19,7 +19,6 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
     rel="stylesheet" />
-  <link href="../../libs/DataTables/datatables.min.css" rel="stylesheet">
   <!-- Icons. Uncomment required icon fonts -->
   <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
   <link rel="stylesheet" href="../../assets/vendor/fonts/animations.css" />
@@ -33,7 +32,7 @@
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
   <link rel="stylesheet" href="../../libs/sweetalert/sweetalert2.css">
-
+  <link rel="stylesheet" href="../../libs/datatables/dataTables.bootstrap.css">
 
 
   <!-- Page CSS -->
@@ -63,14 +62,14 @@
         <ul class="menu-inner py-1">
 
           <!-- TABLERO -->
-           
+
           <li class="menu-item active"></li>
-            <a data-page="home" class="menu-link">
-               <i class="menu-icon tf-icons bx bx-home-circle"></i>
-              <div data-i18n="Analytics">INICIO</div>
-            </a>
-                <!-- SECCION DE REGISTROS Y CONSULTAS -->
-          <li class="menu-header text-uppercase" ><span class="menu-header-text">Registros/Consultas</span></li>
+          <a data-page="home" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <div data-i18n="Analytics">INICIO</div>
+          </a>
+          <!-- SECCION DE REGISTROS Y CONSULTAS -->
+          <li class="menu-header text-uppercase"><span class="menu-header-text">Registros/Consultas</span></li>
 
           <li class="menu-item">
             <a data-page="departamento" class="menu-link">
@@ -189,7 +188,7 @@
             </a>
           </li>
           <li class="menu-item">
-            <a  data-page="auditoria" class="menu-link">
+            <a data-page="auditoria" class="menu-link">
               <i class='menu-icon tf-icons bx bx-file-detail'></i>
               <div data-i18n="Support">Auditoria</div>
             </a>
@@ -207,7 +206,7 @@
             </a>
           </li>
           <li class="menu-item">
-            <a  data-page="perfil" class="menu-link">
+            <a data-page="perfil" class="menu-link">
               <i class="menu-icon tf-icons bx bx-cog"></i>
               <div data-i18n="Documentation">Gestor de Perfil</div>
             </a>
@@ -216,7 +215,7 @@
         </ul>
       </aside>
       <!-- / Menu -->
- 
+
       <!-- Layout container -->
       <div class="layout-page">
         <!-- Navbar -->
@@ -230,7 +229,7 @@
             </a>
           </div>
 
-          
+
           <div class="navbar-nav-left d-flex align-items-center" id="navbar-collapse">
             <div class="navbar-nav flex-row align-items-center ms-auto">
               <div id="ViewPeriodo" class="nav-item d-flex align-items-center">
@@ -260,7 +259,7 @@
 
               <li class="nav-item lh-1 me-3">
                 <a class="github-button username" data-icon="octicon-star" data-size="large" data-show-count="true">
-                  </a>
+                </a>
               </li>
 
               <!-- User -->
@@ -276,7 +275,8 @@
                       <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                           <div class="avatar avatar-online">
-                            <img src="../../assets/img/avatars/1.png" alt class="image_user w-px-40 h-auto rounded-circle" />
+                            <img src="../../assets/img/avatars/1.png" alt
+                              class="image_user w-px-40 h-auto rounded-circle" />
                           </div>
                         </div>
                         <div class="flex-grow-1">
@@ -385,10 +385,11 @@
   <script src="../../assets/vendor/libs/popper/popper.js"></script>
   <script src="../../assets/vendor/js/bootstrap.js"></script>
   <script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-  
+
   <script src="../../assets/vendor/js/menu.js"></script>
-  <script src="../../libs/DataTables/datatables.min.js"></script>
   <!-- endbuild -->
+  <script src="../../libs/datatables/jquery.dataTables.min.js"></script>
+  <script src="../../libs/datatables/dataTables.bootstrap.js"></script>
 
   <script src="../../libs/jquery-validation/jquery.validate.min.js"></script>
   <script src="../../libs/jquery-validation/additional-methods.min.js"></script>
@@ -400,10 +401,11 @@
 
   <!-- Page JS -->
 
- 
+
   <script src="../../js/functions.js"></script>
   <script src="../../js/autoload.js"></script>
   <script src="../../js/pages/session.js"></script>
+
 
 </body>
 

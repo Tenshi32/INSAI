@@ -11,13 +11,6 @@
  */
 
 
-
-
-
-/*! Buttons for DataTables 3.2.6
- * © SpryMedia Ltd - datatables.net/license
- */
-
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {
 		// AMD
@@ -5137,5 +5130,3 @@ _display.modal = function (options) {
 
 return DataTable;
 }));
-
-
