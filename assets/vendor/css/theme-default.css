@@ -83,7 +83,7 @@
     margin-right: 0.0625rem;
   }
   .layout-horizontal .bg-menu-theme .menu-inner > .menu-item .menu-sub {
-    box-shadow: 0 0.25rem 1rem rgba(161, 172, 184, 0.45);
+    box-shadow: 0 0.25rem 1rem rgba(169, 207, 247, 0.45);
   }
 }
 .layout-wrapper:not(.layout-horizontal) .bg-menu-theme .menu-inner > .menu-item.active:before {
@@ -809,11 +809,11 @@ html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item .menu-lin
 
 /*clase de opciones de menu*/
 .bg-menu-theme .menu-inner .menu-sub > .menu-item.active .menu-icon {
-  color: #8CE637;
+  color: #ffffff;
 }
 .bg-menu-theme .menu-inner > .menu-item.active > .menu-link {
   color: #8CE637;
-  background-color: rgba(105, 108, 255, 0.16) !important;
+  background-color: rgba(187, 254, 196, 0.077) !important;
 }
 .bg-menu-theme .menu-inner > .menu-item.active:before {
   background: none;

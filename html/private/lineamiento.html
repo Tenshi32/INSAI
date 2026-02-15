@@ -11,34 +11,30 @@
 
         <div class="modal-body">
           <input type="hidden" id="created" name="id_lineamiento" />
-
-
+        
           <div class="row">
             <span class="text-danger fw-light mb-3">Campos Obligatorio(*)</span>
-
-
-
-              <div class="divider text-start">
-                <div class="divider-text">Periodo del PRE-POA</div>
+              <div class="divider text-start-center">
+                <div class="divider-text">Periodo del <b>Pre-POA</b></div>
               </div>
               <div class="row">
 
                 <div class="col-12 col-md-4 mb-2">
                   <div class="form-group">
-                    <label for="cedula" class="form-label">*Fecha de Inicio</label>
+                    <label for="fecha de Inicio" class="form-label">Fecha de Inicio</label>
                     <input class="form-control" type="date" name="fecha_inicio" id="fecha_inicio" />
                   </div>
                 </div>
-                <div class="col-12 col-md-4 mb-2">
+               <div class="col-12 col-md-4 mb-2">
                   <div class="form-group">
-                    <label for="cedula" class="form-label">*Rango</label>
-                    <input class="form-control" type="text" name="rango" id="rango" />
+                    <label for="fecha de Cierre" class="form-label">Fecha de Cierre</label>
+                    <input class="form-control" type="date" id="fecha_cierre" name="fecha_cierre" />
                   </div>
                 </div>
-                <div class="col-12 col-md-4 mb-2">
+                 <div class="col-12 col-md-4 mb-2">
                   <div class="form-group">
-                    <label for="firstName" class="form-label">*Fecha de Cierre</label>
-                    <input class="form-control" type="date" id="fecha_cierre" name="fecha_cierre" />
+                    <label for="año" class="form-label">Año</label>
+                    <input class="form-control" type="number" min="2026" max="2050" value= "2026" step="1" name="año" id="año" />
                   </div>
                 </div>
               </div>
@@ -50,7 +46,7 @@
                 <div class="col-12 col-md-6 mb-2">
                   <div class="form-group">
                     <label for="direccion" class="form-label">Normas Legales</label>
-                    <textarea class="form-control" id="normas_legales" name="normas_legales" rows="5"
+                    <textarea class="form-control" id="normas_legales" name="normas_legales" rows="4"
                       placeholder="Indique las Normas..." autofocus></textarea>
                   </div>
                 </div>
@@ -58,29 +54,38 @@
                 <div class="col-12 col-md-6 mb-2">
                   <div class="form-group">
                     <label for="direccion" class="form-label">Enfoque Estrategico</label>
-                    <textarea class="form-control" id="enfoque_estrategico" name="enfoque_estrategico" rows="5"
+                    <textarea class="form-control" id="enfoque_estrategico" name="enfoque_estrategico" rows="4"
                       placeholder="Indique la Estrategia..."></textarea>
                   </div>
                 </div>
               </div>
 
               <div class="row">
-
+              
                 <div class="col-12 col-md-12 mb-2">
                   <div class="form-group">
-                    <label for="direccion" class="form-label">Lineamientos</label>
-                    <textarea class="form-control" id="lineamientos" name="lineamientos" rows="5"
+                    <label for="alinear" class="form-label"><b>Lineamientos</b></label>
+                    <textarea class="form-control" id="lineamientos" name="lineamientos" rows="4"
                       placeholder="Indique los Lineamientos..."></textarea>
                   </div>
                 </div>
-
               </div>
             
+            <div class="row">
+              
+                <div class="col-12 col-md-12 mb-2">
+                  <div class="form-group">
+                    <label for="meta alcanzar" class="form-label"><b>Meta por Alcanzar</b></label>
+                    <textarea class="form-control" id="metas1" name="metas1" rows="2"
+                      placeholder="Indique la meta a alcanzar..."></textarea>
+                  </div>
+                </div>
+              </div>   
           </div>
 
         </div>
         <div class="modal-footer">
-          <button type="button" id="Crear" class="btn btn-primary">Enviar</button>
+          <button type="button" id="Crear" class="btn btn-primary">Guardar</button>
           <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
             Cerrar
           </button>
@@ -91,18 +96,18 @@
   </div>
 </div>
 
-<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Consulta de</span> Departamentos</h4>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Consulta de</span> Lineamiento</h4>
 
-<!-- Basic Bootstrap Table -->
+<!-- TABLA BASICA -->
 <div class="card">
-  <h5 class="card-header">Table Basic</h5>
+  <h5 class="card-header"><b>LINEAMIENTOS</b></h5>
 
   <div class="ml-2 card-body">
     <div class="row">
       <div class="col-12 col-md-4 mb2">
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#LineamientoModal"
-          class="btn btn-primary me-2">Crear Departamento</button>
+          class="btn btn-primary me-2">Crear Lineamiento</button>
 
       </div>
       <div class="col-12 col-md-4 mb2"></div>
