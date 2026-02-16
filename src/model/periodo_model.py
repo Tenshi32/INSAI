@@ -37,7 +37,7 @@ class PeriodoModel:
         return all_usuarios
 
     def create_periodo(self, datos):
-        sql = "INSERT INTO periodos (id_periodo, id_lineamiento, rango, fecha_inicio, fecha_final) " \
+        sql = "INSERT INTO periodos (id_periodo, id_lineamiento, anno, fecha_inicio, fecha_final) " \
         "VALUES (%s, %s, %s, %s, %s)"
       
         try: 

@@ -1,6 +1,17 @@
 $(document).ready(function () {
-  if (sessionStorage.getItem('usuario_nombre') && window.location.pathname.includes('login.html')) {
+  const sesionActiva = sessionStorage.getItem('usuario_nombre')
+  const esPaginaLogin = window.location.pathname.includes('login.html')
+
+  // Caso A: No hay sesión y trato de entrar a una página privada (index, etc.)
+  if (!sesionActiva && !esPaginaLogin) {
+    window.location.href = '../public/login.html'
+    return // Detenemos la ejecución del resto del script
+  }
+
+  // Caso B: Ya hay sesión y trato de entrar al login (evitar re-logueo)
+  if (sesionActiva && esPaginaLogin) {
     window.location.href = '../private/index.html'
+    return
   }
 
   if ($('#formAuthentication').length) {
@@ -8,7 +19,7 @@ $(document).ready(function () {
     $('#IniciarSession').on('click', function () {
       if ($('#formAuthentication').valid()) {
         const config = {
-          UrlControl: LOCALURL+'UsuarioData/Login',
+          UrlControl: LOCALURL + 'UsuarioData/Login',
           Formulario: document.getElementById('formAuthentication'),
           Method: 'POST'
         }
@@ -74,10 +85,9 @@ $(document).ready(function () {
       }
     })
   } else {
-
     $('#CerrarSession').on('click', function () {
       const config = {
-        UrlControl: LOCALURL+'UsuarioData/Logout',
+        UrlControl: LOCALURL + 'UsuarioData/Logout',
         Formulario: new FormData(),
         Method: 'POST'
       }
@@ -87,6 +97,5 @@ $(document).ready(function () {
         window.location.href = '../public/login.html'
       })
     })
-    
   }
 })

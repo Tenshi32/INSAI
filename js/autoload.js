@@ -7,7 +7,7 @@ $(document).on('click', 'a[data-page]', function (e) {
 $(document).ready(function () {
   const pageToLoad = 'home'
   loadContent(pageToLoad, $("a[data-page='home']"))
-  consultarLineamientos()
+  consultarPeriodo()
 })
 
 document.addEventListener('keyup', e => {
@@ -30,9 +30,9 @@ document.addEventListener('keyup', e => {
   }
 })
 
-function consultarLineamientos() {
+function consultarPeriodo() {
   // 1. URL de tu servidor Flask
-  const url = LOCALURL+"Periodo/ViewPeriodo"
+  const url = LOCALURL + 'Periodo/ViewPeriodo'
 
   fetch(url, {
     method: 'GET',
@@ -46,7 +46,7 @@ function consultarLineamientos() {
       const tabla = document.getElementById('ViewPeriodo')
 
       if (data != null) {
-        contenido = `Periodo Actual: <button type='button' class='btn btn-warning rounded-pill btn-lg'> ${data.rango}</button>`
+        contenido = `Periodo Actual: <button type='button' class='btn btn-warning rounded-pill btn-lg'> ${data.anno}</button>`
       } else {
         contenido = `No hay un periodo activo actualmente.`
         $('#menu-prepoa').hide()

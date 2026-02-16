@@ -33,7 +33,7 @@ class PeriodoController:
         valores = [
             datos['id_periodo'],
             datos['id_lineamiento'],
-            datos['rango'],
+            datos['anno'],
             datos['fecha_inicio'],
             datos['fecha_final'],
             datos['statu']

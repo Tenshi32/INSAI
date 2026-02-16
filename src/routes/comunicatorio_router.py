@@ -6,7 +6,12 @@ ctrl = ComunicatorioController()
 
 @comunicatorio_bp.route('/Consultar', methods=['GET'])
 def consultar():
-    return jsonify(ctrl.buscar_comunicatorios())
+    status = request.args.get('status')
+    id_lineamiento = request.args.get('id_lineamiento')
+    if status:
+        return jsonify(ctrl.buscar_comunicatorio_activo(status, id_lineamiento))
+    else:
+        return jsonify(ctrl.buscar_comunicatorios())
 
 @comunicatorio_bp.route('/Crear', methods=['POST'])
 def crear():

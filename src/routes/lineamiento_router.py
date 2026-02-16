@@ -6,7 +6,12 @@ ctrl = LineamientoController()
 
 @lineamiento_bp.route('/Consultar', methods=['GET'])
 def consultar():
-    return jsonify(ctrl.listar())
+
+    if request.args.get('status'):
+        status = request.args.get('status')
+        return jsonify(ctrl.obtener_activo(status))
+    else:
+        return jsonify(ctrl.listar())
 
 @lineamiento_bp.route('/Buscar', methods=['GET'])
 def buscar():

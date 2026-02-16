@@ -159,6 +159,10 @@ $(document).ready(function () {
 
   consultarLineamientos()
 
+  const anioActual = new Date().getFullYear();
+  $("#anno").val(anioActual);
+  $("#anno").attr("placeholder", anioActual);
+  
   // Validación del formulario
   $("#formLineamineto").validate({
   // Reglas de validación
@@ -166,27 +170,31 @@ $(document).ready(function () {
     fecha_inicio: { 
       required: true 
     },
-    rango: { 
-      required: true, 
-      minlength: 2 
+    anno: { 
+      required: true,
     },
     fecha_cierre: { 
       required: true 
     },
+    metas_alcanzar: { 
+      required: true, 
+      minlength: 10, 
+      maxlength: 200
+    },
     normas_legales: { 
       required: true, 
       minlength: 10, 
-      maxlength: 2000 
+      maxlength: 200
     },
     enfoque_estrategico: { 
       required: true, 
       minlength: 10, 
-      maxlength: 2000 
+      maxlength: 200
     },
     lineamientos: { 
       required: true, 
       minlength: 10, 
-      maxlength: 4000 
+      maxlength: 400
     }
   },
 
@@ -195,24 +203,31 @@ $(document).ready(function () {
     fecha_inicio: { 
       required: "Por favor, indique la fecha de inicio" 
     },
-    rango: { 
-      required: "Indique el rango", 
-      minlength: "El rango es muy corto" 
+    anno: { 
+      required: "Indique el año del lineamiento",
     },
     fecha_cierre: { 
       required: "Por favor, indique la fecha de cierre" 
     },
     normas_legales: { 
       required: "Ingrese las normas legales", 
-      minlength: "Al menos 10 caracteres" 
+      minlength: "Al menos 10 caracteres",
+      maxlength: "No más de 200 caracteres"
+    },
+    metas_alcanzar: { 
+      required: "Ingrese el enfoque estratégico", 
+      minlength: "Al menos 10 caracteres",
+      maxlength: "No más de 200 caracteres"
     },
     enfoque_estrategico: { 
       required: "Ingrese el enfoque estratégico", 
-      minlength: "Al menos 10 caracteres" 
+      minlength: "Al menos 10 caracteres",
+      maxlength: "No más de 200 caracteres"
     },
     lineamientos: { 
       required: "Ingrese los lineamientos", 
-      minlength: "Al menos 10 caracteres" 
+      minlength: "Al menos 10 caracteres",
+      maxlength: "No más de 400 caracteres"
     }
   },
 
