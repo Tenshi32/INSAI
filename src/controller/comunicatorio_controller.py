@@ -14,6 +14,11 @@ class ComunicatorioController:
     def buscar_comunicatorios(self):
         return self.modelo.get_comunicatorios()
 
+    def buscar_comunicatorio_activo(self, status, id_lineamiento):
+        if not status:
+            return None
+        return self.modelo.get_comunicatorio_lineamiento(status, id_lineamiento)
+    
     def buscar_comunicatorio(self, id):
         if not id:
             return None
@@ -31,7 +36,8 @@ class ComunicatorioController:
             datos['tipo'],
             datos['prioridad'],
             datos['fecha'],
-            datos['descripcion']
+            datos['descripcion'],
+            1
         ]
         retorno = self.modelo.create_comunicatorio(valores)
 
@@ -69,7 +75,6 @@ class ComunicatorioController:
         else:
 
             return {"status": False, "mensaje": "No se pudo guardar el registro"}
-
 
     def Edit_comunicatorio(self, datos):
         valores = [

@@ -19,6 +19,16 @@ class ComunicatorioModel:
         row = self.cursor.fetchone()
         return row
     
+    def get_comunicatorio_lineamiento(self, status, id_lineamiento):
+        sql = "SELECT c.*, l.*, d.*  FROM comunicatorios c "\
+              "JOIN lineamientos l ON c.id_lineamiento = l.id_lineamiento "\
+              "JOIN departamentos d ON c.id_departamento = d.id_departamento " \
+              "WHERE c.status = %s AND c.id_lineamiento = %s"
+        self.cursor.execute(sql, (status, id_lineamiento, ))
+
+        row = self.cursor.fetchone()
+        return row
+    
     def get_comunicatorios(self):
         sql = "SELECT c.*, l.*, d.*  FROM comunicatorios c "\
               "JOIN lineamientos l ON c.id_lineamiento = l.id_lineamiento "\
@@ -37,8 +47,8 @@ class ComunicatorioModel:
         return rows
 
     def create_comunicatorio(self, datos):
-        sql = "INSERT INTO comunicatorios (id_comunicatorio, id_lineamiento, id_departamento, tipo, prioridad, fecha_carga, descripcion) " \
-        "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO comunicatorios (id_comunicatorio, id_lineamiento, id_departamento, tipo, prioridad, fecha_carga, descripcion, status) " \
+        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
       
         try: 
             self.cursor.execute(sql, tuple(datos))

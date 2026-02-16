@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, session, make_response
 from flask_cors import CORS
 import os
+from dotenv import load_dotenv
 
 from routes.periodo_router import periodo_bp 
 from routes.departamento_router import departamento_bp
@@ -19,15 +20,18 @@ from routes.bd_router import database_bp
 #Controllers
 from controller import *
 
+load_dotenv()
+
 app = Flask(__name__)
 
-CORS(app, 
-     supports_credentials=True, 
-     origins=["http://localhost"], 
-     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-     allow_headers=["Content-Type", "Authorization"])
+app.secret_key = os.getenv('SECRET_KEY')
 
-app.secret_key = 'insaiPOA2026'
+CORS(app, 
+    supports_credentials=True, 
+    origins=[os.getenv('APACHE'), os.getenv('LIVESERVER')], 
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"]
+)
 
 app.config.update(
     SESSION_COOKIE_SAMESITE='Lax',
@@ -35,16 +39,12 @@ app.config.update(
     SESSION_COOKIE_HTTPONLY=True
 )
 
-# Configuración de la carpeta de subida
-UPLOAD_FOLDER = 'assets/img/avatars'
-
 # Crear la carpeta si no existe
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
+if not os.path.exists(os.getenv('UPLOAD_FOLDER')):
+    os.makedirs(os.getenv('UPLOAD_FOLDER'))
     
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # Límite de 5MB
-
+app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER')
+app.config['MAX_CONTENT_LENGTH'] = int(os.getenv('MAX_CONTENT_LENGTH')) * 1024 * 1024 # Límite de 5MB
 
 @app.route('/set-cookie')
 def set_cookie():
@@ -63,8 +63,8 @@ def check_auth():
         return
     if 'usuario_id' not in session:
         return jsonify({"status": False, "mensaje": "No autorizado"}), 401
-# Registro de blueprints
-
+    
+# Inicio de Registro de blueprints
 app.register_blueprint(periodo_bp, url_prefix='/Periodo')
 
 app.register_blueprint(departamento_bp, url_prefix='/Departamento')
@@ -88,6 +88,7 @@ app.register_blueprint(auditoria_bp, url_prefix='/Auditoria')
 app.register_blueprint(cabecera_data_bp, url_prefix='/CabeceraData')
 
 app.register_blueprint(database_bp, url_prefix='/Database')
+# Fin de Registro de blueprints
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

@@ -1,7 +1,7 @@
 // Evento GET para Consulta
 function consultarObjetivos() {
  
-  let url = "http://localhost:5000/CabeceraData/Consultar"
+  let url = LOCALURL+"CabeceraData/Consultar"
 
   let contenido = "";
 
@@ -61,7 +61,7 @@ function consultarObjetivos() {
 
 function SelectTipoPoa() {
   // 1. URL de tu servidor Flask
-  const url = "http://localhost:5000/Select/Consultar?tabla=tipo_poa&col1=id_tipo_poa&col2=nombre"
+  const url = LOCALURL+"Select/Consultar?tabla=tipo_poa&col1=id_tipo_poa&col2=nombre"
 
   let contenido = "";
 
@@ -87,7 +87,7 @@ function SelectTipoPoa() {
 
 function GetLineamiento() {
   // 1. URL de tu servidor Flask
-  const url = "http://localhost:5000/Lineamiento/Buscar"
+  const url = LOCALURL+"Lineamiento/Buscar"
 
   MethodGet(url, function(lista) {
 
@@ -105,7 +105,7 @@ $(document).on("click", "#Crear", function () {
     if ($("#formObjetivo").valid()) {
 
       const FormnDepa = {
-        UrlControl: "http://127.0.0.1:5000/CabeceraData/Crear",
+        UrlControl: LOCALURL+"CabeceraData/Crear",
         Formulario: document.getElementById("formObjetivo"),
         Method: "POST",
       };
@@ -134,7 +134,7 @@ $(document).on("click", ".Toggle", function (event) {
     datosManuales.append("status", nuevoStatus);
 
       const FormnDepa = {
-        UrlControl: "http://127.0.0.1:5000/Comunicatorio/Toggle",
+        UrlControl: LOCALURL+"Comunicatorio/Toggle",
         Formulario: datosManuales,
         Method: "PUT",
       };
@@ -167,7 +167,7 @@ $(document).on("click", ".Editar", function (event) {
       if ($("#formObjetivo").valid()) {
 
         const FormnDepa = {
-          UrlControl: "http://127.0.0.1:5000/Comunicatorio/Editar",
+          UrlControl: LOCALURL+"Comunicatorio/Editar",
           Formulario: document.getElementById("formObjetivo"),
           Method: "PUT",
         };

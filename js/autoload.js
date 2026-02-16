@@ -1,81 +1,77 @@
-$(document).on("click", "a[data-page]", function (e) {
-    e.preventDefault();
-    const pageToLoad = $(this).data("page");
-    loadContent(pageToLoad, $(this));
-});
+$(document).on('click', 'a[data-page]', function (e) {
+  e.preventDefault()
+  const pageToLoad = $(this).data('page')
+  loadContent(pageToLoad, $(this))
+})
 
-$(document).ready(function() {
-    const pageToLoad = "home"; 
-    loadContent(pageToLoad, $("a[data-page='home']") );
-    consultarLineamientos()
-
-});
+$(document).ready(function () {
+  const pageToLoad = 'home'
+  loadContent(pageToLoad, $("a[data-page='home']"))
+  consultarPeriodo()
+})
 
 document.addEventListener('keyup', e => {
   // Verificamos si el evento proviene del input con id "buscador"
   if (e.target.matches('#buscador')) {
-    const valorBusqueda = e.target.value.toLowerCase();
-    
+    const valorBusqueda = e.target.value.toLowerCase()
+
     // Seleccionamos todas las filas del cuerpo de la tabla
     document.querySelectorAll('.table tbody tr').forEach(fila => {
       // Comparamos el texto de la fila con lo que escribió el usuario
-      const textoFila = fila.textContent.toLowerCase();
-      
+      const textoFila = fila.textContent.toLowerCase()
+
       // Si el texto coincide, mostramos la fila, si no, la ocultamos
       if (textoFila.includes(valorBusqueda)) {
-        fila.style.display = 'table-row';
+        fila.style.display = 'table-row'
       } else {
-        fila.style.display = 'none';
+        fila.style.display = 'none'
       }
-    });
-  }
-});
-
-function consultarLineamientos() {
-    // 1. URL de tu servidor Flask
-    const url = "http://localhost:5000/Periodo/ViewPeriodo";
-
-    fetch(url, {
-        method: "GET",
-        credentials: "include" 
     })
+  }
+})
+
+function consultarPeriodo() {
+  // 1. URL de tu servidor Flask
+  const url = LOCALURL + 'Periodo/ViewPeriodo'
+
+  fetch(url, {
+    method: 'GET',
+    credentials: 'include'
+  })
     .then(response => {
-        if (!response.ok) throw new Error("Error en la red");
-        return response.json(); 
+      if (!response.ok) throw new Error('Error en la red')
+      return response.json()
     })
     .then(data => {
-      const tabla = document.getElementById("ViewPeriodo");
-      
-      if (data != null){
-        contenido = `Periodo Actual: <button type='button' class='btn btn-warning rounded-pill btn-lg'> ${data.rango}</button>`;
+      const tabla = document.getElementById('ViewPeriodo')
+
+      if (data != null) {
+        contenido = `Periodo Actual: <button type='button' class='btn btn-warning rounded-pill btn-lg'> ${data.anno}</button>`
       } else {
-
-        contenido = `No hay un periodo activo actualmente.`;
-        $("#menu-prepoa").hide();
-        $("#menu-poa").hide();
-
+        contenido = `No hay un periodo activo actualmente.`
+        $('#menu-prepoa').hide()
+        $('#menu-poa').hide()
       }
-      tabla.innerHTML = contenido;
+      tabla.innerHTML = contenido
     })
     .catch(error => {
-        console.error("Hubo un problema con la consulta:", error);
-        $("#menu-prepoa").hide();
-        $("#menu-poa").hide();
-    });
+      console.error('Hubo un problema con la consulta:', error)
+      $('#menu-prepoa').hide()
+      $('#menu-poa').hide()
+    })
 }
 
-// funcion para borrar el cache 
+// funcion para borrar el cache
 function clearCache() {
-    if ('caches' in window) {
-        caches.keys().then(function(names) {
-            for (let name of names)
-                caches.delete(name);
-        });
-    }
-    console.log('Cache cleared!');
+  if ('caches' in window) {
+    caches.keys().then(function (names) {
+      for (let name of names) caches.delete(name)
+    })
+  }
+  console.log('Cache cleared!')
 }
 
 // Llamar a la función para borrar el caché al cargar la página
-window.addEventListener('load', function() {
-    clearCache();
-});
+window.addEventListener('load', function () {
+  clearCache()
+})

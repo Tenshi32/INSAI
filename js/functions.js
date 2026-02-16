@@ -1,26 +1,42 @@
+// Constantes para URLs
+const APACHE = 'http://localhost:5000/'
+const LIVESERVER = 'http://127.0.0.1:5000/'
+
+// Puedes cambiar esta constante según el entorno en el que estés trabajando
+//const LOCALURL = LIVESERVER
+
+
+const currentHost = window.location.hostname;
+
+// Construimos la URL del Backend (Flask) usando el mismo host pero forzando el puerto 5000
+const LOCALURL = `http://${currentHost}:5000/`;
+
+console.log("Conectando a la API en:", LOCALURL);
+
+
 function RastrearDocumentos(Doc) {
   $.ajax({
-    type: "POST",
-    url: Doc["url"],
+    type: 'POST',
+    url: Doc['url'],
     data: Doc.data,
 
     success: function (r) {
-      $("#MostrarDocumento").html(r);
+      $('#MostrarDocumento').html(r)
 
-      $("#CargarDocumento").hide();
-    },
-  });
+      $('#CargarDocumento').hide()
+    }
+  })
 }
 
 function togglepassword() {
-  var password = document.getElementById("Passwd");
-  var confirm_password = document.getElementById("PasswdConfirm");
-  if (password.type === "password") {
-    password.type = "text";
-    confirm_password.type = "text";
+  var password = document.getElementById('Passwd')
+  var confirm_password = document.getElementById('PasswdConfirm')
+  if (password.type === 'password') {
+    password.type = 'text'
+    confirm_password.type = 'text'
   } else {
-    confirm_password.type = "password";
-    password.type = "password";
+    confirm_password.type = 'password'
+    password.type = 'password'
   }
 }
 
@@ -28,163 +44,152 @@ function togglepassword() {
 
 //Metodo para Enviar
 function methodSend(Obj, callback = null) {
-  event.preventDefault();
+  event.preventDefault()
 
+  const data = Obj['Formulario'] instanceof FormData ? Obj['Formulario'] : new FormData(Obj['Formulario'])
 
-  const data = (Obj["Formulario"] instanceof FormData) 
-             ? Obj["Formulario"] 
-             : new FormData(Obj["Formulario"]);
-
-  fetch(Obj["UrlControl"], {
-    method: Obj["Method"],
+  fetch(Obj['UrlControl'], {
+    method: Obj['Method'],
     body: data,
-    credentials: "include" 
+    credentials: 'include'
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
 
       if (data.status == true) {
-
-        Swal.fire(data.mensaje, "", "success");
-        setTimeout(1000);
+        Swal.fire(data.mensaje, '', 'success')
+        setTimeout(1000)
 
         // Si pasamos una función, la ejecutamos ahora
-        if (callback && typeof callback === "function") {
-          callback(data); 
+        if (callback && typeof callback === 'function') {
+          callback(data)
         }
-
       } else if (data.status == false) {
-        Swal.fire("ERROR!", data.mensaje, "error");
+        Swal.fire('ERROR!', data.mensaje, 'error')
       } else {
-        Swal.fire("ERROR!", data.message, "warning");
+        Swal.fire('ERROR!', data.message, 'warning')
       }
     })
 
-    .catch((error) => {
-      console.error("Error:", error);
-      Swal.fire("ERROR!", "No se pudo conectar con el servidor", "error");
-    });
+    .catch(error => {
+      console.error('Error:', error)
+      Swal.fire('ERROR!', 'No se pudo conectar con el servidor', 'error')
+    })
 
-  return true;
+  return true
 }
 
 //Metodo para Buscar
 function MethodGet(url, callback) {
-    fetch(url, {
-        method: "GET",
-        credentials: "include"  
-    })
+  fetch(url, {
+    method: 'GET',
+    credentials: 'include'
+  })
     .then(response => {
-        if (!response.ok) throw new Error("Error en la red");
-        return response.json(); 
+      if (!response.ok) throw new Error('Error en la red')
+      return response.json()
     })
     .then(data => {
+      listaComunicatorios = Object.values(data)
 
-      listaComunicatorios = Object.values(data);
-
-      callback(listaComunicatorios);
-
+      callback(listaComunicatorios)
     })
 
-    .catch((error) => {
-      console.error("Error:", error);
-      Swal.fire("ERROR!", "No se pudo conectar con el servidor", "error");
-    });
+    .catch(error => {
+      console.error('Error:', error)
+      Swal.fire('ERROR!', 'No se pudo conectar con el servidor', 'error')
+    })
 
-  return true;
+  return true
 }
 
 //Metodo para enviar archivos
 function methodSendFile(Obj, callback = null) {
-  event.preventDefault();
+  event.preventDefault()
 
+  const data = Obj['Formulario'] instanceof FormData ? Obj['Formulario'] : new FormData(Obj['Formulario'])
 
-  const data = (Obj["Formulario"] instanceof FormData) 
-             ? Obj["Formulario"] 
-             : new FormData(Obj["Formulario"]);
-
-  fetch(Obj["UrlControl"], {
-    method: Obj["Method"],
+  fetch(Obj['UrlControl'], {
+    method: Obj['Method'],
     body: data,
-    credentials: "include" 
+    credentials: 'include'
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
 
       if (data.status == true) {
-
         // Si pasamos una función, la ejecutamos ahora
-        if (callback && typeof callback === "function") {
-          callback(data); 
+        if (callback && typeof callback === 'function') {
+          callback(data)
         }
-
       } else if (data.status == false) {
-        Swal.fire("ERROR!", data.mensaje, "error");
+        Swal.fire('ERROR!', data.mensaje, 'error')
       } else {
-        Swal.fire("ERROR!", data.message, "warning");
+        Swal.fire('ERROR!', data.message, 'warning')
       }
     })
 
-    .catch((error) => {
-      console.error("Error:", error);
-      Swal.fire("ERROR!", "No se pudo conectar con el servidor", "error");
-    });
+    .catch(error => {
+      console.error('Error:', error)
+      Swal.fire('ERROR!', 'No se pudo conectar con el servidor', 'error')
+    })
 
-  return true;
+  return true
 }
 
 // Función para cargar el contenido
 async function loadContent(pageName, elementClicked = null) {
+  const contentArea = $('#content-area')
 
-    const contentArea = $("#content-area");
-    
-    if (elementClicked) {
+  if (elementClicked) {
+    $('.menu-item').removeClass('active')
+    elementClicked.closest('.menu-item').addClass('active')
+  }
 
-      $(".menu-item").removeClass("active"); 
-      elementClicked.closest(".menu-item").addClass("active");
-      
-    }
+  const loader = $('#loader-overlay')
+  loader.fadeIn(200)
 
-    const loader = $("#loader-overlay");
-    loader.fadeIn(200);
-
-    // 1. Validación de seguridad
-/*     const regex = /^[a-zA-Z0-9\-\/]+$/;
+  // 1. Validación de seguridad
+  /*     const regex = /^[a-zA-Z0-9\-\/]+$/;
     if (!regex.test(pageName)) {
         pageName = "../public/404";
     } */
 
-    // 2. Construir la ruta (Ajusta la ruta a tu carpeta de páginas)
-    const filepath = `${pageName}.html`;
+  // 2. Construir la ruta (Ajusta la ruta a tu carpeta de páginas)
+  const filepath = `${pageName}.html`
 
-    // 3. Simular el "include" usando fetch
-    try {
+  // 3. Simular el "include" usando fetch
+  try {
+    await new Promise(resolve => setTimeout(resolve, 500))
+    const response = await fetch(filepath)
 
-        await new Promise(resolve => setTimeout(resolve, 500));
-        const response = await fetch(filepath);
+    if (response.ok) {
+      const html = await response.text()
+
+      contentArea
+        .hide()
+        .html(html)
+        .fadeIn(500, function () {
+          $('#tablaPrincipal').dataTable({
+            paging: true,
+            responsive: true,
+            pageLength: 10,
+            ordering: true
+          })
+        })
         
-        if (response.ok) {
-
-          const html = await response.text();
-          contentArea.hide().html(html).fadeIn(500);
-          
-        } else {
-
-          throw new Error("Página no encontrada");
-
-        }
-        
-    } catch (error) {
-
-        // Equivalente al include del 404.php
-        $.get("../public/404.php", function(data) {
-            contentArea.html(data);
-        });
-
-    } finally {
-        // 2. Ocultar el loader SIEMPRE (haya error o no)
-        loader.fadeOut(300);
+    } else {
+      throw new Error('Página no encontrada')
     }
+  } catch (error) {
+    // Equivalente al include del 404.php
+    $.get('../public/404.php', function (data) {
+      contentArea.html(data)
+    })
+  } finally {
+    // 2. Ocultar el loader SIEMPRE (haya error o no)
+    loader.fadeOut(300)
+  }
 }

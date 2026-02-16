@@ -14,6 +14,11 @@ class LineamientoController:
         if not id:
             return None
         return self.modelo.get_lineamiento(id)
+    
+    def obtener_activo(self, status):
+        if not status:
+            return None
+        return self.modelo.lineamiento_active(status)
 
     def active_lineamiento(self):
         return self.modelo.lineamiento_active()
@@ -28,6 +33,7 @@ class LineamientoController:
             datos['normas_legales'],
             datos['enfoque_estrategico'],
             datos['lineamientos'],
+            datos['metas_alcanzar'],
             datos['fecha_carga']
         ]
         retorno = self.modelo.create_lineamiento(valores)

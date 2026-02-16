@@ -1,7 +1,7 @@
 // Evento GET para Consulta
 function consultarComunicatorios() {
   // 1. URL de tu servidor Flask
-  const url = "http://localhost:5000/Comunicatorio/Consultar"
+  const url = LOCALURL+"Comunicatorio/Consultar"
 
   let contenido = "";
 
@@ -64,7 +64,7 @@ function consultarComunicatorios() {
 
 function SelectDepartamento() {
   // 1. URL de tu servidor Flask
-  let url = "http://localhost:5000/Select/Consultar?tabla=departamentos&col1=id_departamento&col2=nombre"
+  let url = LOCALURL+"Select/Consultar?tabla=departamentos&col1=id_departamento&col2=nombre"
   
   let contenido = "<option value=''>seleccione una opción</option> ";
 
@@ -89,7 +89,7 @@ function SelectDepartamento() {
 
 function GetLineamiento() {
   // 1. URL de tu servidor Flask
-  const url = "http://localhost:5000/Lineamiento/Buscar"
+  const url = LOCALURL+"Lineamiento/Buscar"
 
   MethodGet(url, function(lista) {
 
@@ -105,7 +105,7 @@ $(document).on("click", "#Crear", function () {
     if ($("#formComunicatorio").valid()) {
 
       const FormnDepa = {
-        UrlControl: "http://127.0.0.1:5000/Comunicatorio/Crear",
+        UrlControl: LOCALURL+"Comunicatorio/Crear",
         Formulario: document.getElementById("formComunicatorio"),
         Method: "POST",
       };
@@ -134,7 +134,7 @@ $(document).on("click", ".Toggle", function (event) {
     datosManuales.append("status", nuevoStatus);
 
       const FormnDepa = {
-        UrlControl: "http://127.0.0.1:5000/Comunicatorio/Toggle",
+        UrlControl: LOCALURL+"Comunicatorio/Toggle",
         Formulario: datosManuales,
         Method: "PUT",
       };
@@ -167,7 +167,7 @@ $(document).on("click", ".Editar", function (event) {
       if ($("#formDepartamento").valid()) {
 
         const FormnDepa = {
-          UrlControl: "http://127.0.0.1:5000/Comunicatorio/Editar",
+          UrlControl: LOCALURL+"Comunicatorio/Editar",
           Formulario: document.getElementById("formDepartamento"),
           Method: "PUT",
         };
