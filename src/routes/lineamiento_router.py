@@ -15,7 +15,9 @@ def consultar():
 
 @lineamiento_bp.route('/Buscar', methods=['GET'])
 def buscar():
-    return jsonify(ctrl.active_lineamiento())
+    if request.args.get('status'):
+        status = request.args.get('status')
+        return jsonify(ctrl.active_lineamiento(status))
 
 @lineamiento_bp.route('/Crear', methods=['POST'])
 def crear():

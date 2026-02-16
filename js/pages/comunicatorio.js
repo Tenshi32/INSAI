@@ -89,7 +89,11 @@ function SelectDepartamento() {
 
 function GetLineamiento() {
   // 1. URL de tu servidor Flask
+<<<<<<< HEAD
   const url = LOCALURL+"Lineamiento/Buscar"
+=======
+  const url = LOCALURL+"Lineamiento/Buscar?status=1"
+>>>>>>> b46d4cd161151b90147004570212c911ff73e5a7
 
   MethodGet(url, function(lista) {
 

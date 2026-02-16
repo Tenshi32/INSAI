@@ -20,8 +20,8 @@ class LineamientoController:
             return None
         return self.modelo.lineamiento_active(status)
 
-    def active_lineamiento(self):
-        return self.modelo.lineamiento_active()
+    def active_lineamiento(self, status):
+        return self.modelo.lineamiento_active(status)
 
     def crear(self, datos: dict):
         numero = random.randint(10**4, 10**10 - 1)
