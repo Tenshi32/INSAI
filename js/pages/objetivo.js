@@ -1,4 +1,5 @@
-// Evento GET para Consulta
+// EVENTO GET PARA CONSULTAR Y MOSTRAR LOS OBJETIVOS DE LA UA EN LA TABLA
+
 function consultarObjetivos() {
  
   let url = LOCALURL+"CabeceraData/Consultar"
@@ -60,7 +61,9 @@ function consultarObjetivos() {
 }
 
 function SelectTipoPoa() {
-  // 1. URL de tu servidor Flask
+
+  // URL DE TU SERVIDOR FLASK PARA OBTENER LOS TIPOS DE POA DISPONIBLES Y LLENAR EL SELECT CORRESPONDIENTE EN EL FORMULARIO DE CREACIÓN/EDICIÓN DE OBJETIVOS
+
   const url = LOCALURL+"Select/Consultar?tabla=tipo_poa&col1=id_tipo_poa&col2=nombre"
 
   let contenido = "";
@@ -86,7 +89,9 @@ function SelectTipoPoa() {
 }
 
 function GetLineamiento() {
-  // 1. URL de tu servidor Flask
+  
+// URL DE TU SERVIDOR FLASK PARA OBTENER EL ID DEL LINEAMIENTO ASOCIADO AL DEPARTAMENTO DEL USUARIO LOGUEADO
+
   const url = LOCALURL+"Lineamiento/Buscar"
 
   MethodGet(url, function(lista) {
@@ -99,7 +104,8 @@ function GetLineamiento() {
 
 }
  
-// Evento POST para crear
+// EVENTO POST PARA CREAR UN NUEVO OBJETIVO DE LA UA
+
 $(document).on("click", "#Crear", function () {
 
     if ($("#formObjetivo").valid()) {
@@ -119,16 +125,18 @@ $(document).on("click", "#Crear", function () {
   
 });
 
-// Evento PUT para activar/desactivar 
+// EVENTO PUT PARA TOGGLE DE ESTADO
+
 $(document).on("click", ".Toggle", function (event) {
   
     const id = $(this).data("unico");
     const statusActual = $(this).data("status");
   
-    // Calculamos el nuevo estado (si es 1 pasa a 0, si es 0 pasa a 1)
+// CALCULAMOS EL NUEVO STATUS INVERTIENDO EL VALOR ACTUAL (SI ES "1" PASA A "0" Y VICEVERSA)
     const nuevoStatus = (statusActual == "1") ? "0" : "1";
 
-    // Creamos el contenedor de datos manual
+// CREAMOS EL FORMDATA PARA ENVIAR LOS DATOS NECESARIOS AL SERVIDOR ID Y EL NUEVO STATUS
+
     const datosManuales = new FormData();
     datosManuales.append("id_departamento", id);
     datosManuales.append("status", nuevoStatus);
@@ -147,20 +155,25 @@ $(document).on("click", ".Toggle", function (event) {
 
 })
 
-// Evento PUT para edición 
+// EVETO PUT PARA EDICIÓN
+
 $(document).on("click", ".Editar", function (event) {
 
-    // 1. Obtener datos del atributo data-
+  
+//  OBTENER LOS DATOS DEL ELEMENTO SELECCIONADO A TRAVÉS DE LOS ATRIBUTOS DATA
+
     const d = $(this).data();
 
-    // 2. Llenar los campos del formulario
+// LLENAR LOS CAMPOS DEL FORMULARIO CON LOS DATOS OBTENIDOS
+
     $("#created").val(d.id);
     $("#codigo").val(d.codigo);
     $("#nombre").val(d.nombre);
     $("#ubicacion").val(d.ubicacion);
     $("#descripcion").val(d.descripcion);
 
-    // 3. Cambiar el botón "Enviar" para que sea de "Editar"
+// CAMBIAR EL CAMBIO DE BOTÓN "ENVIAR" PARA QUE SEA DE "EDITAR"
+
     $("#Crear").text("Editar").removeClass("btn-primary")
     .addClass("btn-warning").off("click") .on("click", function() {
 
@@ -182,8 +195,10 @@ $(document).on("click", ".Editar", function (event) {
 
     });
           
-  // 4. Abrir el modal manualmente
-  $("#ComunicatorioModal").modal("show");
+  // ABRIR EL MODAL MANUEALMENTE
+
+  
+  $("#ObjetivoModal").modal("show");
           
 });
  
@@ -193,17 +208,19 @@ $(document).ready(function () {
   SelectTipoPoa()
   GetLineamiento()
   
-  // Validación del formulario
+  // VALIDACIÓN DEL FORMULARIO CON JQUERY VALIDATE
+
   const $form = $("#formObjetivo");
   if ($form.length) {
     $form.validate({
-      // Reglas de validación
+  
+// REGLAS DE VALIDACIÓN PARA CADA CAMPO
+
       rules: {
-    proyecto: {
-      required: true,
-      minlength: 5
+    departamento: {
+      required: true
     },
-    enfoque_estrategico: {
+      enfoque_estrategico: {
       required: true
     },
     sector: {
@@ -212,42 +229,42 @@ $(document).ready(function () {
     objetivos: {
       required: true,
       minlength: 10,
-      maxlength: 500
+      maxlength: 700
     },
+    
     actividad: {
-      required: true
+      required: true,
+      minlength: 10,
+      maxlength: 500
     },
     tipo_poa: {
       required: true
     }
       },
     
-      // Mensajes personalizados
+  // MENSAJES DE ERROR PERSONALIZADOS
+
       messages: {
-    proyecto: {
-      required: "El nombre del proyecto es obligatorio",
-      minlength: "El nombre debe tener al menos 5 caracteres"
-    },
-    enfoque_estrategico: {
-      required: "Ingrese el enfoque estratégico"
-    },
-    sector: {
+      sector: {
       required: "El sector es obligatorio"
     },
     objetivos: {
-      required: "Debe describir el objetivo específico",
+      required: "Debe describir el nombre del objetivo la UA es obligatorio",
       minlength: "El objetivo debe tener al menos 10 caracteres",
-      maxlength: "No puede exceder los 500 caracteres"
+      maxlength: "No puede exceder los 700 caracteres"
     },
     actividad: {
-      required: "La actividad principal es obligatoria"
+      required: "Describa el nombre de la actividad/proyecto",
+      minlength: "El nombre de la actividad/proyecto debe tener al menos 10 caracteres",
+      maxlength: "No puede exceder los 500 caracteres"
     },
     tipo_poa: {
       required: "Seleccione un tipo de POA"
     }
       },
     
-      // Ubicación del mensaje de error para que no mueva el diseño
+    // UBICACIÓN DE LOS MENSAJES DE ERROR Y CLASES DE ESTILO PARA CAMPOS INVÁLIDOS
+
       errorElement: 'span',
       errorPlacement: function (error, element) {
     error.addClass('invalid-feedback');
