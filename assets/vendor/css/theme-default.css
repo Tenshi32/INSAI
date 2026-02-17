@@ -740,7 +740,7 @@ a:hover {
   color: #8CE637;
 }
 .bg-menu-theme .menu-item.active > .menu-link:not(.menu-toggle) {
-  background-color: #fff;
+  background-color: none;
 }
 .bg-menu-theme.menu-horizontal .menu-sub > .menu-item.active > .menu-link:not(.menu-toggle) {
   background-color: white;

@@ -1,27 +1,31 @@
-// Evento GET para Consulta 
+// EVENTO GET PARA CONSULTAR LOS LINEAMIENTOS
+
 function consultarLineamientos() {
-  // 1. URL de tu servidor Flask
+
+ // URL DE TU SERVIDOR FLASK PARA OBTENER LOS LINEAMIENTOS
+
   let url = LOCALURL+"Lineamiento/Consultar"
-
   let contenido = "";
-
   receptor = document.getElementById("tablaLineamientos")
-
   MethodGet(url, function(lista) {
 
     lista.forEach(item => {
-      // Manejo de estados (Activo/Inactivo)
-      let estadoBadge = (item.statu !== "0")
-          ? '<span class="badge bg-label-primary me-1">Activo</span>'
-          : '<span class="badge bg-label-danger me-1">Inactivo</span>';
+
+// MANEJO DE ESTADOS ACTIVO/INACTIVO
+
+    let estadoBadge = (item.statu !== "0")
+     ? '<span class="badge bg-label-primary me-1">Activo</span>'
+     : '<span class="badge bg-label-danger me-1">Inactivo</span>';
 
       let textoAccion = (item.statu !== "0") ? 'Desactivar' : 'Activar';
 
-      // 1. Convertimos el string raro a un objeto Date de JS
+// COVERTIMOS EL SRING DE FECHA A OBJETO DE FECHA PARA FORMATEARLO
+      
       const fechaI = new Date(item.fecha_inicio);
       const fechaF = new Date(item.fecha_final);
 
-      // 2. Formateamos a estilo latino (día/mes/año)
+// FOTMATEAMOS LA FECHA A UN FORMATO LEGIBLE Y EN ESPAÑOL
+
       item.fecha_inicio = fechaI.toLocaleDateString('es-ES');
       item.fecha_final = fechaF.toLocaleDateString('es-ES');
 
@@ -70,7 +74,8 @@ function consultarLineamientos() {
 
 }
 
-// Evento POST para crear
+// EVENTO POST PARA CREAR UN NUEVO LINEAMIENTO
+
 $(document).on("click", "#Crear", function () {
 
   if ($("#formLineamineto").valid()) {
@@ -90,16 +95,19 @@ $(document).on("click", "#Crear", function () {
   
 });
 
-// Evento PUT para activar/desactivar 
+// EVENTO PUT PARA ACTIVAR UN LINEAMIENTO
+
 $(document).on("click", ".Toggle", function (event) {
   
     const id = $(this).data("unico");
     const statusActual = $(this).data("status");
   
-    // Calculamos el nuevo estado (si es 1 pasa a 0, si es 0 pasa a 1)
+// CALCULAMOS EL NUEVO STATUS INVERTIENDO EL ACTUAL (1 -> 0, 0 -> 1)
+
     const nuevoStatus = (statusActual == "1") ? "0" : "1";
 
-    // Creamos el contenedor de datos manual
+// CREAMOS EL CONTENEDOR DE DATOS PARA ENVIAR EL ID Y EL NUEVO STATUS AL SERVIDOR
+
     const datosManuales = new FormData();
     datosManuales.append("id_lineamiento", id);
     datosManuales.append("status", nuevoStatus);
@@ -116,24 +124,28 @@ $(document).on("click", ".Toggle", function (event) {
 
 })
 
-// Evento PUT para edición 
+// EVENTO PUT PARA EDITAR UN LINEAMIENTO
+
 $(document).on("click", ".Editar", function (event) {
 
-    // 1. Obtener datos del atributo data-
+// OBTENER LOS DATOS DEL ELEMENTO SELECCIONADO PARA EDITAR
+
     const d = $(this).data();
 
-    // 2. Llenar los campos del formulario
+// LLENAR LOS CAMPOS DEL FORMULARIO CON LOS DATOS OBTENIDOS
+
     $("#created").val(d.id); // Usamos el input hidden para el ID
     $("#codigo").val(d.codigo);
     $("#nombre").val(d.nombre);
     $("#ubicacion").val(d.ubicacion);
     $("#descripcion").val(d.descripcion);
 
-    // 3. Cambiar el botón "Enviar" para que sea de "Editar"
-    $("#Crear").text("Editar").removeClass("btn-primary")
-    .addClass("btn-warning").off("click").on("click", function() {
+ // 3. CAMBIAR EL BOTÓN DE ENVÍO PARA QUE REALICE LA ACCIÓN DE EDICIÓN EN LUGAR DE CREACIÓN
+    
+ $("#Crear").text("Editar").removeClass("btn-primary")
+ .addClass("btn-warning").off("click").on("click", function() {
 
-      if ($("#formLineamineto").valid()) {
+ if ($("#formLineamineto").valid()) {
 
         const FormnDepa = {
           UrlControl: LOCALURL+"Lineamiento/Editar",
@@ -151,7 +163,8 @@ $(document).on("click", ".Editar", function (event) {
 
     });
           
-    // 4. Abrir el modal manualmente
+   // MOSTRAR EL MODAL CON LOS DATOS CARGADOS PARA EDITAR
+
     $("#LineamientoModal").modal("show"); 
 });
 
@@ -163,9 +176,12 @@ $(document).ready(function () {
   $("#anno").val(anioActual);
   $("#anno").attr("placeholder", anioActual);
   
-  // Validación del formulario
+  // VALIDACIÓN DEL FORMULARIO DE LINEAMIENTO CON REGLAS Y MENSAJES PERSONALIZADOS
+
   $("#formLineamineto").validate({
-  // Reglas de validación
+
+ // REGLAS DE VALIDACIÓN PARA CADA CAMPO DEL FORMULARIO DE LINEAMIENTO
+
   rules: {
     fecha_inicio: { 
       required: true 
@@ -198,7 +214,8 @@ $(document).ready(function () {
     }
   },
 
-  // Mensajes personalizados
+  // MENSAJES DE ERROR PERSONALIZADOS PARA CADA REGLA DE VALIDACIÓN
+
   messages: {
     fecha_inicio: { 
       required: "Por favor, indique la fecha de inicio" 
@@ -231,7 +248,8 @@ $(document).ready(function () {
     }
   },
 
-  // Ubicación del mensaje de error para que no mueva el diseño
+  // UBICACIÓN DE LOS MENSAJES DE ERROR Y CLASES DE ESTILO PARA LOS CAMPOS CON ERRORES
+  
   errorElement: 'span',
   errorPlacement: function (error, element) {
     error.addClass('invalid-feedback');
