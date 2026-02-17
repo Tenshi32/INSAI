@@ -11,8 +11,8 @@ class CabeceraModel:
         self.cursor = self.conn.cursor(dictionary=True)
 
     def create_cabecera(self, datos):
-        sql = "INSERT INTO cabeceras (id_cabecera, proyecto, enfoque_estrategico, sector, objetivos, actividad) " \
-        "VALUES (%s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO cabeceras (id_cabecera, anno_fiscal, enfoque_estrategico, sector, objetivos, actividad, statu) " \
+        "VALUES (%s, %s, %s, %s, %s, %s, %s)"
       
         try: 
             self.cursor.execute(sql, tuple(datos))
@@ -30,6 +30,21 @@ class CabeceraModel:
         
         try: 
             self.cursor.execute(sql, tuple(datos))
+            self.conn.commit()
+            return self.cursor.rowcount
+
+        except Exception as e:
+            self.conn.rollback()
+            print(f"Error inesperado: {e}")
+            return None
+        
+    def status_cabecera(self, datos):
+        sql = "UPDATE cabeceras SET statu = CASE " \
+            "WHEN statu = '1' THEN '0' ELSE '1' " \
+            "END WHERE id_cabecera = %s"
+        
+        try: 
+            self.cursor.execute(sql, datos, )
             self.conn.commit()
             return self.cursor.rowcount
 

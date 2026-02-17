@@ -100,3 +100,13 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+
+button[aria-expanded="false"] i.bx-chevron-up {
+    transform: rotate(180deg);
+}
+
+/* Transición suave para que se vea profesional */
+button i.bx-chevron-up {
+    transition: all 0.3s ease;
+}

@@ -9,14 +9,19 @@ function consultarObjetivos() {
 
   MethodGet(url, function (lista) {
     lista.forEach(item => {
+
+      if (item.statu === '1') {
+        sessionStorage.setItem('id_planificacion_activa', item.id_comunicatorio);
+      }
+
       let estadoBadge =
-        item.status !== '3'
-          ? item.status !== '2'
+        item.statu !== '3'
+          ? item.statu !== '2'
             ? '<span class="badge bg-label-warning me-1">En Espera</span>'
             : '<span class="badge bg-label-success me-1">Aprobada</span>'
           : '<span class="badge bg-label-danger me-1">Negada</span>'
 
-      let textoAccion = item.status !== '3' ? 'Activar' : 'Desactivar'
+      let textoAccion = item.statu !== '3' ? 'Activar' : 'Desactivar'
 
       contenido += `
           <tr>
@@ -42,7 +47,7 @@ function consultarObjetivos() {
                       </a>
                       <a class="dropdown-item Toggle" 
                          data-unico="${item.id_cabecera}" 
-                         data-status="${item.status}">
+                         data-status="${item.statu}">
                          <i class='bx bx-toggle-big-right me-1'></i> ${textoAccion}
                       </a>
                     </div>
@@ -179,6 +184,7 @@ $(document).ready(function () {
     $('#id_usuario').attr('value', sessionStorage.getItem('id_usuario'))
     $('#id_departamento').attr('value', sessionStorage.getItem('id_departamento'))
     $('#departamento').attr('value', sessionStorage.getItem('departamento_nombre'))
+    $('#id_planificacion_activa').attr('value', sessionStorage.getItem('id_planificacion_activa'))
 
     form.validate({
       // REGLAS DE VALIDACIÓN PARA CADA CAMPO

@@ -81,7 +81,7 @@ class ComunicatorioModel:
     def status_comunicatorio(self, datos):
         sql = "UPDATE comunicatorios SET statu = CASE " \
             "WHEN statu = '1' THEN '0' ELSE '1' " \
-            "END WHERE id_comunicatorio = %s; " \
+            "END WHERE id_comunicatorio = %s"
         
         try: 
             self.cursor.execute(sql, datos, )

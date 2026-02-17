@@ -11,6 +11,7 @@
           <input type="hidden" id="id_lineamiento" name="id_lineamiento" />
           <input type="hidden" id="id_departamento" name="id_departamento" />
           <input type="hidden" id="id_usuario" name="id_usuario" />
+          <input type="hidden" id="id_planificacion_activa" name="id_planificacion_activa" />
 
           <!-- CAMPOS FIJOS DEL LINEAMIENTO -->
 
@@ -18,14 +19,14 @@
             <div class="col-6 col-md-6 mb-2">
               <div class="form-group">
                 <label for="anno" class="form-label">*Año Fiscal en Curso</label>
-                <input class="form-control" type="text" value="2026" id="anno" readonly />
+                <input class="form-control" type="text" value="2026" id="anno_fiscal" name="anno_fiscal" readonly />
               </div>
             </div>
 
             <div class="col-6 col-md-6 mb-2">
               <div class="form-group">
                 <label for="sector" class="form-label">Sector</label>
-                <input class="form-control" type="text" value="Agricola" id="sector" readonly />
+                <input class="form-control" type="text" value="Agricola" id="sector" name="sector" readonly />
               </div>
             </div>
 
@@ -51,7 +52,7 @@
                 <label for="enfoque_estrategico" class="form-label">*Enfoque Estratégico</label>
                 <input class="form-control" type="text"
                   value="1.1.4, 1.4.9, 1.4.9.1.1 IV Modelo Productivo Socialista 1er y 5 objetivo histórico del plan de la patria."
-                  id="enfoque_estrategico" readonly />
+                  id="enfoque_estrategico" name="enfoque_estrategico" readonly />
               </div>
             </div>
           </div>
