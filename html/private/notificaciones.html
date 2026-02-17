@@ -12,6 +12,7 @@
             <span class="text-danger fw-light mb-3">Campos Obligatorio(*)</span>
 
             <input type="hidden" id="id_lineamiento" name="id_lineamiento"/>
+            <input type="hidden" id="id_notificacion_activa" name="id_notificacion_activa"/>
 
             <div class="col-12 col-md-5 mb-2">
               <div class="row">
@@ -83,19 +84,12 @@
   <h5 class="card-header">Notificaciones</h5>
 
   <div class="ml-2 card-body">
-    <div class="row">
-      <div class="col-12 col-md-4 mb2">
+    <div class="row mb-4">
+      <div class="col-12 col-md-4">
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ComunicatorioModal"
           class="btn btn-primary me-2">Crear Notificación</button>
 
-      </div>
-      <div class="col-12 col-md-4 mb2"></div>
-
-      <div class="col-12 col-md-4 mb2 d-flex align-items-center">
-        <i class="bx bx-search fs-4 lh-0"></i>
-        <input type="text" name="buscador" id="buscador" class="form-control border-0 shadow-none"
-          placeholder="Buscador..." aria-label="Buscador..." />
       </div>
     </div>
 
@@ -139,4 +133,4 @@
 
 
  
-<script src="../../js/pages/comunicatorio.js"></script>
+<script src="../../js/pages/notificaciones.js"></script>

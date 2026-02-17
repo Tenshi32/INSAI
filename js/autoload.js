@@ -10,26 +10,6 @@ $(document).ready(function () {
   consultarPeriodo()
 })
 
-document.addEventListener('keyup', e => {
-  // Verificamos si el evento proviene del input con id "buscador"
-  if (e.target.matches('#buscador')) {
-    const valorBusqueda = e.target.value.toLowerCase()
-
-    // Seleccionamos todas las filas del cuerpo de la tabla
-    document.querySelectorAll('.table tbody tr').forEach(fila => {
-      // Comparamos el texto de la fila con lo que escribió el usuario
-      const textoFila = fila.textContent.toLowerCase()
-
-      // Si el texto coincide, mostramos la fila, si no, la ocultamos
-      if (textoFila.includes(valorBusqueda)) {
-        fila.style.display = 'table-row'
-      } else {
-        fila.style.display = 'none'
-      }
-    })
-  }
-})
-
 function consultarPeriodo() {
   // 1. URL de tu servidor Flask
   const url = LOCALURL + 'Periodo/ViewPeriodo'

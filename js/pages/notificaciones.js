@@ -3,8 +3,6 @@ function consultarComunicatorios() {
   // 1. URL de tu servidor Flask
   const url = LOCALURL+"Comunicatorio/Consultar"
 
-  let contenido = "";
-
   receptor = document.getElementById("tablaComunicatorios")
 
   MethodGet(url, function(lista) {
@@ -13,11 +11,17 @@ function consultarComunicatorios() {
 
     lista.forEach(item => {
 
-      let estadoBadge = (item.status !== "0") 
+      if (item.statu === '1') {
+
+        sessionStorage.setItem('id_notificacion_activa', item.id_comunicatorio);
+
+      }
+
+      let estadoBadge = (item.statu !== '0') 
           ? '<span class="badge bg-label-primary me-1">Activo</span>' 
           : '<span class="badge bg-label-danger me-1">Inactivo</span>';
 
-      let textoAccion = (item.status !== "0") ? 'Desactivar' : 'Activar';
+      let textoAccion = (item.statu === '1') ? 'Desactivar' : 'Activar';
 
       contenido += `
           <tr>
@@ -43,7 +47,7 @@ function consultarComunicatorios() {
                       </a>
                       <a class="dropdown-item Toggle" 
                          data-unico="${item.id_comunicatorio}" 
-                         data-status="${item.status}">
+                         data-status="${item.statu}">
                          <i class='bx bx-toggle-big-right me-1'></i> ${textoAccion}
                       </a>
                     </div>
@@ -87,22 +91,6 @@ function SelectDepartamento() {
 
 }
 
-function GetLineamiento() {
-  // 1. URL de tu servidor Flask
-<<<<<<< HEAD
-  const url = LOCALURL+"Lineamiento/Buscar"
-=======
-  const url = LOCALURL+"Lineamiento/Buscar?status=1"
->>>>>>> b46d4cd161151b90147004570212c911ff73e5a7
-
-  MethodGet(url, function(lista) {
-
-    $("#id_lineamiento").val(lista[2])
-
-  })
-
-}
- 
 // Evento POST para crear
 $(document).on("click", "#Crear", function () {
 
@@ -192,16 +180,17 @@ $(document).on("click", ".Editar", function (event) {
 });
  
 $(document).ready(function () {
-
+  let form
   consultarComunicatorios()
   SelectDepartamento()
-  GetLineamiento()
   
   // Validación del formulario
-  const $form = $("#formComunicatorio");
-  if ($form.length) {
-    
-    $form.validate({
+  form = $("#formComunicatorio");
+  if (form.length) {
+    $("#id_lineamiento").attr("value", sessionStorage.getItem('id_lineamiento'))
+    $("#id_notificacion_activa").attr("value", sessionStorage.getItem('id_notificacion_activa'))
+    console.log( $("#id_notificacion_activa") )
+    form.validate({
   // Reglas de validación
   rules: {
     tipo: {

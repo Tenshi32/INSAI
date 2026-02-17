@@ -1,29 +1,30 @@
 // EVENTO GET PARA CONSULTAR Y MOSTRAR LOS OBJETIVOS DE LA UA EN LA TABLA
 
 function consultarObjetivos() {
- 
-  let url = LOCALURL+"CabeceraData/Consultar"
+  let url = LOCALURL + 'CabeceraData/Consultar'
 
-  let contenido = "";
+  let contenido = ''
 
-  receptor = document.getElementById("tablaPOA")
+  receptor = document.getElementById('tablaPlanificacion')
 
-  MethodGet(url, function(lista) {
-
+  MethodGet(url, function (lista) {
     lista.forEach(item => {
+      let estadoBadge =
+        item.status !== '3'
+          ? item.status !== '2'
+            ? '<span class="badge bg-label-warning me-1">En Espera</span>'
+            : '<span class="badge bg-label-success me-1">Aprobada</span>'
+          : '<span class="badge bg-label-danger me-1">Negada</span>'
 
-      let estadoBadge = (item.status !== "0") 
-          ? '<span class="badge bg-label-primary me-1">Activo</span>' 
-          : '<span class="badge bg-label-danger me-1">Inactivo</span>';
-
-      let textoAccion = (item.status !== "0") ? 'Desactivar' : 'Activar';
+      let textoAccion = item.status !== '3' ? 'Activar' : 'Desactivar'
 
       contenido += `
           <tr>
               <td>${item.id_cabecera}</td>
-              <td><span class="fw-bold">${item.proyecto}</span></td>
-              <td><span class="badge bg-label-info">${item.sector}</span></td>
+              <td><span class="fw-bold">${item.actividad}</span><br>
+              <span class="badge bg-label-info">${item.sector}</span></td>
               <td>${item.objetivos}</td>
+
               <td>${estadoBadge}</td>
               <td>
                   <div class="dropdown">
@@ -34,7 +35,7 @@ function consultarObjetivos() {
                       <a class="dropdown-item Editar" 
                          style="cursor:pointer;"
                          data-id="${item.id_cabecera}"
-                         data-proyecto="${item.proyecto}" 
+                         data-actividad="${item.actividad}" 
                          data-sector="${item.sector}"
                          data-objetivos="${item.objetivos}"
                          <i class="bx bx-edit-alt me-1"></i> Editar
@@ -48,234 +49,200 @@ function consultarObjetivos() {
                   </div>
               </td>
           </tr>
-      `;
-
+      `
     })
 
-    const form = document.getElementById("formObjetivo");
-    if(form) form.reset();
-    
-    receptor.innerHTML = contenido;
-  })
+    const form = document.getElementById('formObjetivo')
+    if (form) form.reset()
 
+    receptor.innerHTML = contenido
+  })
 }
 
 function SelectTipoPoa() {
-
   // URL DE TU SERVIDOR FLASK PARA OBTENER LOS TIPOS DE POA DISPONIBLES Y LLENAR EL SELECT CORRESPONDIENTE EN EL FORMULARIO DE CREACIÓN/EDICIÓN DE OBJETIVOS
 
-  const url = LOCALURL+"Select/Consultar?tabla=tipo_poa&col1=id_tipo_poa&col2=nombre"
+  const url = LOCALURL + 'Select/Consultar?tabla=tipo_poa&col1=id_tipo_poa&col2=nombre'
 
-  let contenido = "";
+  let contenido = ''
 
-  const receptor = document.getElementById("tipo_poa")
+  const receptor = document.getElementById('tipo_poa')
 
-  MethodGet(url, function(lista) {
-
-    let contenido = "<option value=''>seleccione una opción</option> ";
+  MethodGet(url, function (lista) {
+    let contenido = "<option value=''>seleccione una opción</option> "
 
     lista.forEach(item => {
-
-        contenido += `
+      contenido += `
                 <option value='${item.id_tipo_poa}'>#${item.id_tipo_poa}: ${item.nombre}</option>
-                `;
-
+                `
     })
-    
-    receptor.innerHTML = contenido;
 
+    receptor.innerHTML = contenido
   })
-
 }
 
-function GetLineamiento() {
-  
-// URL DE TU SERVIDOR FLASK PARA OBTENER EL ID DEL LINEAMIENTO ASOCIADO AL DEPARTAMENTO DEL USUARIO LOGUEADO
-
-  const url = LOCALURL+"Lineamiento/Buscar"
-
-  MethodGet(url, function(lista) {
-
-    $("#id_lineamiento").val(lista[2])
-    $("#id_departamento").val(sessionStorage.getItem('id_departamento'))
-    $("#id_usuario").val(sessionStorage.getItem('id_usuario'))
-
-  })
-
-}
- 
 // EVENTO POST PARA CREAR UN NUEVO OBJETIVO DE LA UA
 
-$(document).on("click", "#Crear", function () {
-
-    if ($("#formObjetivo").valid()) {
-
-      const FormnDepa = {
-        UrlControl: LOCALURL+"CabeceraData/Crear",
-        Formulario: document.getElementById("formObjetivo"),
-        Method: "POST",
-      };
-
-      methodSend(FormnDepa, function (params) {
-        consultarObjetivos
-        $("#ObjetivoModal").modal("hide"); 
-      });
-      
+$(document).on('click', '#Crear', function () {
+  if ($('#formObjetivo').valid()) {
+    const FormnDepa = {
+      UrlControl: LOCALURL + 'CabeceraData/Crear',
+      Formulario: document.getElementById('formObjetivo'),
+      Method: 'POST'
     }
-  
-});
+
+    methodSend(FormnDepa, function (params) {
+      consultarObjetivos
+      $('#ObjetivoModal').modal('hide')
+    })
+  }
+})
 
 // EVENTO PUT PARA TOGGLE DE ESTADO
 
-$(document).on("click", ".Toggle", function (event) {
-  
-    const id = $(this).data("unico");
-    const statusActual = $(this).data("status");
-  
-// CALCULAMOS EL NUEVO STATUS INVERTIENDO EL VALOR ACTUAL (SI ES "1" PASA A "0" Y VICEVERSA)
-    const nuevoStatus = (statusActual == "1") ? "0" : "1";
+$(document).on('click', '.Toggle', function (event) {
+  const id = $(this).data('unico')
+  const statusActual = $(this).data('status')
 
-// CREAMOS EL FORMDATA PARA ENVIAR LOS DATOS NECESARIOS AL SERVIDOR ID Y EL NUEVO STATUS
+  // CALCULAMOS EL NUEVO STATUS INVERTIENDO EL VALOR ACTUAL (SI ES "1" PASA A "0" Y VICEVERSA)
+  const nuevoStatus = statusActual == '1' ? '0' : '1'
 
-    const datosManuales = new FormData();
-    datosManuales.append("id_departamento", id);
-    datosManuales.append("status", nuevoStatus);
+  // CREAMOS EL FORMDATA PARA ENVIAR LOS DATOS NECESARIOS AL SERVIDOR ID Y EL NUEVO STATUS
 
-      const FormnDepa = {
-        UrlControl: LOCALURL+"Comunicatorio/Toggle",
-        Formulario: datosManuales,
-        Method: "PUT",
-      };
+  const datosManuales = new FormData()
+  datosManuales.append('id_departamento', id)
+  datosManuales.append('status', nuevoStatus)
 
-      methodSend(FormnDepa, function (params) {
-        
-        consultarObjetivos
+  const FormnDepa = {
+    UrlControl: LOCALURL + 'Comunicatorio/Toggle',
+    Formulario: datosManuales,
+    Method: 'PUT'
+  }
 
-      });
-
+  methodSend(FormnDepa, function (params) {
+    consultarObjetivos
+  })
 })
 
 // EVETO PUT PARA EDICIÓN
 
-$(document).on("click", ".Editar", function (event) {
+$(document).on('click', '.Editar', function (event) {
+  //  OBTENER LOS DATOS DEL ELEMENTO SELECCIONADO A TRAVÉS DE LOS ATRIBUTOS DATA
 
-  
-//  OBTENER LOS DATOS DEL ELEMENTO SELECCIONADO A TRAVÉS DE LOS ATRIBUTOS DATA
+  const d = $(this).data()
 
-    const d = $(this).data();
+  // LLENAR LOS CAMPOS DEL FORMULARIO CON LOS DATOS OBTENIDOS
 
-// LLENAR LOS CAMPOS DEL FORMULARIO CON LOS DATOS OBTENIDOS
+  $('#created').val(d.id)
+  $('#codigo').val(d.codigo)
+  $('#nombre').val(d.nombre)
+  $('#ubicacion').val(d.ubicacion)
+  $('#descripcion').val(d.descripcion)
 
-    $("#created").val(d.id);
-    $("#codigo").val(d.codigo);
-    $("#nombre").val(d.nombre);
-    $("#ubicacion").val(d.ubicacion);
-    $("#descripcion").val(d.descripcion);
+  // CAMBIAR EL CAMBIO DE BOTÓN "ENVIAR" PARA QUE SEA DE "EDITAR"
 
-// CAMBIAR EL CAMBIO DE BOTÓN "ENVIAR" PARA QUE SEA DE "EDITAR"
-
-    $("#Crear").text("Editar").removeClass("btn-primary")
-    .addClass("btn-warning").off("click") .on("click", function() {
-
-      if ($("#formObjetivo").valid()) {
-
+  $('#Crear')
+    .text('Editar')
+    .removeClass('btn-primary')
+    .addClass('btn-warning')
+    .off('click')
+    .on('click', function () {
+      if ($('#formObjetivo').valid()) {
         const FormnDepa = {
-          UrlControl: LOCALURL+"Comunicatorio/Editar",
-          Formulario: document.getElementById("formObjetivo"),
-          Method: "PUT",
-        };
-      
+          UrlControl: LOCALURL + 'Comunicatorio/Editar',
+          Formulario: document.getElementById('formObjetivo'),
+          Method: 'PUT'
+        }
+
         methodSend(FormnDepa, function (params) {
           consultarObjetivos
-          $("#ObjetivoModal").modal("hide"); 
-          $("#Crear").text("Enviar").removeClass("btn-warning").addClass("btn-primary").attr('data-action','create');
-        });
-              
+          $('#ObjetivoModal').modal('hide')
+          $('#Crear').text('Enviar').removeClass('btn-warning').addClass('btn-primary').attr('data-action', 'create')
+        })
       }
+    })
 
-    });
-          
   // ABRIR EL MODAL MANUEALMENTE
 
-  
-  $("#ObjetivoModal").modal("show");
-          
-});
- 
-$(document).ready(function () {
+  $('#ObjetivoModal').modal('show')
+})
 
+$(document).ready(function () {
   consultarObjetivos()
   SelectTipoPoa()
-  GetLineamiento()
-  
+
   // VALIDACIÓN DEL FORMULARIO CON JQUERY VALIDATE
 
-  const $form = $("#formObjetivo");
-  if ($form.length) {
-    $form.validate({
-  
-// REGLAS DE VALIDACIÓN PARA CADA CAMPO
+  let form = $('#formObjetivo')
+  if (form.length) {
+    $('#id_lineamiento').attr('value', sessionStorage.getItem('id_lineamiento'))
+    $('#id_usuario').attr('value', sessionStorage.getItem('id_usuario'))
+    $('#id_departamento').attr('value', sessionStorage.getItem('id_departamento'))
+    $('#departamento').attr('value', sessionStorage.getItem('departamento_nombre'))
+
+    form.validate({
+      // REGLAS DE VALIDACIÓN PARA CADA CAMPO
 
       rules: {
-    departamento: {
-      required: true
-    },
-      enfoque_estrategico: {
-      required: true
-    },
-    sector: {
-      required: true
-    },
-    objetivos: {
-      required: true,
-      minlength: 10,
-      maxlength: 700
-    },
-    
-    actividad: {
-      required: true,
-      minlength: 10,
-      maxlength: 500
-    },
-    tipo_poa: {
-      required: true
-    }
+        departamento: {
+          required: true
+        },
+        enfoque_estrategico: {
+          required: true
+        },
+        sector: {
+          required: true
+        },
+        objetivos: {
+          required: true,
+          minlength: 10,
+          maxlength: 700
+        },
+
+        actividad: {
+          required: true,
+          minlength: 10,
+          maxlength: 500
+        },
+        tipo_poa: {
+          required: true
+        }
       },
-    
-  // MENSAJES DE ERROR PERSONALIZADOS
+
+      // MENSAJES DE ERROR PERSONALIZADOS
 
       messages: {
-      sector: {
-      required: "El sector es obligatorio"
-    },
-    objetivos: {
-      required: "Debe describir el nombre del objetivo la UA es obligatorio",
-      minlength: "El objetivo debe tener al menos 10 caracteres",
-      maxlength: "No puede exceder los 700 caracteres"
-    },
-    actividad: {
-      required: "Describa el nombre de la actividad/proyecto",
-      minlength: "El nombre de la actividad/proyecto debe tener al menos 10 caracteres",
-      maxlength: "No puede exceder los 500 caracteres"
-    },
-    tipo_poa: {
-      required: "Seleccione un tipo de POA"
-    }
+        sector: {
+          required: 'El sector es obligatorio'
+        },
+        objetivos: {
+          required: 'Debe describir el nombre del objetivo la UA es obligatorio',
+          minlength: 'El objetivo debe tener al menos 10 caracteres',
+          maxlength: 'No puede exceder los 700 caracteres'
+        },
+        actividad: {
+          required: 'Describa el nombre de la actividad/proyecto',
+          minlength: 'El nombre de la actividad/proyecto debe tener al menos 10 caracteres',
+          maxlength: 'No puede exceder los 500 caracteres'
+        },
+        tipo_poa: {
+          required: 'Seleccione un tipo de POA'
+        }
       },
-    
-    // UBICACIÓN DE LOS MENSAJES DE ERROR Y CLASES DE ESTILO PARA CAMPOS INVÁLIDOS
+
+      // UBICACIÓN DE LOS MENSAJES DE ERROR Y CLASES DE ESTILO PARA CAMPOS INVÁLIDOS
 
       errorElement: 'span',
       errorPlacement: function (error, element) {
-    error.addClass('invalid-feedback');
-    element.closest('.form-group').append(error);
+        error.addClass('invalid-feedback')
+        element.closest('.form-group').append(error)
       },
       highlight: function (element, errorClass, validClass) {
-    $(element).addClass('is-invalid');
+        $(element).addClass('is-invalid')
       },
       unhighlight: function (element, errorClass, validClass) {
-    $(element).removeClass('is-invalid');
+        $(element).removeClass('is-invalid')
       }
-    });
+    })
   }
-});
+})

@@ -22,7 +22,9 @@ class UsuarioDataModel:
         return all
     
     def get_usuario_data(self, id):
-        sql = "SELECT * FROM usuario_data WHERE id_usuario = %s"
+        sql = "SELECT * FROM usuario_data ud" \
+        "INNER JOIN departamentos d ON d.id_departamento = ud.id_departamento " \
+        "WHERE ud.id_usuario = %s"
         self.cursor.execute(sql, (id))
 
         row = self.cursor.fetchone()
