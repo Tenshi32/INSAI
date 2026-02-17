@@ -1,196 +1,75 @@
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Perfil del Usuario</h4>
 
 <!-- Basic Bootstrap Table -->
-<div class="card">
-  <h5 class="card-header">Usuario</h5>
 
-  <div class="ml-2 card-body">
-    <div class="row" style="display:block;">
 
-      <span class="text-danger fw-light mb-3">Campos Obligatorio(*)</span>
-
-      <div class="d-flex align-items-start align-items-sm-center gap-4">
-
-        <img src="../../assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="100" width="100"
-          id="uploadedAvatar" />
-        <div class="button-wrapper">
-
-          <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-            <span class="d-none d-sm-block">Subir foto</span>
-            <input type="hidden" name="foto_ruta" id="foto_ruta" value="../../assets/img/avatars/1.png">
-            <i class="bx bx-upload d-block d-sm-none"></i>
-            <input type="file" id="upload" name="foto_archivo" class="account-file-input" hidden
-              accept="image/png, image/jpeg" />
-          </label>
-
-          <button type="button" id="resetear" class="btn btn-outline-secondary account-image-reset mb-4">
-            <i class="bx bx-reset d-block d-sm-none"></i>
-            <span class="d-none d-sm-block">Resetear</span>
-          </button>
-
-          <div class=" d-block d-sm-none">
-            <div class="form-group">
-              <label for="direccion" class="form-label">Usuario</label>
-              <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Indique su dirección" />
+<div class="row">
+  <div class="col-md-12">
+    <div class="card mb-4">
+      <h5 class="card-header">Detalles del Perfil</h5>
+      <div class="card-body">
+        <div class="d-flex align-items-start align-items-sm-center gap-4">
+          <img src="../../assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="100" width="100"
+            id="uploadedAvatar" />
+          <div class="button-wrapper">
+            <h4 class="mb-1" id="display_full_name">Cargando...</h4>
+            <p class="text-muted mb-0" id="display_rol">Rol de usuario</p>
+            <span class="badge bg-label-primary mt-2" id="display_depto">Departamento</span>
+          </div>
+        </div>
+      </div>
+      <hr class="my-0" />
+      <div class="card-body">
+        <form id="formAccountSettings" method="POST" onsubmit="return false">
+          <div class="row">
+            <div class="mb-3 col-md-6">
+              <label for="usuario" class="form-label">Nombre de Usuario</label>
+              <input class="form-control" type="text" id="usuario" name="usuario" readonly />
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="cedula" class="form-label">Cédula de Identidad</label>
+              <input class="form-control" type="text" name="cedula" id="cedula" />
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="firstName" class="form-label">Nombres</label>
+              <input class="form-control" type="text" id="firstName" name="firstName" />
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="lastName" class="form-label">Apellidos</label>
+              <input class="form-control" type="text" id="lastName" name="lastName" />
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="email" class="form-label">E-mail</label>
+              <input class="form-control" type="text" id="email" name="email" />
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="numerocel">Teléfono</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text">VEN (+58)</span>
+                <input type="text" id="numerocel" name="numerocel" class="form-control" />
+              </div>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="fechan" class="form-label">Fecha de Nacimiento</label>
+              <input type="date" class="form-control" id="fechan" name="fechan" />
+            </div>
+            <div class="mb-3 col-md-12">
+              <label for="direccion" class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="direccion" name="direccion" />
             </div>
           </div>
-
-          <p class="text-muted mb-0">Formato permito JPG, PNG, la imagen no debe exceder de 5M</p>
-        </div>
+          <div class="mt-2">
+            <button type="submit" class="btn btn-primary me-2">Guardar cambios</button>
+            <button type="reset" class="btn btn-outline-secondary">Descartar</button>
+          </div>
+        </form>
       </div>
-
-      <input type="hidden" name="created" id="created">
-
-      <div class="row">
-        <div class="col-12 col-md-4 mb-2">
-          <div class="form-group">
-            <label for="cedula" class="form-label">cédula de identidad</label>
-            <input class="form-control" type="text" name="cedula" id="cedula" placeholder="V-13357514" />
-          </div>
-        </div>
-        <div class="col-12 col-md-4 mb-2">
-          <div class="form-group">
-            <label for="firstName" class="form-label">nombres</label>
-            <input class="form-control" type="text" id="firstName" name="firstName" placeholder="Freddy" autofocus />
-          </div>
-        </div>
-        <div class="col-12 col-md-4 mb-2">
-          <div class="form-group">
-            <label for="lastName" class="form-label">apellidos</label>
-            <input class="form-control" type="text" id="lastName" name="lastName" placeholder="Miranda" autofocus />
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-md-4 mb-2">
-          <div class="form-group">
-            <label for="email" class="form-label">Correo Electronico</label>
-            <input class="form-control" type="text" id="email" name="email" placeholder="hostpc01@example.com" />
-          </div>
-        </div>
-        <div class="col-12 col-md-4 mb-2">
-          <div class="form-group">
-            <label class="form-label" for="phoneNumber">número de teléfono</label>
-
-
-            <input type="text" id="numerocel" name="numerocel" class="form-control" placeholder="0412 887.25.63" />
-
-          </div>
-        </div>
-        <div class="col-12 col-md-4 mb-2">
-          <div class="form-group">
-            <label for="fechan" class="form-label">fecha de nacimiento</label>
-            <input type="date" class="form-control" id="fechan" name="fechan" />
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-md-12 mb-2">
-          <div class="form-group">
-            <label for="direccion" class="form-label">dirección</label>
-            <input type="text" class="form-control" id="direccion" name="direccion"
-              placeholder="Indique su dirección" />
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="row" id="FormEditPerfil" style="display:none;">
-
-      <span class="text-danger fw-light mb-3">Campos Obligatorio(*)</span>
-
-      <div class="d-flex align-items-start align-items-sm-center gap-4">
-
-        <img src="../../assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="100" width="100"
-          id="uploadedAvatar" />
-        <div class="button-wrapper">
-
-          <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-            <span class="d-none d-sm-block">Subir foto</span>
-            <input type="hidden" name="foto_ruta" id="foto_ruta" value="../../assets/img/avatars/1.png">
-            <i class="bx bx-upload d-block d-sm-none"></i>
-            <input type="file" id="upload" name="foto_archivo" class="account-file-input" hidden
-              accept="image/png, image/jpeg" />
-          </label>
-
-          <button type="button" id="resetear" class="btn btn-outline-secondary account-image-reset mb-4">
-            <i class="bx bx-reset d-block d-sm-none"></i>
-            <span class="d-none d-sm-block">Resetear</span>
-          </button>
-
-          <div class=" d-block d-sm-none">
-            <div class="form-group">
-              <label for="direccion" class="form-label">Usuario</label>
-              <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Indique su dirección" />
-            </div>
-          </div>
-
-          <p class="text-muted mb-0">Formato permito JPG, PNG, la imagen no debe exceder de 5M</p>
-        </div>
-      </div>
-
-      <input type="hidden" name="created" id="created">
-
-      <div class="row">
-        <div class="col-12 col-md-4 mb-2">
-          <div class="form-group">
-            <label for="cedula" class="form-label">cédula de identidad</label>
-            <input class="form-control" type="text" name="cedula" id="cedula" placeholder="V-13357514" />
-          </div>
-        </div>
-        <div class="col-12 col-md-4 mb-2">
-          <div class="form-group">
-            <label for="firstName" class="form-label">nombres</label>
-            <input class="form-control" type="text" id="firstName" name="firstName" placeholder="Freddy" autofocus />
-          </div>
-        </div>
-        <div class="col-12 col-md-4 mb-2">
-          <div class="form-group">
-            <label for="lastName" class="form-label">apellidos</label>
-            <input class="form-control" type="text" id="lastName" name="lastName" placeholder="Miranda" autofocus />
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-md-4 mb-2">
-          <div class="form-group">
-            <label for="email" class="form-label">Correo Electronico</label>
-            <input class="form-control" type="text" id="email" name="email" placeholder="hostpc01@example.com" />
-          </div>
-        </div>
-        <div class="col-12 col-md-4 mb-2">
-          <div class="form-group">
-            <label class="form-label" for="phoneNumber">número de teléfono</label>
-
-
-            <input type="text" id="numerocel" name="numerocel" class="form-control" placeholder="0412 887.25.63" />
-
-          </div>
-        </div>
-        <div class="col-12 col-md-4 mb-2">
-          <div class="form-group">
-            <label for="fechan" class="form-label">fecha de nacimiento</label>
-            <input type="date" class="form-control" id="fechan" name="fechan" />
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-md-12 mb-2">
-          <div class="form-group">
-            <label for="direccion" class="form-label">dirección</label>
-            <input type="text" class="form-control" id="direccion" name="direccion"
-              placeholder="Indique su dirección" />
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>
 
+
+
 <!-- Js de Departamento -->
+
+<script src="../../js/pages/perfil.js"></script>

@@ -1,0 +1,126 @@
+<div class="modal fade" id="LineamientoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title fw-bold py-2" id="exampleModalLabel1"> <span class="text-muted fw-light"></span>
+          Creación de Auditoría</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Consulta de</span> Poa´s</h4>
+
+<!-- Basic Bootstrap Table -->
+<div class="card">
+  <h5 class="card-header">Comprobante de POA´s
+    <button class="btn btn-sm btn-icon" data-bs-toggle="collapse" data-bs-target="#CollapsePlanificacion"
+      aria-expanded="true" aria-controls="CollapsePlanificacion">
+      <i class="bx bx-chevron-up"></i>
+    </button>
+  </h5>
+  <div id="CollapsePlanificacion" class="collapse show">
+    <div class="ml-2 card-body">
+
+      <div class="table-responsive text-nowrap">
+        <table class="table" id="tablaPrincipal">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Usuario</th>
+              <th>Fecha</th>
+              <th>Acción</th>
+              <th>Descripción</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0" id="tablaAuditoria">
+            <tr>
+              <td>AU-1001</td>
+              <td>María Gómez</td>
+              <td>2026-01-09</td>
+              <td>Creación</td>
+              <td>Registro de cambios en módulo Y</td>
+              <td>
+                <div class="dropdown">
+                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Editar</a>
+                    <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Eliminar</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="card">
+  <h5 class="card-header">Formulación del PrePOA
+    <button class="btn btn-sm btn-icon" data-bs-toggle="collapse" data-bs-target="#CollapseFormulacion"
+      aria-expanded="true" aria-controls="CollapseFormulacion">
+      <i class="bx bx-chevron-up"></i>
+    </button>
+  </h5>
+  <div id="CollapseFormulacion" class="collapse show">
+    <div class="ml-2 card-body">
+
+      <div class="table-responsive text-nowrap">
+        <table class="table" id="tablaPrincipal">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Usuario</th>
+              <th>Fecha</th>
+              <th>Acción</th>
+              <th>Descripción</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0" id="tablaAuditoria">
+            <tr>
+              <td>AU-1001</td>
+              <td>María Gómez</td>
+              <td>2026-01-09</td>
+              <td>Creación</td>
+              <td>Registro de cambios en módulo Y</td>
+              <td>
+                <div class="dropdown">
+                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Editar</a>
+                    <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Eliminar</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Js de Departamento -->
+<script src="../../js/pages/auditoria.js"></script>
