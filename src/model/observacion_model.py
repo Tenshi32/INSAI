@@ -18,7 +18,7 @@ class ObservacionModel:
         return row
 
     def create_observacion(self, datos):
-        sql = "INSERT INTO observaciones (id_observacion, id_observado, observacion, statu) " \
+        sql = "INSERT INTO observaciones (id_observacion, observacion, fecha_create, statu) " \
         "VALUES (%s, %s, %s, %s)"
       
         try: 

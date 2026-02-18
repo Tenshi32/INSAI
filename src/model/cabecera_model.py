@@ -38,13 +38,12 @@ class CabeceraModel:
             print(f"Error inesperado: {e}")
             return None
         
-    def status_cabecera(self, datos):
-        sql = "UPDATE cabeceras SET statu = CASE " \
-            "WHEN statu = '1' THEN '0' ELSE '1' " \
-            "END WHERE id_cabecera = %s"
+    def status_cabecera(self, id, statu):
+        sql = "UPDATE cabeceras SET statu = %s " \
+            "WHERE id_cabecera = %s"
         
         try: 
-            self.cursor.execute(sql, datos, )
+            self.cursor.execute(sql, (statu, id, ))
             self.conn.commit()
             return self.cursor.rowcount
 

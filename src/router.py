@@ -16,6 +16,8 @@ from routes.ticket_router import ticket_bp
 from routes.auditoria_router import auditoria_bp
 from routes.cabecera_data_router import cabecera_data_bp
 from routes.bd_router import database_bp
+from routes.cabecera_router import cabecera_bp
+from routes.observacion_router import observacion_bp
 
 #Controllers
 from controller import *
@@ -65,6 +67,8 @@ def check_auth():
         return jsonify({"status": False, "mensaje": "No autorizado"}), 401
     
 # Inicio de Registro de blueprints
+app.register_blueprint(observacion_bp, url_prefix='/Observacion')
+
 app.register_blueprint(periodo_bp, url_prefix='/Periodo')
 
 app.register_blueprint(departamento_bp, url_prefix='/Departamento')
@@ -86,6 +90,8 @@ app.register_blueprint(ticket_bp, url_prefix='/Ticket')
 app.register_blueprint(auditoria_bp, url_prefix='/Auditoria')
 
 app.register_blueprint(cabecera_data_bp, url_prefix='/CabeceraData')
+
+app.register_blueprint(cabecera_bp, url_prefix='/Cabecera')
 
 app.register_blueprint(database_bp, url_prefix='/Database')
 # Fin de Registro de blueprints

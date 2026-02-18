@@ -1,4 +1,4 @@
-<div class="modal fade" id="LineamientoModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="ObservacionesModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -6,20 +6,98 @@
           Creación de Auditoría</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <form id="formObservaciones" method="POST" onsubmit="return false">
+        <div class="modal-body">
+          <div class="row mb-4">
+            <div class="col-6 col-md-3">
+              <small class="text-muted text-uppercase fw-semibold d-block">Departamento</small>
+              <p id="view_departamento_negar"></p>
+            </div>
+            <div class="col-6 col-md-3">
+              <small class="text-muted text-uppercase fw-semibold d-block">Tipo POA</small>
+              <p id="view_tipo_poa_notificacion"></p>
+            </div>
+          </div>
 
-      <div class="modal-body">
+          <input type="hidden" name="id_observado" id="id_observado">
+          <input type="hidden" name="tipo_observacion" value="planificacion">
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-          Cerrar
-        </button>
-      </div>
-
+          <div class="row mb-4">
+            <div class="col-12 col-md-12">
+              <div class="form-group">
+                <label for="observacion" class="form-label">*Observaciones</label>
+                <textarea class="form-control" name="observacion" id="observacion" cols="3"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="Crear" class="btn btn-primary">Enviar Observaciones</button>
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+            Cerrar
+          </button>
+        </div>
+      </form>
 
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="ObjetivoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom">
+        <h4 class="modal-title fw-bold py-2">
+          <i class="bx bx-file me-2"></i>Detalles del Objetivo PRE-POA
+        </h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row mb-4">
+          <div class="col-6 col-md-3">
+            <small class="text-muted text-uppercase fw-semibold d-block">Año Fiscal</small>
+            <p id="view_anno_fiscal"></p>
+          </div>
+          <div class="col-6 col-md-3">
+            <small class="text-muted text-uppercase fw-semibold d-block">Sector</small>
+            <p id="view_sector"></p>
+          </div>
+          <div class="col-12 col-md-6">
+            <small class="text-muted text-uppercase fw-semibold d-block">Departamento</small>
+            <p id="view_departamento"></p>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-12 col-md-4">
+            <small class="text-muted text-uppercase fw-semibold d-block">Enfoque Estratégico</small>
+            <p id="view_enfoque_estrategico"></p>
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="text-muted text-uppercase fw-semibold d-block">Objetivo de la UA</label>
+            <p id="view_objetivos"></p>
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="text-muted text-uppercase fw-semibold d-block">Actividad / Proyecto</label>
+            <p id="view_actividad"></p>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label class="text-muted text-uppercase fw-semibold d-block">Tipo de POA</label>
+          <p id="tipo_proyecto_view"></p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Consulta de</span> PrePoa´s</h4>
 
@@ -41,12 +119,11 @@
               <th>ID</th>
               <th>Usuario</th>
               <th>Fecha</th>
-              <th>Acción</th>
               <th>Descripción</th>
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody class="table-border-bottom-0" id="tablaAuditoria">
+          <tbody class="table-border-bottom-0" id="tablaPlanificacionPrePoa">
             <tr>
               <td>AU-1001</td>
               <td>María Gómez</td>
@@ -121,4 +198,4 @@
 </div>
 
 <!-- Js de Departamento -->
-<script src="../../js/pages/auditoria.js"></script>
+<script src="../../js/pages/revisionpreopoa.js"></script>
