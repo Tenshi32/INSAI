@@ -14,6 +14,11 @@ class ObservacionController:
 
     def listar(self):
         return self.modelo.get_all_ticket()
+    
+    def listar_planificacion(self, id_departamento):
+        if not id_departamento:
+            return None
+        return self.modelo.get_observacion_planificacion(id_departamento)
 
     def obtener(self, id_ticket):
         if not id_ticket:

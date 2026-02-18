@@ -6,9 +6,10 @@ ctrl = ObservacionController()
 
 @observacion_bp.route('/Consultar', methods=['GET'])
 def consultar():
-    id = request.args.get('id_lineamiento')
-    if id:
-        return jsonify(ctrl.obtener_revision(id))
+    tipo_observacion = request.args.get('tipo_observacion')
+    id_departamento = request.args.get('id_departamento')
+    if id_departamento and tipo_observacion == "planificacion":
+        return jsonify(ctrl.listar_planificacion(id_departamento))
     else:
         return jsonify(ctrl.lista())
 
