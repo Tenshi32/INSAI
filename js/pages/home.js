@@ -31,6 +31,7 @@ function consultarLineamientosActivos() {
         //console.log('Lineamiento activo:', data)
 
         id_lineamiento = data.id_lineamiento
+        sessionStorage.setItem('id_lineamiento', id_lineamiento)
         consultarNotificaciones(id_lineamiento)
       } else {
         contenido = `No hay un periodo activo actualmente.`
@@ -45,7 +46,7 @@ function consultarLineamientosActivos() {
 
 function consultarNotificaciones(id_lineamiento) {
   // 1. URL de tu servidor Flask
-  let url = LOCALURL + 'Comunicatorio/Consultar?status=1&id_lineamiento=' + id_lineamiento
+  let url = LOCALURL + 'Comunicatorio/Consultar?statu=1&id_lineamiento=' + id_lineamiento
 
   let contenido = ''
 
@@ -59,6 +60,9 @@ function consultarNotificaciones(id_lineamiento) {
     })
     .then(data => {
       if (data != null) {
+
+        console.log(data)
+
         $('#ViewNotificaciones').show()
 
         // 1. Textos básicos
@@ -74,10 +78,10 @@ function consultarNotificaciones(id_lineamiento) {
 
         $('#notif-prioridad').text(data.prioridad).addClass(prioridadClass)
 
-        // 3. Cambiar imagen según el tipo (opcional, le da un toque pro)
-        if (data.tipo === 'Soporte') {
-          $('#notif-img').attr('src', '../../assets/img/illustrations/boy-verify-email-light.png')
+        if (sessionStorage.getItem('id_nivel') <= 2){
+          sessionStorage.setItem('id_notificacion_actual', data.id_comunicatorio)
         }
+        
       } else {
         contenido = `No hay un periodo activo actualmente.`
         $('#ViewNotificaciones').hide()

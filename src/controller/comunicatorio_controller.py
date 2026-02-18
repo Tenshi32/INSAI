@@ -14,10 +14,10 @@ class ComunicatorioController:
     def buscar_comunicatorios(self):
         return self.modelo.get_comunicatorios()
 
-    def buscar_comunicatorio_activo(self, status, id_lineamiento):
-        if not status:
+    def buscar_comunicatorio_activo(self, statu, id_lineamiento):
+        if not statu:
             return None
-        return self.modelo.get_comunicatorio_lineamiento(status, id_lineamiento)
+        return self.modelo.get_comunicatorio_lineamiento(statu, id_lineamiento)
     
     def buscar_comunicatorio(self, id):
         if not id:
@@ -25,6 +25,12 @@ class ComunicatorioController:
         return self.modelo.get_comunicatorio(id)
 
     def crear_comunicatorio(self, datos):
+
+        id_viejo = datos.get('id_notificacion_activa')
+
+        if id_viejo and id_viejo != "":
+            self.modelo.status_comunicatorio(id_viejo)
+
         numero = random.randint(10**4, 10**12 - 1)
         datos["codigo"] = numero
 
@@ -37,7 +43,7 @@ class ComunicatorioController:
             datos['prioridad'],
             datos['fecha'],
             datos['descripcion'],
-            1
+            '1'
         ]
         retorno = self.modelo.create_comunicatorio(valores)
 
@@ -63,7 +69,6 @@ class ComunicatorioController:
     
     def Toggle_comunicatorio(self, datos):
         valores = [
-            datos['status'],
             datos['id_departamento']
         ]
         retorno = self.modelo.status_comunicatorio(valores)

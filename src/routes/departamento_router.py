@@ -8,6 +8,11 @@ ctrl = DepartamentoController()
 def consultar():
     return jsonify(ctrl.buscar_departamentos())
 
+@departamento_bp.route('/Obtener', methods=['GET'])
+def obtener():
+    id_departamento = request.args.get('id')
+    return jsonify(ctrl.buscar_departamento(id_departamento))
+
 @departamento_bp.route('/Crear', methods=['POST'])
 def crear():
     datos_recibidos = request.form.to_dict()

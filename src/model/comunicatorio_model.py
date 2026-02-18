@@ -8,7 +8,7 @@ class ComunicatorioModel:
         if self.conn is None:
             raise ConnectionError("No se pudo establecer la conexión a la base de datos.")
 
-        self.cursor = self.conn.cursor(dictionary=True)
+        self.cursor = self.conn.cursor(dictionary=True, buffered=True)
 
     def get_comunicatorio(self, id):
         sql = "SELECT c.*, l.* FROM comunicatorios c "\
@@ -20,10 +20,14 @@ class ComunicatorioModel:
         return row
     
     def get_comunicatorio_lineamiento(self, status, id_lineamiento):
-        sql = "SELECT c.*, l.*, d.*  FROM comunicatorios c "\
-              "JOIN lineamientos l ON c.id_lineamiento = l.id_lineamiento "\
-              "JOIN departamentos d ON c.id_departamento = d.id_departamento " \
-              "WHERE c.status = %s AND c.id_lineamiento = %s"
+        sql = "SELECT " \
+        "c.id_comunicatorio, c.descripcion, c.prioridad, c.tipo," \
+        " l.id_lineamiento, " \
+        "d.id_departamento, d.nombre " \
+        "FROM comunicatorios c "\
+        "JOIN lineamientos l ON c.id_lineamiento = l.id_lineamiento "\
+        "JOIN departamentos d ON c.id_departamento = d.id_departamento " \
+        "WHERE c.statu = %s AND c.id_lineamiento = %s"
         self.cursor.execute(sql, (status, id_lineamiento, ))
 
         row = self.cursor.fetchone()
@@ -47,7 +51,7 @@ class ComunicatorioModel:
         return rows
 
     def create_comunicatorio(self, datos):
-        sql = "INSERT INTO comunicatorios (id_comunicatorio, id_lineamiento, id_departamento, tipo, prioridad, fecha_carga, descripcion, status) " \
+        sql = "INSERT INTO comunicatorios (id_comunicatorio, id_lineamiento, id_departamento, tipo, prioridad, fecha_carga, descripcion, statu) " \
         "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
       
         try: 
@@ -66,6 +70,21 @@ class ComunicatorioModel:
         
         try: 
             self.cursor.execute(sql, tuple(datos))
+            self.conn.commit()
+            return self.cursor.rowcount
+
+        except Exception as e:
+            self.conn.rollback()
+            print(f"Error inesperado: {e}")
+            return None
+        
+    def status_comunicatorio(self, datos):
+        sql = "UPDATE comunicatorios SET statu = CASE " \
+            "WHEN statu = '1' THEN '0' ELSE '1' " \
+            "END WHERE id_comunicatorio = %s"
+        
+        try: 
+            self.cursor.execute(sql, datos, )
             self.conn.commit()
             return self.cursor.rowcount
 

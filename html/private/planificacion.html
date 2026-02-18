@@ -8,69 +8,77 @@
       <form id="formObjetivo" method="POST" onsubmit="return false">
         <div class="modal-body">
 
-          <input type="hidden" id="id_lineamiento" name="id_lineamiento"/>
-          <input type="hidden" id="id_departamento" name="id_departamento"/>
-          <input type="hidden" id="id_usuario" name="id_usuario"/>
+          <input type="hidden" id="id_lineamiento" name="id_lineamiento" />
+          <input type="hidden" id="id_departamento" name="id_departamento" />
+          <input type="hidden" id="id_usuario" name="id_usuario" />
+          <input type="hidden" id="id_planificacion_activa" name="id_planificacion_activa" />
 
-<!-- CAMPOS FIJOS DEL LINEAMIENTO -->
+          <!-- CAMPOS FIJOS DEL LINEAMIENTO -->
 
-           <div class="row">
-                 <div class="col-12 mb-2">
-                  <div class="form-group">
-                    <label for="anno" class="form-label">*Año Fiscal en Curso</label>
-                    <input class="form-control" type="text" value="2026" id="anno" readonly />
-                  </div>
-                </div>
-            
-            <div class="col-12 mb-2">
-                  <div class="form-group">
-                    <label for="sector" class="form-label">Sector</label>
-                    <input class="form-control" type="text" value="Agricola" id="sector" readonly />
-                  </div>
+          <div class="row">
+            <div class="col-6 col-md-6 mb-2">
+              <div class="form-group">
+                <label for="anno" class="form-label">*Año Fiscal en Curso</label>
+                <input class="form-control" type="text" value="2026" id="anno_fiscal" name="anno_fiscal" readonly />
+              </div>
             </div>
-          <div class="col-6 mb-2">
-                  <div class="form-group">
-                    <label for="departamento" class="form-label">*Departamento</label>
-                    <input class="form-control" type="text" value="Oficina de Planificación Estratégica (OPE)" id="departamento" readonly />
-                  </div>
-            </div> 
-          </div>
 
-        <div class="col-30 mb-2">
-                  <div class="form-group">
-                    <label for="enfoque_estrategico" class="form-label">*Enfoque Estratégico</label>
-                    <input class="form-control" type="text" value="1.1.4, 1.4.9, 1.4.9.1.1 IV Modelo Productivo Socialista 1er y 5 objetivo histórico del plan de la patria." id="enfoque_estrategico" readonly />
-                  </div>
-            </div> 
-    
-        <div class="row">
-            <div class="col-6 col-md-4 mb-2">
+            <div class="col-6 col-md-6 mb-2">
+              <div class="form-group">
+                <label for="sector" class="form-label">Sector</label>
+                <input class="form-control" type="text" value="Agricola" id="sector" name="sector" readonly />
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-6 col-md-6 mb-2">
+              <div class="form-group">
+                <label for="departamento" class="form-label">*Departamento</label>
+                <input type="text" class="form-control" id="departamento" name="departamento" readonly />
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-2">
               <div class="form-group">
                 <label class="form-label" for="tipo_poa">*Tipo de Poa </label>
                 <select id="tipo_poa" name="tipo_poa" class="select2 form-select">
                 </select>
               </div>
             </div>
-      
-            <div class="col-12 col-md-8 mb-2">
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-12 mb-2">
               <div class="form-group">
-                <label for="actividad" class="form-label">*Nombre de la Actividad/Proyecto</label>
-                <textarea class="form-control" id="actividad" name="actividad" rows="6"
-                 placeholder="Describa la actividad o proyecto..."></textarea>
+                <label for="enfoque_estrategico" class="form-label">*Enfoque Estratégico</label>
+                <input class="form-control" type="text"
+                  value="1.1.4, 1.4.9, 1.4.9.1.1 IV Modelo Productivo Socialista 1er y 5 objetivo histórico del plan de la patria."
+                  id="enfoque_estrategico" name="enfoque_estrategico" readonly />
               </div>
             </div>
           </div>
-    
-        <div class="row">             
-            <div class="col-22 col-md-12 mb-2">
-                  <div class="form-group">
-                    <label for="objetivos" class="form-label">*Objetivo</label>
-                    <textarea class="form-control" id="objetivos" name="objetivos" rows="5"
-                      placeholder="Indique el objetivo de la UA..."></textarea>
-                  </div>
-                </div>
+
+          <div class="row">
+            <div class="col-12 col-md-6 mb-2">
+              <div class="form-group">
+                <label for="objetivos" class="form-label">*Objetivo</label>
+                <textarea class="form-control" id="objetivos" name="objetivos" rows="6"
+                  placeholder="Indique el objetivo de la UA..."></textarea>
               </div>
-      </div>
+            </div>
+
+            <div class="col-12 col-md-6 mb-2">
+              <div class="form-group">
+                <label for="actividad" class="form-label">*Nombre de la Actividad/Proyecto</label>
+                <textarea class="form-control" id="actividad" name="actividad" rows="6"
+                  placeholder="Describa la actividad o proyecto..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" id="tipo_proyecto">
+
+          </div>
+        </div>
         <div class="modal-footer">
           <button type="button" id="Crear" class="btn btn-primary">Guardar Objetivo</button>
           <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -85,33 +93,28 @@
 <div class="card mt-4">
   <h5 class="card-header">Listado de Objetivos</h5>
   <div class="card-body">
-   
-    <div class="row">
-      <div class="col-12 col-md-4 mb2">
+
+    <div class="row mb-4">
+      <div class="col-12 col-md-4 ">
+
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ObjetivoModal"
           class="btn btn-primary me-2">Crear Objetivo</button>
-      </div>
-      <div class="col-12 col-md-4 mb2"></div>
 
-<!--OPCIONES DE FILTRO Y BUSQUEDA -->
-
-      <div class="col-12 col-md-4 mb2 d-flex align-items-center">
-        <i class="bx bx-search fs-4 lh-0"></i>
-        <input type="text" name="buscador" id="buscador" class="form-control border-0 shadow-none"
-          placeholder="Buscador..." aria-label="Buscador..." />
       </div>
     </div>
-    <div class="table-responsive">
-      <table class="table table-hover" id="tablaPrincipal">
+
+    <div class="table-responsive text-nowrap">
+      <table class="table" id="tablaPrincipal">
         <thead>
           <tr>
             <th>Tipo de POA</th>
             <th>Sector</th>
             <th>Objetivo</th>
+            <th>Estado</th>
             <th>Acciones</th>
           </tr>
         </thead>
-        <tbody id="tablaPOA">
+        <tbody class="table-border-bottom-0" id="tablaPlanificacion">
         </tbody>
       </table>
     </div>
@@ -119,6 +122,6 @@
 </div>
 
 
- <!-- JS OBJETIVOS-->  
+<!-- JS OBJETIVOS-->
 
 <script src="../../js/pages/objetivo.js"></script>

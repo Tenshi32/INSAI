@@ -22,16 +22,17 @@ class CabeceraDataController:
     def crear(self, datos: dict):
         numero = random.randint(10**4, 10**12 - 1)
         datos["codigo"] = numero
-        datos['hora'] = date.now().strftime('%H:%M:%S')
+        datos['hora'] = date.today().strftime('%H:%M:%S')
         datos["fecha"] = date.today().strftime('%Y-%m-%d')
 
         valores_cabecera = [
             datos['codigo'],
-            datos['proyecto'],
+            datos['anno_fiscal'],
             datos['enfoque_estrategico'],
             datos['sector'],
             datos['objetivos'],
-            datos['actividad']
+            datos['actividad'],
+            '1'
         ]
 
         retorno = self.modeloCabecera.create_cabecera(valores_cabecera)

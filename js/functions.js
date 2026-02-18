@@ -1,17 +1,10 @@
-// Constantes para URLs
-const APACHE = 'http://localhost:5000/'
-const LIVESERVER = 'http://127.0.0.1:5000/'
-
-// Puedes cambiar esta constante según el entorno en el que estés trabajando
-//const LOCALURL = LIVESERVER
-
-
 const currentHost = window.location.hostname;
 
 // Construimos la URL del Backend (Flask) usando el mismo host pero forzando el puerto 5000
 const LOCALURL = `http://${currentHost}:5000/`;
 
 console.log("Conectando a la API en:", LOCALURL);
+
 
 
 function RastrearDocumentos(Doc) {
@@ -39,6 +32,8 @@ function togglepassword() {
     password.type = 'password'
   }
 }
+
+let form 
 
 ////////////////////////////////////////////////////
 
