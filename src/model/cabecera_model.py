@@ -39,7 +39,7 @@ class CabeceraModel:
             return None
         
     def status_cabecera(self, id, statu):
-        sql = "UPDATE cabeceras SET statu = %s " \
+        sql = "UPDATE cabeceras SET statu_cabecera = %s " \
             "WHERE id_cabecera = %s"
         
         try: 

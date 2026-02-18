@@ -15,6 +15,10 @@ class DbConnect:
     def connect(self):
         try:
             self.conn = mysql.connector.connect(**self.mysql_params)
+            
+            cursor = self.conn.cursor()
+            cursor.execute("SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED")
+            cursor.close() #
             return self.conn
         
         except mysql.connector.Error as e:
