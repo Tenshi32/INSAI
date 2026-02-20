@@ -86,11 +86,70 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="ObjetivoVerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom">
+        <h4 class="modal-title fw-bold py-2">
+          <i class="bx bx-file me-2"></i>Detalles del Objetivo PRE-POA
+        </h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row mb-4">
+          <div class="col-6 col-md-3">
+            <small class="text-muted text-uppercase fw-semibold d-block">Año Fiscal</small>
+            <p id="view_anno_fiscal"></p>
+          </div>
+          <div class="col-6 col-md-3">
+            <small class="text-muted text-uppercase fw-semibold d-block">Sector</small>
+            <p id="view_sector"></p>
+          </div>
+          <div class="col-12 col-md-6">
+            <small class="text-muted text-uppercase fw-semibold d-block">Departamento</small>
+            <p id="view_departamento"></p>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-12 col-md-4">
+            <small class="text-muted text-uppercase fw-semibold d-block">Enfoque Estratégico</small>
+            <p id="view_enfoque_estrategico"></p>
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="text-muted text-uppercase fw-semibold d-block">Objetivo de la UA</label>
+            <p id="view_objetivos"></p>
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="text-muted text-uppercase fw-semibold d-block">Actividad / Proyecto</label>
+            <p id="view_actividad"></p>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+            <label class="text-muted text-uppercase fw-semibold d-block">Tipo de POA</label>
+            <p id="tipo_proyecto_view"></p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Consulta de</span> Objetivos</h4>
 
 <div class="card mt-4">
+<<<<<<< HEAD
   <h5 class="card-header"><b>LISTADO DE OBJETIVOS</b></h5>
+=======
+
+>>>>>>> 7cd468005adbb428147f61990100408715fc10b7
   <div class="card-body">
 
     <div class="row mb-4">
@@ -100,8 +159,17 @@
           class="btn btn-primary me-2">Crear Objetivo</button>
 
       </div>
+
     </div>
 
+    <h5 class="card-header">Planificacion Actual</h5>
+    <table class="table">
+      <tbody class="table-border-bottom-0" id="tablaPlanificacionActual">
+      </tbody>
+    </table>
+
+    <br>
+    <h5 class="card-header">Listado de Objetivos POA - INSAI</h5>
     <div class="table-responsive text-nowrap">
       <table class="table" id="tablaPrincipal">
         <thead>
@@ -117,6 +185,7 @@
         </tbody>
       </table>
     </div>
+
   </div>
 </div>
 

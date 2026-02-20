@@ -14,10 +14,39 @@ class CabeceraDataController:
     def lista(self):
         return self.modelo.get_full_cabecera_data()
     
+    def obtener_revision(self, id_lineamiento):
+        if not id_lineamiento:
+            return None
+        return self.modelo.get_full_cabecera_revision(id_lineamiento)
+    
+    def listaXdepartamento(self, id_departamento):
+        if not id_departamento:
+            return None
+        return self.modelo.get_cabeceras_x_departamento(id_departamento)
+    
+    def status_planificacion(self, id_departamento, id_lineamiento):
+        if not id_departamento:
+            return None
+        return self.modelo.get_cabeceras_x_departamento_status(id_departamento, id_lineamiento)
+    
     def obtener(self, id_usuario):
         if not id_usuario:
             return None
         return self.modelo.get_usuario_data(id_usuario)
+    
+    def aprobar_cabecera(self, datos):
+        if not datos:
+            return None
+        
+        retorno = self.modeloCabecera.status_cabecera(datos["id_cabecera"], '2')
+    
+        if retorno is not None:
+
+            return {"status": True, "mensaje": "se cambio el estado a la planificacion del id: " + datos['id_cabecera']}
+        
+        else:
+
+            return {"status": False, "mensaje": "No se pudo guardar el registro"}
 
     def crear(self, datos: dict):
         numero = random.randint(10**4, 10**12 - 1)

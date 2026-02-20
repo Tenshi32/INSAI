@@ -16,9 +16,22 @@ class ObservacionModel:
 
         row = self.cursor.fetchone()
         return row
+    
+    def get_observacion_planificacion(self, id):
+        sql = "SELECT * FROM observaciones o " \
+        "JOIN cabeceras_data cd ON cd.id_observado = o.id_observacion "\
+        "JOIN lineamientos l ON cd.id_lineamiento = l.id_lineamiento "\
+        "JOIN cabeceras c ON cd.id_cabecera = c.id_cabecera "\
+        "JOIN departamentos d ON cd.id_departamento = d.id_departamento "\
+        "JOIN tipo_poa tp ON cd.id_tipo_poa = tp.id_tipo_poa " \
+        "WHERE cd.id_departamento = %s"
+        self.cursor.execute(sql, (id, ))
+
+        row = self.cursor.fetchall()
+        return row
 
     def create_observacion(self, datos):
-        sql = "INSERT INTO observaciones (id_observacion, id_observado, observacion, statu) " \
+        sql = "INSERT INTO observaciones (id_observacion, observacion, fecha_create, statu) " \
         "VALUES (%s, %s, %s, %s)"
       
         try: 
