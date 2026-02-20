@@ -2,113 +2,264 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title fw-bold py-2">Creación de Metas y Actividades (POA)</h4>
+        <h4 class="modal-title fw-bold py-2">Metas/Acciones del PRE-POA</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form id="formObjetivo" method="POST" onsubmit="return false">
         <div class="modal-body">
 
-          <input type="hidden" id="id_lineamiento" name="id_lineamiento"/>
-          <input type="hidden" id="id_departamento" name="id_departamento"/>
-          <input type="hidden" id="id_usuario" name="id_usuario"/>
+          <input type="hidden" id="id_lineamiento" name="id_lineamiento" />
+          <input type="hidden" id="id_departamento" name="id_departamento" />
+          <input type="hidden" id="id_usuario" name="id_usuario" />
+          <input type="hidden" id="id_planificacion_activa" name="id_planificacion_activa" />
 
-          <div class="row">
-            <div class="col-12 mb-3">
+
+<!-- CAMPOS FIJOS DEL LINEAMIENTO Y OBJETIVOS -->
+          
+    <div class="row">
+          <div class="col-12 col-md-2 mb-2">
+                  <div class="form-group">
+                    <label for="anno" class="form-label">*Año</label>
+                    <input class="form-control" type="text" name="anno" id="anno" readonly />
+                  </div>
+             </div>
+
+            <div class="col-6 col-md-2 mb-2">
               <div class="form-group">
-                <label for="proyecto" class="form-label">Nombre del Proyecto</label>
-                <input type="text" class="form-control" id="proyecto" name="proyecto"
-                  placeholder="Ej: Fortalecimiento de la vigilancia epidemiológica" required />
+                <label for="sector" class="form-label">*Sector</label>
+                <input class="form-control" type="text" value="Agricola" id="sector" name="sector" readonly />
+              </div>
+            </div>
+
+            <div class="col-6 col-md-4 mb-2">
+              <div class="form-group">
+                <label for="departamento" class="form-label">*Departamento</label>
+                <input type="text" class="form-control" id="departamento" name="departamento" readonly />
+              </div>
+            </div>
+               
+            <div class="col-12 col-md-4 mb-2"> 
+              <div class="form-group">
+                <label for="tipo_poa" class="form-label">*Tipo de Poa</label>
+                <input class="form-control" type="text" value="Centralizada" id="tipo_poa" name="tipo_poa" readonly />
+              </div>
+            </div>
+      </div>
+          <div class="row">
+            <div class="col-12 col-md-12 mb-2">
+              <div class="form-group">
+                <label for="enfoque_estrategico" class="form-label">*Enfoque Estratégico</label>
+                <input class="form-control" type="text"value="1.1.4, 1.4.9, 1.4.9.1.1 IV Modelo Productivo Socialista 1er y 5 objetivo histórico del plan de la patria."
+                  id="enfoque_estrategico" name="enfoque_estrategico" readonly />
               </div>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-12 col-md-6 mb-3">
-              <div class="form-group">
-                <label for="enfoque_estrategico" class="form-label">Enfoque Estratégico</label>
-                <input type="text" class="form-control" id="enfoque_estrategico" name="enfoque_estrategico"
-                  placeholder="Línea estratégica" />
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6 mb-3">
-              <div class="form-group">
-                <label for="sector" class="form-label">Sector</label>
-                <input type="text" class="form-control" id="sector" name="sector"
-                  placeholder="Ej: Agrícola / Pecuario" />
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-12 mb-3">
-              <div class="form-group">
-                <label for="objetivos" class="form-label">Objetivo Específico</label>
-                <textarea class="form-control" id="objetivos" name="objetivos" rows="3"
-                  placeholder="Describa el objetivo..."></textarea>
-              </div>
-            </div>
-          </div>
-
+           
           <div class="row">
             <div class="col-12 col-md-6 mb-2">
               <div class="form-group">
-                <label for="actividad" class="form-label">Actividad Principal</label>
-                <input type="text" class="form-control" id="actividad" name="actividad"
-                  placeholder="Acción a ejecutar" />
-              </div>
+                <label for="objetivos" class="form-label"><b>*Objetivo</b></label>
+                <textarea class="form-control" id="objetivos" name="objetivos"   readonly 
+                rows="2" style="resize: none; height: auto;">Determinación y control de costos operativos por programas totalitarios y zoosanitarios.</textarea> 
+             </div>
             </div>
 
             <div class="col-12 col-md-6 mb-2">
               <div class="form-group">
-                <label class="form-label" for="tipo_poa">*Tipo de Poa </label>
-                <select id="tipo_poa" name="tipo_poa" class="select2 form-select">
-                </select>
+                <label for="actividad" class="form-label">*Nombre de la Actividad/Proyecto</label>
+                <textarea class="form-control" id="actividad" name="actividad"   readonly 
+                rows="4" style="resize: none; height: auto;">Determinar el control de costos operativos por programas fitosanitarios y zoosanitarios, Calcular cual es el costo operativo por programa fitosanitario y zoosanitario, Determinar el costo operativo por programa fitosanitario y zoosanitario, Controlar el costo operativo por programa fitosanitario y zoosanitario.</textarea>
               </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="Crear" class="btn btn-primary">Guardar Objetivo</button>
+
+<!-- REGISTRO DE METAS POR OBJETIVO -->
+ 
+ <style>
+        .contenedor-float {
+            padding: 20px;
+            background-color: #f0f0f0;
+            overflow: auto; /* Clearfix */
+        }
+        
+        .fila-float {
+            margin-bottom: 20px;
+            overflow: auto;
+        }
+        
+/* COLUMNAS CON FLOAT */
+
+        .col-float {
+            float: left;
+            width: 25%; 
+            box-sizing: border-box;
+            padding: 10px;
+        }
+        
+        .col-float-2 { width: 50%; }
+        .col-float-3 { width: 33.333%; }
+        
+        .contenido-col {
+            background-color: #9C27B0;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        
+/* CONTENER FLOAT CON CLEARFIX */
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+</style>
+
+<style>
+ 
+ /* METODO FORMULARIO GRID */
+
+ .formulario-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr; 
+        gap: 10px;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        }
+  
+.campo {
+        background-color: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+ .campo label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+        }
+        
+.campo textarea, .campo input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        }
+        
+  /* SUBGRID PARA DISTRIBUCION DE METAS */
+  
+.sub-grid {
+       display: grid;
+       grid-template-columns: repeat(5, 1fr);
+       gap: 5px;
+       margin-top: 10px;
+        }
+        
+      .trimestre {
+            text-align: center;
+        }
+        
+      .trimestre input {
+            text-align: center;
+        }
+
+</style>
+
+<div class="formulario-grid">
+        
+<!-- META POR OBJETIVO-->
+
+<div class="campo">
+     <center><label>META POR OBJETIVO:</label></center>
+     <textarea rows="4"></textarea></div>
+        
+<!-- COLUMNA DISTRIBUCION DE METAS -->
+
+<div class="campo">
+  <center><label>DISTRIBUCION DE METAS:</label></center>
+  <div class="sub-grid">
+    <div class="trimestre">
+      <div class="form-label">TRIM1</div>
+      <input type="text" class="input-trimestre" pattern="[0-9]+" inputmode="numeric">
+    </div>
+    <div class="trimestre">
+      <div class="form-label">TRIM2</div>
+      <input type="text" class="input-trimestre" pattern="[0-9]+" inputmode="numeric">
+    </div>
+    <div class="trimestre">
+      <div class="form-label">TRIM3</div>
+      <input type="text" class="input-trimestre" pattern="[0-9]+" inputmode="numeric">
+    </div>
+    <div class="trimestre">
+      <div class="form-label">TRIM4</div>
+      <input type="text" class="input-trimestre" pattern="[0-9]+" inputmode="numeric">
+    </div>
+    <div class="trimestre">
+      <div class="form-label">TOTAL</div>
+      <input type="text" id="total-metas" readonly>
+    </div>
+  </div>
+</div>
+        
+<!-- COLUMNA ACCIONES -->
+
+  <div class="campo">
+      <center><label>ACCIONES:</label></center>
+      <textarea rows="4"></textarea>
+  </div>
+</div>
+
+<!-- PIE DE PAGINA PARA GUARDAR METAS TRIMESTRES Y ACCIONES -->
+
+<div class="row" id="tipo_proyecto"></div>
+    <div class="modal-footer">
+          <button type="button" id="Crear" class="btn btn-primary">Guardar Metas/Acciones</button>
           <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
-        </div>
+        </div> 
       </form>
     </div>
   </div>
 </div>
 
-<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Consulta de</span> Metas y Actividades</h4>
+</div>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Consulta de</span> Metas/Acciones</h4>
 
 <div class="card mt-4">
-  <h5 class="card-header">Listado de Metas y Actividades</h5>
+  <h5 class="card-header"><b>LISTADO DE METAS/ACCIONES</b></h5>
   <div class="card-body">
 
     <div class="row mb-4">
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-4 ">
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ObjetivoModal"
-          class="btn btn-primary me-2">Crear Metas/Actividades</button>
+          class="btn btn-primary me-2">Crear Metas</button>
 
       </div>
     </div>
 
-    <div class="table-responsive">
-      <table class="table table-hover" id="tablaPrincipal">
+    <!--LISTADO DE CONSULTAS DE METAS-->
+
+    <div class="table-responsive text-nowrap">
+      <table class="table" id="tablaPrincipal">
         <thead>
           <tr>
-            <th>Proyecto</th>
-            <th>Sector</th>
-            <th>Objetivo</th>
+            <th>Tipo de POA</th>
+            <th>Metas por Objetivo</th>
             <th>Acciones</th>
+            <th>Status</th>
+            <th>Métodos</th>
           </tr>
         </thead>
-        <tbody id="tablaPOA">
+        <tbody class="table-border-bottom-0" id="tablaPlanificacion">
         </tbody>
       </table>
     </div>
   </div>
 </div>
- 
-<!-- JS FORMULACION-->  
+
+<!-- JS FORMULACION-->
 
 <script src="../../js/pages/formulacion.js"></script>

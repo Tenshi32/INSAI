@@ -65,6 +65,7 @@ function consultarObjetivos() {
 }
 
 function SelectTipoPoa() {
+  
   // URL DE TU SERVIDOR FLASK PARA OBTENER LOS TIPOS DE POA DISPONIBLES Y LLENAR EL SELECT CORRESPONDIENTE EN EL FORMULARIO DE CREACIÓN/EDICIÓN DE OBJETIVOS
 
   const url = LOCALURL + 'Select/Consultar?tabla=tipo_poa&col1=id_tipo_poa&col2=nombre'
@@ -129,7 +130,7 @@ $(document).on('click', '.Toggle', function (event) {
   })
 })
 
-// EVETO PUT PARA EDICIÓN
+// EVENTO PUT PARA EDICIÓN
 
 $(document).on('click', '.Editar', function (event) {
   //  OBTENER LOS DATOS DEL ELEMENTO SELECCIONADO A TRAVÉS DE LOS ATRIBUTOS DATA
@@ -176,6 +177,12 @@ $(document).ready(function () {
   consultarObjetivos()
   SelectTipoPoa()
 
+   // ESTABLECER EL PLACEHOLDER DEL CAMPO DE AÑO CON EL AÑO ACTUAL 
+
+  const anioActual = new Date().getFullYear();
+  $("#anno").val(anioActual);
+  $("#anno").attr("placeholder", anioActual);
+ 
   // VALIDACIÓN DEL FORMULARIO CON JQUERY VALIDATE
 
   let form = $('#formObjetivo')
@@ -187,7 +194,8 @@ $(document).ready(function () {
     $('#id_planificacion_activa').attr('value', sessionStorage.getItem('id_planificacion_activa'))
 
     form.validate({
-      // REGLAS DE VALIDACIÓN PARA CADA CAMPO
+  
+  // REGLAS DE VALIDACIÓN PARA CADA CAMPO
 
       rules: {
         departamento: {

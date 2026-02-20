@@ -1,280 +1,109 @@
-// EVENTO GET PARA CONSULTAR Y MOSTRAR LOS OBJETIVOS DE LA UA EN LA TABLA
+// SELECCIONAMOS LOS CAMPOS DE LOS TRIMESTRES Y EL CAMPO TOTAL
 
-function consultarObjetivos() {
- 
-  let url = LOCALURL+"CabeceraData/Consultar"
+const inputsTrimestre = document.querySelectorAll('.input-trimestre');
+const inputTotal = document.getElementById('total-metas');
 
-  let contenido = "";
+inputsTrimestre.forEach(input => {
+    input.addEventListener('input', () => {
 
-  receptor = document.getElementById("tablaPOA")
+ // VALIDACIÓN: Solo números (eliminar cualquier carácter no numérico)
+        input.value = input.value.replace(/[^0-9]/g, '');
 
-  MethodGet(url, function(lista) {
-
-    lista.forEach(item => {
-
-      let estadoBadge = (item.status !== "0") 
-          ? '<span class="badge bg-label-primary me-1">Activo</span>' 
-          : '<span class="badge bg-label-danger me-1">Inactivo</span>';
-
-      let textoAccion = (item.status !== "0") ? 'Desactivar' : 'Activar';
-
-      contenido += `
-          <tr>
-              <td>${item.id_cabecera}</td>
-              <td><span class="fw-bold">${item.proyecto}</span></td>
-              <td><span class="badge bg-label-info">${item.sector}</span></td>
-              <td>${item.objetivos}</td>
-              <td>${estadoBadge}</td>
-              <td>
-                  <div class="dropdown">
-                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                      <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item Editar" 
-                         style="cursor:pointer;"
-                         data-id="${item.id_cabecera}"
-                         data-proyecto="${item.proyecto}" 
-                         data-sector="${item.sector}"
-                         data-objetivos="${item.objetivos}"
-                         ><i class="bx bx-edit-alt me-1"></i> Editar</a>
-                      <a class="dropdown-item Toggle" 
-                         data-unico="${item.id_cabecera}" 
-                         data-status="${item.status}">
-                         <i class='bx bx-toggle-big-right me-1'></i> ${textoAccion}
-                      </a>
-                    </div>
-                  </div>
-              </td>
-          </tr>
-      `;
-
-    })
-
-    const form = document.getElementById("formObjetivo");
-    if(form) form.reset();
-    
-    receptor.innerHTML = contenido;
-  })
-
-}
-
-function SelectTipoPoa() {
-
-  // URL DE TU SERVIDOR FLASK PARA OBTENER LOS TIPOS DE POA DISPONIBLES Y LLENAR EL SELECT CORRESPONDIENTE EN EL FORMULARIO DE CREACIÓN/EDICIÓN DE OBJETIVOS
-
-  const url = LOCALURL+"Select/Consultar?tabla=tipo_poa&col1=id_tipo_poa&col2=nombre"
-
-  let contenido = "";
-
-  const receptor = document.getElementById("tipo_poa")
-
-  MethodGet(url, function(lista) {
-
-    let contenido = "<option value=''>seleccione una opción</option> ";
-
-    lista.forEach(item => {
-
-        contenido += `
-                <option value='${item.id_tipo_poa}'>#${item.id_tipo_poa}: ${item.nombre}</option>
-                `;
-
-    })
-    
-    receptor.innerHTML = contenido;
-
-  })
-
-}
-
-function GetLineamiento() {
-  
-// URL DE TU SERVIDOR FLASK PARA OBTENER EL ID DEL LINEAMIENTO ASOCIADO AL DEPARTAMENTO DEL USUARIO LOGUEADO
-
-  const url = LOCALURL+"Lineamiento/Buscar"
-
-  MethodGet(url, function(lista) {
-
-    $("#id_lineamiento").val(lista[2])
-    $("#id_departamento").val(sessionStorage.getItem('id_departamento'))
-    $("#id_usuario").val(sessionStorage.getItem('id_usuario'))
-
-  })
-
-}
- 
-// EVENTO POST PARA CREAR UN NUEVO OBJETIVO DE LA UA
-
-$(document).on("click", "#Crear", function () {
-
-    if ($("#formObjetivo").valid()) {
-
-      const FormnDepa = {
-        UrlControl: LOCALURL+"CabeceraData/Crear",
-        Formulario: document.getElementById("formObjetivo"),
-        Method: "POST",
-      };
-
-      methodSend(FormnDepa, function (params) {
-        consultarObjetivos();
-        $("#ObjetivoModal").modal("hide"); 
-      });
-      
-    }
-  
-});
-
-// EVENTO PUT PARA TOGGLE DE ESTADO
-
-$(document).on("click", ".Toggle", function (event) {
-  
-    const id = $(this).data("unico");
-    const statusActual = $(this).data("status");
-  
-// CALCULAMOS EL NUEVO STATUS INVERTIENDO EL VALOR ACTUAL (SI ES "1" PASA A "0" Y VICEVERSA)
-    const nuevoStatus = (statusActual == "1") ? "0" : "1";
-
-// CREAMOS EL FORMDATA PARA ENVIAR LOS DATOS NECESARIOS AL SERVIDOR ID Y EL NUEVO STATUS
-
-    const datosManuales = new FormData();
-    datosManuales.append("id_departamento", id);
-    datosManuales.append("status", nuevoStatus);
-
-      const FormnDepa = {
-        UrlControl: LOCALURL+"Comunicatorio/Toggle",
-        Formulario: datosManuales,
-        Method: "PUT",
-      };
-
-      methodSend(FormnDepa, function (params) {
-        
-        consultarObjetivos();
-
-      });
-
-})
-
-// EVETO PUT PARA EDICIÓN
-
-$(document).on("click", ".Editar", function (event) {
-
-  
-//  OBTENER LOS DATOS DEL ELEMENTO SELECCIONADO A TRAVÉS DE LOS ATRIBUTOS DATA
-
-    const d = $(this).data();
-
-// LLENAR LOS CAMPOS DEL FORMULARIO CON LOS DATOS OBTENIDOS
-
-    $("#created").val(d.id);
-    $("#codigo").val(d.codigo);
-    $("#nombre").val(d.nombre);
-    $("#ubicacion").val(d.ubicacion);
-    $("#descripcion").val(d.descripcion);
-
-// CAMBIAR EL CAMBIO DE BOTÓN "ENVIAR" PARA QUE SEA DE "EDITAR"
-
-    $("#Crear").text("Editar").removeClass("btn-primary")
-    .addClass("btn-warning").off("click") .on("click", function() {
-
-      if ($("#formObjetivo").valid()) {
-
-        const FormnDepa = {
-          UrlControl: LOCALURL+"Comunicatorio/Editar",
-          Formulario: document.getElementById("formObjetivo"),
-          Method: "PUT",
-        };
-      
-        methodSend(FormnDepa, function (params) {
-          consultarObjetivos();
-          $("#ObjetivoModal").modal("hide"); 
-          $("#Crear").text("Enviar").removeClass("btn-warning").addClass("btn-primary").attr('data-action','create');
-        });
-              
-      }
-
+// CALCULO DE LA SUMA DE LOS TRIMESTRES CADA VEZ QUE SE INGRESA UN VALOR
+        calcularTotal();
     });
-          
-  // ABRIR EL MODAL MANUEALMENTE
-
-  
-  $("#ObjetivoModal").modal("show");
-          
 });
- 
-$(document).ready(function () {
 
-  consultarObjetivos()
-  SelectTipoPoa()
-  GetLineamiento()
-  
-  // VALIDACIÓN DEL FORMULARIO CON JQUERY VALIDATE
+function calcularTotal() {
+    let suma = 0;
 
-  const $form = $("#formObjetivo");
-  if ($form.length) {
-    $form.validate({
+    inputsTrimestre.forEach(input => {
+
+// COVERTIMOS EL VALOR A ENTERO, SI NO ES UN NÚMERO SE CONSIDERA 0
+        const valor = parseInt(input.value) || 0;
+        suma += valor;
+    });
+
+// MOSTRAMOS LA SUMA EN EL CAMPO TOTAL
+    inputTotal.value = suma;
+}
+
+const input = document.getElementById('miCampoNumerico');
+const errorSpan = document.getElementById('error');
+
+input.addEventListener('input', function () {
+
+// ELIMINAMOS CUALQUIER CARÁCTER QUE NO SEA NÚMERO
+
+    this.value = this.value.replace(/[^0-9]/g, '');
+
+// VALIDACION VISUAL DE LA LONGITUD DEL CAMPO
+
+    if (this.value.length === 7) {
+        input.style.borderColor = "green";
+        errorSpan.style.display = "none";
+    } else {
+        input.style.borderColor = "red";
+    }
+});
+
+// VALIDACIÓN DEL FORMULARIO CON JQUERY VALIDATE
+
+  let form = $('#formObjetivo')
+  if (form.length) {
+    $('#id_metas').attr('value', sessionStorage.getItem('id_metas'))
+    $('#id_usuario').attr('value', sessionStorage.getItem('id_usuario'))
+    $('#id_departamento').attr('value', sessionStorage.getItem('id_departamento'))
+    $('#departamento').attr('value', sessionStorage.getItem('departamento_nombre'))
+    $('#id_planificacion_activa').attr('value', sessionStorage.getItem('id_planificacion_activa'))
+
+    form.validate({
   
-// REGLAS DE VALIDACIÓN PARA CADA CAMPO
+  // REGLAS DE VALIDACIÓN PARA CADA CAMPO
 
       rules: {
-    departamento: {
-      required: true
-    },
-      enfoque_estrategico: {
-      required: true
-    },
-    sector: {
-      required: true
-    },
-    objetivos: {
-      required: true,
-      minlength: 10,
-      maxlength: 700
-    },
-    
-    actividad: {
-      required: true,
-      minlength: 10,
-      maxlength: 500
-    },
-    tipo_poa: {
-      required: true
-    }
+        departamento: {
+          required: true
+        },
+        enfoque_estrategico: {
+          required: true
+        },
+        sector: {
+          required: true
+        },
+        objetivos: {
+          required: true,
+          minlength: 10,
+          maxlength: 700
+        },
+
+        actividad: {
+          required: true,
+          minlength: 10,
+          maxlength: 500
+        },
+        tipo_poa: {
+          required: true
+        }
       },
-    
-  // MENSAJES DE ERROR PERSONALIZADOS
+
+      // MENSAJES DE ERROR PERSONALIZADOS
 
       messages: {
-      sector: {
-      required: "El sector es obligatorio"
-    },
-    objetivos: {
-      required: "Debe describir el nombre del objetivo la UA es obligatorio",
-      minlength: "El objetivo debe tener al menos 10 caracteres",
-      maxlength: "No puede exceder los 700 caracteres"
-    },
-    actividad: {
-      required: "Describa el nombre de la actividad/proyecto",
-      minlength: "El nombre de la actividad/proyecto debe tener al menos 10 caracteres",
-      maxlength: "No puede exceder los 500 caracteres"
-    },
-    tipo_poa: {
-      required: "Seleccione un tipo de POA"
-    }
+        sector: {
+          required: 'El sector es obligatorio'
+        },
+        objetivos: {
+          required: 'Debe describir el nombre del objetivo la UA es obligatorio',
+          minlength: 'El objetivo debe tener al menos 10 caracteres',
+          maxlength: 'No puede exceder los 700 caracteres'
+        },
+        actividad: {
+          required: 'Describa el nombre de la actividad/proyecto',
+          minlength: 'El nombre de la actividad/proyecto debe tener al menos 10 caracteres',
+          maxlength: 'No puede exceder los 500 caracteres'
+        },
+        tipo_poa: {
+          required: 'Seleccione un tipo de POA'
+        }
       },
-    
-    // UBICACIÓN DE LOS MENSAJES DE ERROR Y CLASES DE ESTILO PARA CAMPOS INVÁLIDOS
-
-      errorElement: 'span',
-      errorPlacement: function (error, element) {
-    error.addClass('invalid-feedback');
-    element.closest('.form-group').append(error);
-      },
-      highlight: function (element, errorClass, validClass) {
-    $(element).addClass('is-invalid');
-      },
-      unhighlight: function (element, errorClass, validClass) {
-    $(element).removeClass('is-invalid');
-      }
-    });
-  }
-});

@@ -13,32 +13,31 @@
           <input type="hidden" id="id_usuario" name="id_usuario" />
           <input type="hidden" id="id_planificacion_activa" name="id_planificacion_activa" />
 
-          <!-- CAMPOS FIJOS DEL LINEAMIENTO -->
+<!-- CAMPOS FIJOS DEL LINEAMIENTO -->
+        
+        <div class="row">
+          <div class="col-12 col-md-2 mb-2">
+                  <div class="form-group">
+                    <label for="anno" class="form-label">*Año</label>
+                    <input class="form-control" type="text" name="anno" id="anno" readonly />
+                  </div>
+             </div>
 
-          <div class="row">
-            <div class="col-6 col-md-6 mb-2">
+            <div class="col-6 col-md-2 mb-2">
               <div class="form-group">
-                <label for="anno" class="form-label">*Año Fiscal en Curso</label>
-                <input class="form-control" type="text" value="2026" id="anno_fiscal" name="anno_fiscal" readonly />
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 mb-2">
-              <div class="form-group">
-                <label for="sector" class="form-label">Sector</label>
+                <label for="sector" class="form-label">*Sector</label>
                 <input class="form-control" type="text" value="Agricola" id="sector" name="sector" readonly />
               </div>
             </div>
 
-          </div>
-          <div class="row">
-            <div class="col-6 col-md-6 mb-2">
+            <div class="col-6 col-md-4 mb-2">
               <div class="form-group">
                 <label for="departamento" class="form-label">*Departamento</label>
                 <input type="text" class="form-control" id="departamento" name="departamento" readonly />
               </div>
             </div>
-            <div class="col-12 col-md-6 mb-2">
+    
+            <div class="col-12 col-md-4 mb-2">
               <div class="form-group">
                 <label class="form-label" for="tipo_poa">*Tipo de Poa </label>
                 <select id="tipo_poa" name="tipo_poa" class="select2 form-select">
@@ -91,7 +90,7 @@
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Consulta de</span> Objetivos</h4>
 
 <div class="card mt-4">
-  <h5 class="card-header">Listado de Objetivos</h5>
+  <h5 class="card-header"><b>LISTADO DE OBJETIVOS</b></h5>
   <div class="card-body">
 
     <div class="row mb-4">
@@ -108,10 +107,10 @@
         <thead>
           <tr>
             <th>Tipo de POA</th>
-            <th>Sector</th>
             <th>Objetivo</th>
-            <th>Estado</th>
-            <th>Acciones</th>
+            <th>Actividad/Proyecto</th>
+            <th>Status</th>
+            <th>Métodos</th>
           </tr>
         </thead>
         <tbody class="table-border-bottom-0" id="tablaPlanificacion">

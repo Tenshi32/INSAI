@@ -24,10 +24,11 @@ function consultarLineamientos() {
       const fechaI = new Date(item.fecha_inicio);
       const fechaF = new Date(item.fecha_final);
 
-// FOTMATEAMOS LA FECHA A UN FORMATO LEGIBLE Y EN ESPAÑOL
+// FORMATEAMOS LA FECHA A UN FORMATO LEGIBLE Y EN ESPAÑOL
 
-      item.fecha_inicio = fechaI.toLocaleDateString('es-ES');
+      item.fecha_inicio = fechaI.toLocaleDateString('es-ES'); 
       item.fecha_final = fechaF.toLocaleDateString('es-ES');
+      fechaInput.setAttribute('min', hoy);
 
       contenido += `
           <tr>
@@ -63,7 +64,7 @@ function consultarLineamientos() {
               </td>
           </tr>
       `;
-
+    
     })
 
     const form = document.getElementById("formLineamineto"); 
@@ -163,7 +164,7 @@ $(document).on("click", ".Editar", function (event) {
 
     });
           
-   // MOSTRAR EL MODAL CON LOS DATOS CARGADOS PARA EDITAR
+  // MOSTRAR EL MODAL CON LOS DATOS CARGADOS PARA EDITAR
 
     $("#LineamientoModal").modal("show"); 
 });
@@ -172,10 +173,12 @@ $(document).ready(function () {
 
   consultarLineamientos()
 
+  // ESTABLECER EL PLACEHOLDER DEL CAMPO DE AÑO CON EL AÑO ACTUAL 
+
   const anioActual = new Date().getFullYear();
   $("#anno").val(anioActual);
   $("#anno").attr("placeholder", anioActual);
-  
+
   // VALIDACIÓN DEL FORMULARIO DE LINEAMIENTO CON REGLAS Y MENSAJES PERSONALIZADOS
 
   $("#formLineamineto").validate({

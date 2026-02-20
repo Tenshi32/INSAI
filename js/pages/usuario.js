@@ -1,4 +1,5 @@
-//Evento POST para carga la foto de perfil
+// EVENTTO FOST PARA SUBIR LA FOTO DE PERFIL Y MOSTRARLA EN EL AVATAR
+
 $(document).on("change", "#upload", function(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -29,14 +30,16 @@ $(document).on("change", "#upload", function(event) {
     }
 });
 
-//Evento POST para borrar la foto de perfil
+//EVENTO POST PARA BORRAR LA FOTO DE PERFIL Y RESTAURAR LA IMAGEN POR DEFECTO
+
 $(document).on("click", "#resetear", function(event) {
     event.preventDefault();
     
     const nombreArchivo = $("#foto_ruta").val();
 
-    // Si no hay foto subida (está la de por defecto), solo limpiamos el input file
-    if (nombreArchivo === "" || nombreArchivo === "1.png") {
+// SI NO HAY SUBIDA O YA ES LA IMAGEN POR DEFECTO, NO HACER NADA Y RESTAURAR LA IMAGEN POR DEFECTO
+
+if (nombreArchivo === "" || nombreArchivo === "1.png") {
         $("#upload").val("");
         $("#uploadedAvatar").attr("src", "../../assets/img/avatars/1.png");
         return;
@@ -62,10 +65,12 @@ $(document).on("click", "#resetear", function(event) {
     
 });
 
+// EVENTO GET PARA CONSULTAR LOS USUARIOS Y MOSTRARLOS EN LA TABLA
 
-// Evento GET para Consulta 
 function consultarUsuarios() {
-    // 1. URL de tu servidor Flask
+
+// URL DE TU SERVIDOR FLASK PARA OBTENER LOS USUARIOS
+
     let url = LOCALURL+"UsuarioData/Consultar"
 
     let usuariosLocales = [];
@@ -81,18 +86,22 @@ function consultarUsuarios() {
 
 
       lista.forEach(item => {
-        // Manejo de estados (Activo/Inactivo)
+
+// MANEJO DE ESTADOS ACTIVO E INACTIVO PARA MOSTRARLO EN LA TABLA 
+
         let estado = (item.statu !== "0")
             ? '<span class="badge bg-label-primary me-1">Activo</span>'
             : '<span class="badge bg-label-danger me-1">Inactivo</span>';
 
         let accion = (item.statu !== "0") ? 'Desactivar' : 'Activar';
 
-        // 1. Convertimos el string raro a un objeto Date de JS
+// COVERTIMOS EL STRING DE FECHA EN UN OBJETO DATE PARA FORMATEARLO MEJOR
+
         const fechaI = new Date(item.fecha_inicio);
         const fechaF = new Date(item.fecha_final);
 
-        // 2. Formateamos a estilo latino (día/mes/año)
+// FORMATEAMOS LAS FECHAS A UN FORMATO MÁS LEGIBLE (DÍA/MES/AÑO)
+
         item.fecha_inicio = fechaI.toLocaleDateString('es-ES');
         item.fecha_final = fechaF.toLocaleDateString('es-ES');
 
@@ -140,8 +149,10 @@ function consultarUsuarios() {
 }
 
 function SelectDepartamento() {
-  // 1. URL de tu servidor Flask
-  const url = LOCALURL+"Select/Consultar?tabla=departamentos&col1=id_departamento&col2=nombre"
+
+ // 1. URL DE TU SERVIDOR FLASK PARA OBTENER LOS DEPARTAMENTOS 
+
+ const url = LOCALURL+"Select/Consultar?tabla=departamentos&col1=id_departamento&col2=nombre"
 
   let contenido = "";
 
@@ -166,7 +177,9 @@ function SelectDepartamento() {
 }
 
 function SelectNivel() {
-  // 1. URL de tu servidor Flask
+
+// URL DE TU SERVIDOR FLASK PARA OBTENER LOS NIVELES DE ACCESO DISPONIBLES Y LLENAR EL SELECT CORRESPONDIENTE EN EL FORMULARIO DE CREACIÓN/EDICIÓN DE USUARIOS
+
   const url = LOCALURL+"Select/Consultar?tabla=nivel&col1=id_nivel&col2=nombre"
     
   let contenido = "";
@@ -191,7 +204,9 @@ function SelectNivel() {
 }
 
 function SelectPreguntas() {
-  // 1. URL de tu servidor Flask
+ 
+  // URL DE TU SERVIDOR FLASK PARA OBTENER LAS PREGUNTAS DE SEGURIDAD
+
   const url = LOCALURL+"Select/Consultar?tabla=tipo_pregunta&col1=id_tipo_pregunta&col2=tipo_pregunta"
     
   let contenido = "";
@@ -219,7 +234,8 @@ function SelectPreguntas() {
 
 }
 
-// Evento POST para crear
+// EVENTO POST PARA CREAR UN NUEVO USUARIO
+
 $(document).on("click", "#Crear", function () {
 
     if ($("#formUsuario").valid()) {
@@ -238,7 +254,8 @@ $(document).on("click", "#Crear", function () {
   
 });
 
-// Evento PUT para activar/desactivar 
+// EVENTO PUT PARA ACTIVAR/DESACTIVAR USUARIOS
+
 $(document).on("click", ".Toggle", function (event) {
     const id = $(this).data("unico");
     const statusActual = $(this).data("status");
@@ -260,7 +277,8 @@ $(document).on("click", ".Toggle", function (event) {
 
 })
 
-// Evento PUT para edición 
+// EVENTO PUT PARA EDITAR UN USUARIO (LLENA EL FORMULARIO CON LOS DATOS SELECCIONADOS)
+
 $(document).on("click", ".Editar", function (event) {
 
     const d = $(this).data(); // Captura todos los data-attributes
@@ -274,7 +292,8 @@ $(document).on("click", ".Editar", function (event) {
     $("#fechan").val(d.fechan);
     $("#direccion").val(d.direccion)
 
-    // 3. Cambiar el botón "Enviar" para que sea de "Editar"
+// CAMBIAR EL BOTÓN DE CREAR A EDITAR Y SU FUNCIONALIDAD
+
     $("#Crear").text("Editar").removeClass("btn-primary")
     .addClass("btn-warning").off("click").on("click", function() {
         if ($("#formUsuario").valid()) {
@@ -296,7 +315,8 @@ $(document).on("click", ".Editar", function (event) {
 
     });
     
-    // 4. Abrir el modal manualmente
+// ABRI EL MODAL LOCALMENTE PARA QUE SE VEA EL CAMBIO DE DATOS ANTES DE ENVIAR AL SERVIDOR
+
     $("#UsuarioModal").modal("show");  
 });
 
@@ -312,29 +332,33 @@ $(document).ready(function () {
         $form.validate({
         rules: {
             cedula: {
+                number:true,
                 required: true,
                 minlength: 7,
-                usuarioUnico: true // <--- Regla local
+                maxlength: 12,
             },
             firstName: { 
+                number:false,
                 required: true, 
-                minlength: 2 
+                minlength: 3 
             },
             lastName: { 
+                number:false,
                 required: true, 
-                minlength: 2 
+                minlength: 3 
             },
             email: {
                 required: true,
                 email: true,
-                usuarioUnico: true // <--- Regla local
+                usuarioUnico: true 
             },
             numerocel: { 
                 required: true,
                 minlength: 11 
             },
             fechan: { 
-                required: true 
+                required: true,
+                fecha: true
             },
             direccion: { 
                 required: true, 
@@ -348,7 +372,8 @@ $(document).ready(function () {
                 minlength: 4 
             },
             
-            // Validación de Contraseñas
+// VALIDACION DE CONTRASEÑA Y CONFIRMAR CONTRASEÑA
+
             contraseña: { 
                 required: true, 
                 minlength: 6 
@@ -358,7 +383,7 @@ $(document).ready(function () {
                 equalTo: "#contraseña" 
             },
             
-            // Selects dinámicos
+// SELECT DINAMICO DE NIVELES Y DEPARTAMENTOS
             nivel: { 
                 required: true 
             },
@@ -366,7 +391,7 @@ $(document).ready(function () {
                 required: true 
             },
             
-            // Preguntas (usando la clase .pregunta-seguridad)
+// PREGUNTAS DE SEGURIDAD
             pregunta1: { 
                 required: true, 
                 distintasPreguntas: true 
@@ -380,7 +405,7 @@ $(document).ready(function () {
                 distintasPreguntas: true 
             },
             
-            // Respuestas
+// RESPUESTAS DE SEGURIDAD
             repuesta1: { 
                 required: true,
                 distintasRespuestas: true
@@ -395,19 +420,25 @@ $(document).ready(function () {
             }
         },
 
+    // MENSAJES DE ERROR PERSONALIZADOS PARA CADA CAMPO DEL FORMULARIO
+    
         messages: {
             cedula: {
                 required: "La cédula de identidad es obligatoria.",
                 minlength: "La cédula debe tener al menos 7 dígitos.",
-                maxlength: "La cédula no puede exceder los 12 caracteres."
+                maxlength: "La cédula no puede exceder los 12 caracteres.",
+                number: "La cédula debe contener solo números.",
+                usuarioUnico: "Esta cédula ya está registrada en el sistema."
             },
             firstName: {
+                number: "El nombre no puede contener números.",
                 required: "Por favor, ingrese sus nombres.",
-                minlength: "El nombre debe tener al menos 2 caracteres."
+                minlength: "El nombre debe tener al menos 3 caracteres."
             },
             lastName: {
+                number: "El apellido no puede contener números.",
                 required: "Por favor, ingrese sus apellidos.",
-                minlength: "El apellido debe tener al menos 2 caracteres."
+                minlength: "El apellido debe tener al menos 3 caracteres."
             },
             email: {
                 required: "El correo electrónico es indispensable para el registro.",
@@ -445,7 +476,9 @@ $(document).ready(function () {
             departamento: {
                 required: "Seleccione el departamento al que pertenece."
             },
-            // Mensajes para las preguntas de seguridad
+
+// MENSAJES PARA LAS PREGUNTAS DE SEGURIDAD
+
             pregunta1: {
                 required: "Seleccione la primera pregunta de seguridad.",
                 distintasPreguntas: "No puede repetir la misma pregunta."
@@ -458,7 +491,8 @@ $(document).ready(function () {
                 required: "Seleccione la tercera pregunta de seguridad.",
                 distintasPreguntas: "Debe elegir tres preguntas diferentes."
             },
-            // Mensajes para las respuestas
+
+// MENSAJE PARA LAS RESPUESTAS DE SEGURIDAD
             repuesta1: {
                 required: "Debe responder a la primera pregunta."
 
@@ -485,9 +519,9 @@ $(document).ready(function () {
     }
 
     $.validator.addMethod("usuarioUnico", function(value, element) {
-        // "value" es lo que el usuario escribió en el input (cédula o correo)
+// "value" es lo que el usuario escribió en el input (cédula o correo)
         
-        // Buscamos si existe algún usuario en nuestra lista global que coincida
+// Buscamos si existe algún usuario en nuestra lista global que coincida
         let existe = usuariosLocales.some(user => 
             user.id_usuario == value || user.email.toLowerCase() === value.toLowerCase()
         );
@@ -495,12 +529,14 @@ $(document).ready(function () {
         return !existe;
     }, "Este registro ya existe en el sistema.");
 
-    // Regla para que las respuestas no sean iguales
+ // REGLA PERSONALIZADA PARA VALIDAR QUE LAS RESPUESTAS DE SEGURIDAD SEAN DIFERENTES ENTRE SÍ
+
     $.validator.addMethod("distintasRespuestas", function(value, element) {
         let respuestas = [];
         let repetida = false;
 
-        // Evaluamos los 3 campos de respuesta
+// EVALUAMOS LOS 3 INPUTS DE RESPUESTAS (USANDO SUS IDS)
+
         $("#repuesta1, #repuesta2, #repuesta3").each(function() {
             let val = $(this).val().trim().toLowerCase(); // Normalizamos a minúsculas
             if (val !== "") {
@@ -518,7 +554,8 @@ $(document).ready(function () {
     let preguntas = [];
     let repetida = false;
 
-    // Buscamos todos los selects que tengan la clase .pregunta-seguridad
+ // BUSCAMOS LOS 3 SELECTS DE PREGUNTAS (USANDO SUS IDS) Y VERIFICAMOS QUE NO SE REPITA EL VALOR SELECCIONADO
+
    $("#pregunta1, #pregunta2, #pregunta3").each(function() {
         let val = $(this).val();
         if (val !== "") {

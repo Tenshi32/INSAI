@@ -1,6 +1,7 @@
-// Evento GET para Consulta
-function consultarDepartamentos() {
-  // 1. URL de tu servidor Flask
+// EVENTO GET PARA CONSULTAR Y MOSTRAR LOS DEPARTAMENTOS EN LA TABLA
+    function consultarDepartamentos() {
+
+// URL DE TU SERVIDOR FLASL
   const url = LOCALURL + 'Departamento/Consultar'
 
   let contenido = ''
@@ -11,21 +12,25 @@ function consultarDepartamentos() {
     let contenido = ''
 
     lista.forEach(item => {
-      // Manejo de estados (Activo/Inactivo)
-      let estadoBadge =
-        item.statu !== '0'
-          ? '<span class="badge bg-label-primary me-1">Activo</span>'
-          : '<span class="badge bg-label-danger me-1">Inactivo</span>'
+
+// MANEJO DE ESTADOS ACTIVO/INACTIVO PARA MOSTRARLO EN LA TABLA Y EN EL BOTÓN DE ACCIÓN
+
+let estadoBadge =
+     item.statu !== '0'
+        ? '<span class="badge bg-label-primary me-1">Activo</span>'
+        : '<span class="badge bg-label-danger me-1">Inactivo</span>'
 
       let textoAccion = item.statu !== '0' ? 'Desactivar' : 'Activar'
 
-      // 1. Convertimos el string raro a un objeto Date de JS
+//  CONVERTIMOS EL STRING DE FECHAS A OBJETOS DE FECHA PARA FORMATEARLAS
+
       const fechaI = new Date(item.fecha_inicio)
       const fechaF = new Date(item.fecha_final)
 
-      // 2. Formateamos a estilo latino (día/mes/año)
-      item.fecha_inicio = fechaI.toLocaleDateString('es-ES')
-      item.fecha_final = fechaF.toLocaleDateString('es-ES')
+// FORMATEAMOS LAS FECHAS A UN FORMATO LEGIBLE (DÍA/MES/AÑO) Y LAS ASIGNAMOS DE NUEVO AL OBJETO PARA MOSTRARLAS EN LA TABLA
+
+    item.fecha_inicio = fechaI.toLocaleDateString('es-ES')
+     item.fecha_final = fechaF.toLocaleDateString('es-ES')
 
       contenido += `
                 <tr>
@@ -63,7 +68,8 @@ function consultarDepartamentos() {
   })
 }
 
-// Evento POST para crear
+// EVENTO POST PARA CREAR UN NUEVO DEPARTAMENTO
+
 $(document).on('click', '#Crear', function () {
   if ($('#formDepartamento').valid()) {
     const FormnDepa = {
@@ -79,20 +85,22 @@ $(document).on('click', '#Crear', function () {
   }
 })
 
-// Evento PUT para activar/desactivar
+// EVENTO PUT PARA ACTIVAR/DESACTIVAR UN DEPARTAMENTO (TOGGLE) USANDO LOS ATRIBUTOS DATA- PARA PASAR EL ID Y EL STATUS ACTUAL
+
 $(document).on('click', '.Toggle', function (event) {
   const id = $(this).data('unico')
   const statusActual = $(this).data('status')
 
-  // Calculamos el nuevo estado (si es 1 pasa a 0, si es 0 pasa a 1)
-  const nuevoStatus = statusActual == '1' ? '0' : '1'
+ // CALCULAMOS EL NUEVO STATUS (SI ES 1 PASA A 0, SI ES 0 PASA A 1)
+   const nuevoStatus = statusActual == '1' ? '0' : '1'
 
-  // Creamos el contenedor de datos manual
-  const datosManuales = new FormData()
-  datosManuales.append('id_departamento', id)
-  datosManuales.append('status', nuevoStatus)
+ // CREAMOS EL CONTENIDO DEL FORMULARIO MANUALMENTE USANDO FORMDATA PARA ENVIAR LOS DATOS NECESARIOS AL SERVIDOR (ID Y NUEVO STATUS)
+ 
+ const datosManuales = new FormData()
+ datosManuales.append('id_departamento', id)
+ datosManuales.append('status', nuevoStatus)
 
-  const FormnDepa = {
+ const FormnDepa = {
     UrlControl: LOCALURL + 'Departamento/Toggle',
     Formulario: datosManuales,
     Method: 'PUT'
@@ -103,19 +111,20 @@ $(document).on('click', '.Toggle', function (event) {
   })
 })
 
-// Evento PUT para edición
+// EVENTO PUT PARA EDITAR UN DEPARTAMENTO
 $(document).on('click', '.Editar', function (event) {
-  // 1. Obtener datos del atributo data-
+
+//  OBTENER DATOS DEL ATRIBUTO DATA
   const d = $(this).data()
 
-  // 2. Llenar los campos del formulario
-  $('#created').val(d.id) // Usamos el input hidden para el ID
+// LLENAR EL FORMULARIO CON LOS DATOS OBTENIDOS PARA MOSTRARLOS EN EL MODAL Y PERMITIR SU EDICIÓN
+  $('#created').val(d.id) // USAMOS EL HIDDEN PARA GUARDAR EL ID DEL DEPARTAMENTO QUE SE VA A EDITAR, ASÍ LO TENEMOS DISPONIBLE CUANDO SE ENVÍE EL FORMULARIO
   $('#codigo').val(d.codigo)
   $('#nombre').val(d.nombre)
   $('#ubicacion').val(d.ubicacion)
   $('#descripcion').val(d.descripcion)
 
-  // 3. Cambiar el botón "Enviar" para que sea de "Editar"
+// CAMBIAR EL BOTÓN DE CREAR A EDITAR Y ASIGNARLE EL EVENTO DE ENVÍO
   $('#Crear')
     .text('Editar')
     .removeClass('btn-primary')
@@ -137,7 +146,7 @@ $(document).on('click', '.Editar', function (event) {
       }
     })
 
-  // 4. Abrir el modal manualmente
+// ABRIR EL MODAL MANUALMENTE DESPUÉS DE LLENAR LOS CAMPOS PARA QUE SE MUESTREN LOS DATOS ANTES DE EDITARLOS
   $('#DepartamentoModal').modal('show')
 })
 
@@ -147,9 +156,11 @@ $(document).ready(function () {
   form = $('#formDepartamento')
   if (form.length) {
     form.validate({
-      //Reglas/Validaciones
+
+// REGLAS DE VALIDACIÓN PARA LOS CAMPOS DEL FORMULARIO DE DEPARTAMENTO
       rules: {
-        //Datos del Departamento
+
+ // DATOS DEL DEPARTAMENTO
         codigo: {
           required: true,
           number: true,
@@ -159,7 +170,7 @@ $(document).ready(function () {
         nombre: {
           required: true,
           minlength: 5,
-          maxlength: 25
+          maxlength: 50
         },
         jefe: {
           required: true
@@ -176,8 +187,9 @@ $(document).ready(function () {
         }
       },
 
-      //Mensages de validaciones
-      messages: {
+  // MENSAJES DE ERROR PERSONALIZADOS PARA CADA CAMPO (VALIDACIONES)
+  
+  messages: {
         codigo: {
           required: 'Campo Obligatorio',
           number: 'Solo se permiten números',

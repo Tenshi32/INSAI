@@ -87,3 +87,13 @@ body {
     border: none;
     z-index: auto;            
 }
+
+.row-centrada {
+  display: flex;            /* Activa el modo flexible */
+  gap: 2px;                /* Espacio opcional entre los elementos */
+  min-height: 50px;        /* Altura mínima para notar el centrado vertical */
+
+}
+.texto-largo {
+  column-count: 1; /* Fuerza a que todo se mantenga en una sola columna */
+}
