@@ -23,6 +23,41 @@ class CabeceraDataModel:
         row = self.cursor.fetchone()
         return row
     
+    def get_full_cabecera_revision(self, id):
+        sql = "SELECT cd.*, c.*, l.*, d.nombre as nombre_departamento, o.*, tp.nombre as nombre_tipo_poa FROM cabeceras_data cd "\
+              "JOIN lineamientos l ON cd.id_lineamiento = l.id_lineamiento "\
+              "JOIN cabeceras c ON cd.id_cabecera = c.id_cabecera "\
+              "JOIN departamentos d ON cd.id_departamento = d.id_departamento "\
+              "JOIN observaciones o ON cd.id_observado = o.id_observacion "\
+              "JOIN tipo_poa tp ON cd.id_tipo_poa = tp.id_tipo_poa " \
+              "WHERE l.id_lineamiento = %s"
+        
+        self.cursor.execute(sql, (id, ))
+        all_cabeceras = self.cursor.fetchall()
+        return all_cabeceras
+    
+    def get_cabeceras_x_departamento(self, id):
+        sql = "SELECT cd.*, c.*, l.*, d.nombre as nombre_departamento, o.*, tp.nombre as nombre_tipo_poa FROM cabeceras_data cd "\
+              "JOIN lineamientos l ON cd.id_lineamiento = l.id_lineamiento "\
+              "JOIN cabeceras c ON cd.id_cabecera = c.id_cabecera "\
+              "JOIN departamentos d ON cd.id_departamento = d.id_departamento "\
+              "JOIN observaciones o ON cd.id_observado = o.id_observacion "\
+              "JOIN tipo_poa tp ON cd.id_tipo_poa = tp.id_tipo_poa " \
+              "WHERE d.id_departamento = %s"
+        
+        self.cursor.execute(sql, (id, ))
+        all_cabeceras = self.cursor.fetchall()
+        return all_cabeceras
+    
+    def get_cabeceras_x_departamento_status(self, id_departamento, id_lineamiento):
+        sql = "SELECT statu_cabecera FROM cabeceras_data cd "\
+              "JOIN cabeceras c ON cd.id_cabecera = c.id_cabecera "\
+              "WHERE cd.id_departamento = %s AND cd.id_lineamiento = %s"
+        
+        self.cursor.execute(sql, (id_departamento ,id_lineamiento, ))
+        all_cabeceras = self.cursor.fetchone()
+        return all_cabeceras
+    
     def get_full_cabecera_data(self):
         sql = "SELECT cd.*, c.*, l.*, d.*, o.*, tp.* FROM cabeceras_data cd "\
               "JOIN lineamientos l ON cd.id_lineamiento = l.id_lineamiento "\
@@ -57,6 +92,20 @@ class CabeceraDataModel:
             self.cursor.execute(sql, tuple(datos))
             self.conn.commit()
             return self.cursor.lastrowid
+
+        except Exception as e:
+            self.conn.rollback()
+            print(f"Error inesperado: {e}")
+            return None
+        
+    def update_observacion(self, datos):
+        sql = "UPDATE cabeceras_data SET id_observado = %s " \
+        "WHERE id_cabecera = %s"
+      
+        try: 
+            self.cursor.execute(sql, tuple(datos))
+            self.conn.commit()
+            return self.cursor.rowcount
 
         except Exception as e:
             self.conn.rollback()

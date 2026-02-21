@@ -1,6 +1,7 @@
 $(document).ready(function () {
-  let id_lineamiento
+ 
   consultarLineamientosActivos()
+  consultarObjetivos()
 })
 
 function consultarLineamientosActivos() {
@@ -60,7 +61,6 @@ function consultarNotificaciones(id_lineamiento) {
     })
     .then(data => {
       if (data != null) {
-
         console.log(data)
 
         $('#ViewNotificaciones').show()
@@ -78,10 +78,9 @@ function consultarNotificaciones(id_lineamiento) {
 
         $('#notif-prioridad').text(data.prioridad).addClass(prioridadClass)
 
-        if (sessionStorage.getItem('id_nivel') <= 2){
+        if (sessionStorage.getItem('id_nivel') <= 2) {
           sessionStorage.setItem('id_notificacion_actual', data.id_comunicatorio)
         }
-        
       } else {
         contenido = `No hay un periodo activo actualmente.`
         $('#ViewNotificaciones').hide()
@@ -91,4 +90,29 @@ function consultarNotificaciones(id_lineamiento) {
       console.error('Hubo un problema con la consulta:', error)
       $('#ViewNotificaciones').hide()
     })
+}
+
+function consultarObjetivos() {
+  let url = LOCALURL + 'CabeceraData/Obtener?id_departamento=' + sessionStorage.getItem('id_departamento') + '&id_lineamiento='+ sessionStorage.getItem('id_lineamiento')
+  let contenido
+  receptor = document.getElementById('statusPlanificacion')
+
+  MethodGet(url, function (lista) {
+    console.log(lista)
+    if (lista !== undefined){
+
+      const estados = {
+        '1': '<span class="badge bg-label-warning me-1"><i class="bx bx-alert-circle me-1"></i> En Revision </span>',
+        '2': '<span class="badge bg-label-success me-1"><i class="bx bx-seal-check me-1"></i>  Aprobada</span>',
+        '3': '<span class="badge bg-label-danger me-1">Negada</span>'
+      }
+      contenido = estados[lista]
+      
+    }else{
+      
+      contenido = '<span class="badge bg-label-warning me-1"><i class="bx bx-alert-circle me-1"></i> Pendiente por Cargar </span>'
+
+    }
+    receptor.innerHTML = contenido
+  })
 }

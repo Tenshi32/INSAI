@@ -11,6 +11,7 @@ from .comunicatorio_controller import ComunicatorioController
 from .auditoria_controller import AuditoriaController
 from .nivel_controller import NivelController
 from .cabecera_data_controller import CabeceraDataController
+from .observacion_controller import ObservacionController
 
 __all__ = [
     'SelectController',
@@ -25,4 +26,5 @@ __all__ = [
     'AuditoriaController',
     'NivelController',
     'CabeceraDataController',
+    'ObservacionController',
 ]
