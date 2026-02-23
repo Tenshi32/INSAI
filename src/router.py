@@ -18,6 +18,7 @@ from routes.cabecera_data_router import cabecera_data_bp
 from routes.bd_router import database_bp
 from routes.cabecera_router import cabecera_bp
 from routes.observacion_router import observacion_bp
+from routes.metas_data_router import metas_data_bp
 
 #Controllers
 from controller import *
@@ -88,6 +89,8 @@ app.register_blueprint(ubicacion_bp, url_prefix='/Ubicacion')
 app.register_blueprint(ticket_bp, url_prefix='/Ticket')
 
 app.register_blueprint(auditoria_bp, url_prefix='/Auditoria')
+
+app.register_blueprint(metas_data_bp, url_prefix='/MetasData')
 
 app.register_blueprint(cabecera_data_bp, url_prefix='/CabeceraData')
 

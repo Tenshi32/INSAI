@@ -101,12 +101,14 @@ function consultarObjetivos() {
     console.log(lista)
     if (lista !== undefined){
 
+      sessionStorage.setItem('id_planificacion_activa', lista[0]);
+      
       const estados = {
         '1': '<span class="badge bg-label-warning me-1"><i class="bx bx-alert-circle me-1"></i> En Revision </span>',
         '2': '<span class="badge bg-label-success me-1"><i class="bx bx-seal-check me-1"></i>  Aprobada</span>',
         '3': '<span class="badge bg-label-danger me-1">Negada</span>'
       }
-      contenido = estados[lista]
+      contenido = estados[lista[1]]
       
     }else{
       
