@@ -28,8 +28,8 @@ class SelectModel:
             cursor.close()
         
     def get_select_where(self, col1, col2, col3, tabla, id):
-        sql = f"SELECT {col1}, {col2}, {col3} FROM {tabla} WHERE {col1} = ?"
-        self.cursor.execute(sql, (id))
+        sql = f"SELECT {col1}, {col2}, {col3} FROM {tabla} WHERE {col3} = {id}"
+        self.cursor.execute(sql)
 
         rows = self.cursor.fetchall()
         return rows

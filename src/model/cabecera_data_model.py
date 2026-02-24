@@ -50,7 +50,7 @@ class CabeceraDataModel:
         return all_cabeceras
     
     def get_cabeceras_x_departamento_status(self, id_departamento, id_lineamiento):
-        sql = "SELECT statu_cabecera FROM cabeceras_data cd "\
+        sql = "SELECT statu_cabecera, c.id_cabecera FROM cabeceras_data cd "\
               "JOIN cabeceras c ON cd.id_cabecera = c.id_cabecera "\
               "WHERE cd.id_departamento = %s AND cd.id_lineamiento = %s"
         

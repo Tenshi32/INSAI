@@ -11,8 +11,8 @@ class MetasModel:
         self.cursor = self.conn.cursor(dictionary=True)
 
     def create_metas(self, datos):
-        sql = "INSERT INTO metas_fisicas (id_meta, acciones, distribucion_trimestre, actividad_trimestre, total_actividad, descripcion) " \
-        "VALUES (%s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO metas_fisicas (id_meta, acciones, trim1, trim2, trim3, trim4, total_actividad, descripcion, statu_metas) " \
+        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
       
         try: 
             self.cursor.execute(sql, tuple(datos))

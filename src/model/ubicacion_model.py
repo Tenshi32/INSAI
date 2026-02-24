@@ -11,8 +11,8 @@ class UbicacionModel:
         self.cursor = self.conn.cursor(dictionary=True)
 
     def create_ubicacion(self, datos):
-        sql = "INSERT INTO ubicaciones (id_ubicacion, id_estado, id_municipio, estado_sede, municipio_sede) " \
-        "VALUES (%s, %s, %s, %s, %s)"
+        sql = "INSERT INTO ubicaciones (id_ubicacion, id_estado, id_municipio, sede_ubicacion) " \
+        "VALUES (%s, %s, %s, %s)"
       
         try: 
             self.cursor.execute(sql, tuple(datos))
