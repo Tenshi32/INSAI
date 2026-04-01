@@ -1,15 +1,13 @@
 // EVENTO GET PARA CONSULTAR Y MOSTRAR LOS OBJETIVOS DE LA UA EN LA TABLA
 
 function consultarObjetivos() {
-  let url = LOCALURL + 'CabeceraData/Consultar?id_departamento=' + sessionStorage.getItem("id_departamento")
+  let url = LOCALURL + 'CabeceraData/Consultar?id_lineamiento=' + sessionStorage.getItem('id_lineamiento')
 
   let contenido = ''
 
-  receptor = document.getElementById('tablaPlanificacion')
-  receptorActual = document.getElementById('tablaPlanificacionActual')
+  receptor = document.getElementById('tablaPlanificacionPrePoa')
 
   MethodGet(url, function (lista) {
-    console.log(lista)
     lista.forEach(item => {
 
       const estados = {
@@ -18,6 +16,7 @@ function consultarObjetivos() {
         '3': '<span class="badge bg-label-danger me-1">Negada</span>'
       }
 
+      // Si el estado no existe en el objeto, podrías poner uno por defecto
       let estadoBadge = estados[item.statu_cabecera]
 
       let textoAccion 
@@ -53,18 +52,30 @@ function consultarObjetivos() {
                       <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item Editar" 
+                      <a class="dropdown-item Aprobar" 
                          style="cursor:pointer;"
                          data-id="${item.id_cabecera}"
-                         data-actividad="${item.actividad}" 
-                         data-sector="${item.sector}"
-                         data-objetivos="${item.objetivos}"
-                         <i class="bx bx-edit-alt me-1"></i> Editar
+                         <i class="bx bx-edit-alt me-1"></i> Aprobar
                       </a>
-                      <a class="dropdown-item Toggle" 
-                         data-unico="${item.id_cabecera}" 
-                         data-status="${item.statu_cabecera}">
-                         <i class='bx bx-toggle-big-right me-1'></i> ${textoAccion}
+                      <a class="dropdown-item Notificar" 
+                         style="cursor:pointer;"
+                         data-unico="${item.id_cabecera}"
+                         data-nombre_tipo_poa="${item.nombre_tipo_poa}"
+                         data-nombre_departamento="${item.nombre_departamento}"
+                         <i class="bx bx-edit-alt me-1"></i> Notificar
+                      </a>
+                      <a class="dropdown-item Ver" 
+                         data-unico="${item.id_cabecera}"
+                         data-status="${item.statu_cabecera}"
+                         data-actividad="${item.actividad}"
+                         data-anno_fiscal="${item.anno_fiscal}"
+                         data-enfoque_estrategico="${item.enfoque_estrategico}"
+                         data-nombre_departamento="${item.nombre_departamento}"
+                         data-nombre_tipo_poa="${item.nombre_tipo_poa}"
+                         data-normas_legales="${item.normas_legales}"
+                         data-objetivos="${item.objetivos}"
+                         data-sector="${item.sector}">
+                         <i class="bx bx-toggle-big-right me-1"></i> Ver
                       </a>
                     </div>
                   </div>`
@@ -79,40 +90,10 @@ function consultarObjetivos() {
 
               <td>${estadoBadge}</td>
               <td>
-                 ${textoAccion}
+                ${textoAccion}
               </td>
           </tr>
       `
-
-      if(item.id_lineamiento == sessionStorage.getItem('id_lineamiento')){
-        receptorActual.innerHTML = contenido
-      }
-    })
-
-    const form = document.getElementById('formObjetivo')
-    if (form) form.reset()
-
-    receptor.innerHTML = contenido
-  })
-}
-
-function SelectTipoPoa() {
-  
-  // URL DE TU SERVIDOR FLASK PARA OBTENER LOS TIPOS DE POA DISPONIBLES Y LLENAR EL SELECT CORRESPONDIENTE EN EL FORMULARIO DE CREACIÓN/EDICIÓN DE OBJETIVOS
-
-  const url = LOCALURL + 'Select/Consultar?tabla=tipo_poa&col1=id_tipo_poa&col2=nombre'
-
-  let contenido = ''
-
-  const receptor = document.getElementById('tipo_poa')
-
-  MethodGet(url, function (lista) {
-    let contenido = "<option value=''>seleccione una opción</option> "
-
-    lista.forEach(item => {
-      contenido += `
-                <option value='${item.id_tipo_poa}'>#${item.id_tipo_poa}: ${item.nombre}</option>
-                `
     })
 
     receptor.innerHTML = contenido
@@ -120,21 +101,6 @@ function SelectTipoPoa() {
 }
 
 // EVENTO POST PARA CREAR UN NUEVO OBJETIVO DE LA UA
-
-$(document).on('click', '#Crear', function () {
-  if ($('#formObjetivo').valid()) {
-    const FormnDepa = {
-      UrlControl: LOCALURL + 'CabeceraData/Crear',
-      Formulario: document.getElementById('formObjetivo'),
-      Method: 'POST'
-    }
-
-    methodSend(FormnDepa, function (params) {
-      consultarObjetivos
-      $('#ObjetivoModal').modal('hide')
-    })
-  }
-})
 
 $(document).on('click', '.Ver', function (event) {
   //  OBTENER LOS DATOS DEL ELEMENTO SELECCIONADO A TRAVÉS DE LOS ATRIBUTOS DATA
@@ -149,26 +115,17 @@ $(document).on('click', '.Ver', function (event) {
   $('#tipo_proyecto_view').text(d.nombre_tipo_poa)
 
   // ABRIR EL MODAL MANUEALMENTE
-  $('#ObjetivoVerModal').modal('show')
+  $('#ObjetivoModal').modal('show')
 })
 
-// EVENTO PUT PARA TOGGLE DE ESTADO
-
-$(document).on('click', '.Toggle', function (event) {
-  const id = $(this).data('unico')
-  const statusActual = $(this).data('status')
-
-  // CALCULAMOS EL NUEVO STATUS INVERTIENDO EL VALOR ACTUAL (SI ES "1" PASA A "0" Y VICEVERSA)
-  const nuevoStatus = statusActual == '1' ? '0' : '1'
-
-  // CREAMOS EL FORMDATA PARA ENVIAR LOS DATOS NECESARIOS AL SERVIDOR ID Y EL NUEVO STATUS
+$(document).on('click', '.Aprobar', function (event) {
+  const id = $(this).data('id')
 
   const datosManuales = new FormData()
-  datosManuales.append('id_departamento', id)
-  datosManuales.append('status', nuevoStatus)
+  datosManuales.append('id_cabecera', id)
 
   const FormnDepa = {
-    UrlControl: LOCALURL + 'Comunicatorio/Toggle',
+    UrlControl: LOCALURL + 'Cabecera/Toggle',
     Formulario: datosManuales,
     Method: 'PUT'
   }
@@ -178,72 +135,56 @@ $(document).on('click', '.Toggle', function (event) {
   })
 })
 
-// EVENTO PUT PARA EDICIÓN
+// EVETO PUT PARA EDICIÓN
 
-$(document).on('click', '.Editar', function (event) {
+$(document).on('click', '.Notificar', function (event) {
   //  OBTENER LOS DATOS DEL ELEMENTO SELECCIONADO A TRAVÉS DE LOS ATRIBUTOS DATA
 
   const d = $(this).data()
 
   // LLENAR LOS CAMPOS DEL FORMULARIO CON LOS DATOS OBTENIDOS
 
-  $('#created').val(d.id)
-  $('#codigo').val(d.codigo)
-  $('#nombre').val(d.nombre)
-  $('#ubicacion').val(d.ubicacion)
-  $('#descripcion').val(d.descripcion)
+  $('#id_observado').attr("value", d.unico)
+  $('#view_tipo_poa_notificacion').text(d.nombre_tipo_poa)
+  $('#view_departamento_negar').text(d.nombre_departamento)
 
   // CAMBIAR EL CAMBIO DE BOTÓN "ENVIAR" PARA QUE SEA DE "EDITAR"
 
   $('#Crear')
-    .text('Editar')
-    .removeClass('btn-primary')
-    .addClass('btn-warning')
-    .off('click')
     .on('click', function () {
-      if ($('#formObjetivo').valid()) {
+      if ($('#formObservaciones').valid()) {
         const FormnDepa = {
-          UrlControl: LOCALURL + 'Comunicatorio/Editar',
-          Formulario: document.getElementById('formObjetivo'),
-          Method: 'PUT'
+          UrlControl: LOCALURL + 'Observacion/Crear',
+          Formulario: document.getElementById('formObservaciones'),
+          Method: 'POST'
         }
 
         methodSend(FormnDepa, function (params) {
           consultarObjetivos
-          $('#ObjetivoModal').modal('hide')
-          $('#Crear').text('Enviar').removeClass('btn-warning').addClass('btn-primary').attr('data-action', 'create')
+          $('#ObservacionesModal').modal('hide')
         })
       }
     })
 
   // ABRIR EL MODAL MANUEALMENTE
 
-  $('#ObjetivoModal').modal('show')
+  $('#ObservacionesModal').modal('show')
 })
 
 $(document).ready(function () {
   consultarObjetivos()
-  SelectTipoPoa()
 
-   // ESTABLECER EL PLACEHOLDER DEL CAMPO DE AÑO CON EL AÑO ACTUAL 
-
-  const anioActual = new Date().getFullYear();
-  $("#anno").val(anioActual);
-  $("#anno").attr("placeholder", anioActual);
- 
   // VALIDACIÓN DEL FORMULARIO CON JQUERY VALIDATE
+  /*  $('#id_lineamiento').attr('value', sessionStorage.getItem('id_lineamiento'))
+  $('#id_usuario').attr('value', sessionStorage.getItem('id_usuario'))
+  $('#id_departamento').attr('value', sessionStorage.getItem('id_departamento'))
+  $('#departamento').attr('value', sessionStorage.getItem('departamento_nombre'))
+  $('#id_planificacion_activa').attr('value', sessionStorage.getItem('id_planificacion_activa')) */
 
-  let form = $('#formObjetivo')
+  let form = $('#formNotificar')
   if (form.length) {
-    $('#id_lineamiento').attr('value', sessionStorage.getItem('id_lineamiento'))
-    $('#id_usuario').attr('value', sessionStorage.getItem('id_usuario'))
-    $('#id_departamento').attr('value', sessionStorage.getItem('id_departamento'))
-    $('#departamento').attr('value', sessionStorage.getItem('departamento_nombre'))
-    $('#id_planificacion_activa').attr('value', sessionStorage.getItem('id_planificacion_activa'))
-
     form.validate({
-  
-  // REGLAS DE VALIDACIÓN PARA CADA CAMPO
+      // REGLAS DE VALIDACIÓN PARA CADA CAMPO
 
       rules: {
         departamento: {
