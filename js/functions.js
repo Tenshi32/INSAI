@@ -173,6 +173,13 @@ async function loadContent(pageName, elementClicked = null) {
             pageLength: 10,
             ordering: true
           })
+          
+          $('#tablaSegundaria').dataTable({
+            paging: true,
+            responsive: true,
+            pageLength: 10,
+            ordering: true
+          })
         })
         
     } else {

@@ -5,24 +5,22 @@ function consultarObjetivos() {
 
   let contenido = ''
 
-  receptor = document.getElementById('tablaPlanificacionPrePoa')
+  let receptorPlanificacion = document.getElementById('tablaPlanificacionPrePoa')
 
   MethodGet(url, function (lista) {
     lista.forEach(item => {
-
       const estados = {
-        '1': '<span class="badge bg-label-warning me-1">En Espera</span>',
-        '2': '<span class="badge bg-label-success me-1">Aprobada</span>',
-        '3': '<span class="badge bg-label-danger me-1">Negada</span>'
+        1: '<span class="badge bg-label-warning me-1">En Espera</span>',
+        2: '<span class="badge bg-label-success me-1">Aprobada</span>',
+        3: '<span class="badge bg-label-danger me-1">Negada</span>'
       }
 
       // Si el estado no existe en el objeto, podrías poner uno por defecto
       let estadoBadge = estados[item.statu_cabecera]
 
-      let textoAccion 
+      let textoAccion
       if (item.statu_cabecera === '2') {
-
-        textoAccion =`
+        textoAccion = `
                   <div class="dropdown">
                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                       <i class="bx bx-dots-vertical-rounded"></i>
@@ -43,10 +41,8 @@ function consultarObjetivos() {
                       </a>
                     </div>
                   </div>`
-
-      }else{
-
-        textoAccion =`
+      } else {
+        textoAccion = `
                   <div class="dropdown">
                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                       <i class="bx bx-dots-vertical-rounded"></i>
@@ -96,27 +92,137 @@ function consultarObjetivos() {
       `
     })
 
-    receptor.innerHTML = contenido
+    receptorPlanificacion.innerHTML = contenido
+  })
+}
+
+function consultarFormulaciones() {
+  let url = LOCALURL + 'MetasData/Consultar?id_lineamiento=' + sessionStorage.getItem('id_lineamiento')
+
+  let receptorFormulacion = document.getElementById('tablaFormulacionPrePoa')
+
+  MethodGet(url, function (lista) {
+    console.log(lista) // Objeto agrupado por ID de departamento
+
+    let contenido = ''
+
+    const estados = {
+      1: '<span class="badge bg-label-warning me-1">En Espera</span>',
+      2: '<span class="badge bg-label-success me-1">Aprobada</span>',
+      3: '<span class="badge bg-label-danger me-1">Negada</span>'
+    }
+
+    // Iteramos sobre cada Departamento (una sola fila por grupo)
+    Object.keys(lista).forEach(deptoId => {
+      const metas = lista[deptoId] // Este es el array de metas de este depto
+      const primerItem = metas[0] // Usamos el primero para obtener datos generales (ubicación, etc.)
+
+      // Calculamos totales del departamento si es necesario
+      const totalMetasDepto = metas.length
+      const sumaTotalActividades = metas.reduce((acc, cur) => acc + (parseInt(cur.total_actividad) || 0), 0)
+
+      let textoAccion = `
+            <div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item Ver" 
+                        style="cursor:pointer;"
+                        data-deptoid="${deptoId}">
+                        <i class="bx bx-list-ul me-1"></i> Ver ${totalMetasDepto} Metas
+                    </a>
+                </div>
+            </div>`
+
+      contenido += `
+            <tr>
+                <td>${deptoId}</td>
+                <td>
+                    <span class="fw-bold">Departamento / Unidad</span><br>
+                    <small class="text-muted">Sede: ${primerItem.sede_ubicacion}</small>
+                </td>
+                <td>
+                    <span class="badge bg-label-primary">${totalMetasDepto} Metas registradas</span>
+                </td>
+                <td>${estados[primerItem.statu_metas]}</td>
+                <td>${textoAccion}</td>
+            </tr>`
+    })
+
+    receptorFormulacion.innerHTML = contenido
+
+    // Guardamos la lista globalmente para acceder a ella desde el modal sin volver al servidor
+    window.datosMetasGlobal = lista
   })
 }
 
 // EVENTO POST PARA CREAR UN NUEVO OBJETIVO DE LA UA
 
-$(document).on('click', '.Ver', function (event) {
+$(document).on('click', '.Ver', function () {
   //  OBTENER LOS DATOS DEL ELEMENTO SELECCIONADO A TRAVÉS DE LOS ATRIBUTOS DATA
 
   const d = $(this).data()
-  $('#view_anno_fiscal').text(d.anno_fiscal)
-  $('#view_sector').text(d.sector)
-  $('#view_enfoque_estrategico').text(d.enfoque_estrategico)
-  $('#view_objetivos').text(d.objetivos)
-  $('#view_actividad').text(d.actividad)
-  $('#view_departamento').text(d.nombre_departamento)
-  $('#tipo_proyecto_view').text(d.nombre_tipo_poa)
 
-  // ABRIR EL MODAL MANUEALMENTE
-  $('#ObjetivoModal').modal('show')
+  let metasDataGlobal = window.datosMetasGlobal
+  const idDepto = d.deptoid
+  const metas = metasDataGlobal[idDepto]
+
+  let filasMetas = ''
+
+  if (metas && metas.length > 0) {
+    metas.forEach((m, index) => {
+      filasMetas += `
+                <tr>
+                    <td><strong>#${index + 1}</strong></td>
+                    <td>${m.descripcion.substring(0, 40)}...</td>
+                    <td>
+                        <button class="btn btn-primary VerDetalleTecnico" 
+                            data-deptoid="${idDepto}" 
+                            data-index="${index}">
+                            <i class="bx bx-show"></i> Ver Detalles
+                        </button>
+                        <button class="btn btn-success VerDetalleTecnico" 
+                            data-deptoid="${idDepto}" 
+                            data-index="${index}">
+                            <i class="bx bx-show"></i> Aprobar
+                        </button>
+                        <button class="btn btn-danger VerDetalleTecnico" 
+                            data-deptoid="${idDepto}" 
+                            data-index="${index}">
+                            <i class="bx bx-show"></i> Observar
+                        </button>
+                    </td>
+                </tr>`
+    })
+  } else {
+    filasMetas = '<tr><td colspan="3" class="text-center">No hay metas</td></tr>'
+  }
+
+  // 3. Inyectar filas y abrir modal
+  $('#lista_metas_tabla').html(filasMetas)
+  $('#FormulacionModal').modal('show')
 })
+
+// 2. ABRIR EL DETALLE DE UNA META ESPECÍFICA
+$(document).on('click', '.VerDetalleTecnico', function () {
+    const d = $(this).data();
+    const idDepto = d.deptoid;
+    const index = d.index;
+    
+    // Obtenemos la meta específica del array usando el índice
+    const metaUnica = window.datosMetasGlobal[idDepto][index];
+
+    // Llenamos el modal de detalles
+    $('#det_descripcion').text(metaUnica.descripcion);
+    $('#det_t1').text(metaUnica.trim1);
+    $('#det_t2').text(metaUnica.trim2);
+    $('#det_t3').text(metaUnica.trim3);
+    $('#det_t4').text(metaUnica.trim4);
+    // ... llenar los demás campos (estado, municipio, etc.)
+
+    $('#DetalleMetaUnicaModal').modal('show');
+});
 
 $(document).on('click', '.Aprobar', function (event) {
   const id = $(this).data('id')
@@ -144,43 +250,37 @@ $(document).on('click', '.Notificar', function (event) {
 
   // LLENAR LOS CAMPOS DEL FORMULARIO CON LOS DATOS OBTENIDOS
 
-  $('#id_observado').attr("value", d.unico)
+  $('#id_observado').attr('value', d.unico)
   $('#view_tipo_poa_notificacion').text(d.nombre_tipo_poa)
   $('#view_departamento_negar').text(d.nombre_departamento)
 
   // CAMBIAR EL CAMBIO DE BOTÓN "ENVIAR" PARA QUE SEA DE "EDITAR"
 
-  $('#Crear')
-    .on('click', function () {
-      if ($('#formObservaciones').valid()) {
-        const FormnDepa = {
-          UrlControl: LOCALURL + 'Observacion/Crear',
-          Formulario: document.getElementById('formObservaciones'),
-          Method: 'POST'
-        }
-
-        methodSend(FormnDepa, function (params) {
-          consultarObjetivos
-          $('#ObservacionesModal').modal('hide')
-        })
+  $('#Crear').on('click', function () {
+    if ($('#formObservaciones').valid()) {
+      const FormnDepa = {
+        UrlControl: LOCALURL + 'Observacion/Crear',
+        Formulario: document.getElementById('formObservaciones'),
+        Method: 'POST'
       }
-    })
+
+      methodSend(FormnDepa, function (params) {
+        consultarObjetivos
+        $('#ObservacionesModal').modal('hide')
+      })
+    }
+  })
 
   // ABRIR EL MODAL MANUEALMENTE
 
   $('#ObservacionesModal').modal('show')
 })
-
+async function loadRevisionPrePoa() {
+  await Promise.all([consultarObjetivos(), consultarFormulaciones()])
+}
 $(document).ready(function () {
-  consultarObjetivos()
-
+  loadRevisionPrePoa()
   // VALIDACIÓN DEL FORMULARIO CON JQUERY VALIDATE
-  /*  $('#id_lineamiento').attr('value', sessionStorage.getItem('id_lineamiento'))
-  $('#id_usuario').attr('value', sessionStorage.getItem('id_usuario'))
-  $('#id_departamento').attr('value', sessionStorage.getItem('id_departamento'))
-  $('#departamento').attr('value', sessionStorage.getItem('departamento_nombre'))
-  $('#id_planificacion_activa').attr('value', sessionStorage.getItem('id_planificacion_activa')) */
-
   let form = $('#formNotificar')
   if (form.length) {
     form.validate({

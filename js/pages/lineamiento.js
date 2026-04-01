@@ -28,7 +28,7 @@ function consultarLineamientos() {
 
       item.fecha_inicio = fechaI.toLocaleDateString('es-ES'); 
       item.fecha_final = fechaF.toLocaleDateString('es-ES');
-      fechaInput.setAttribute('min', hoy);
+      //fechaInput.setAttribute('min', hoy);
 
       contenido += `
           <tr>

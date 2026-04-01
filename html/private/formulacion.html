@@ -1,225 +1,181 @@
-<div class="modal fade" id="ObjetivoModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="FormulacionModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title fw-bold py-2">Metas/Acciones del PRE-POA</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form id="formObjetivo" method="POST" onsubmit="return false">
+
+      <form id="formFomulacion" method="POST" onsubmit="return false">
         <div class="modal-body">
 
           <input type="hidden" id="id_lineamiento" name="id_lineamiento" />
+          <input type="hidden" id="id_planificacion_activa" name="id_planificacion_activa" />
           <input type="hidden" id="id_departamento" name="id_departamento" />
           <input type="hidden" id="id_usuario" name="id_usuario" />
-          <input type="hidden" id="id_planificacion_activa" name="id_planificacion_activa" />
 
+          <!-- REGISTRO DE METAS POR OBJETIVO -->
 
-<!-- CAMPOS FIJOS DEL LINEAMIENTO Y OBJETIVOS -->
-          
-    <div class="row">
-          <div class="col-12 col-md-2 mb-2">
+          <div class="row m-3">
+            <div class="col-12 col-md-4">
+              <div class="form-group">
+                <label class="form-label">META POR OBJETIVO:</label>
+                <textarea rows="4" class="form-control" name="meta_fisica" id="meta_fisica"></textarea>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-8">
+              <div class="row mb-2">
+                <p>DISTRIBUCION DE METAS:</p>
+                <div class="col-md-3">
                   <div class="form-group">
-                    <label for="anno" class="form-label">*Año</label>
-                    <input class="form-control" type="text" name="anno" id="anno" readonly />
+                    <label class="form-label">TRIM1</label>
+                    <input type="text" class="form-control trim-input" name="trim1" id="trim1">
                   </div>
-             </div>
-
-            <div class="col-6 col-md-2 mb-2">
-              <div class="form-group">
-                <label for="sector" class="form-label">*Sector</label>
-                <input class="form-control" type="text" value="Agricola" id="sector" name="sector" readonly />
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-label">TRIM2</label>
+                    <input type="text" class="form-control trim-input" name="trim2" id="trim2">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-label">TRIM3</label>
+                    <input type="text" class="form-control trim-input" name="trim3" id="trim3">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-label">TRIM4</label>
+                    <input type="text" class="form-control trim-input" name="trim4" id="trim4">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="form-label">TOTAL</label>
+                  <input type="text" class="form-control total-fila" readonly name="trimtotal" id="trimtotal">
+                </div>
               </div>
             </div>
 
-            <div class="col-6 col-md-4 mb-2">
+            <div class="col-12 col-md-12 mt-3">
               <div class="form-group">
-                <label for="departamento" class="form-label">*Departamento</label>
-                <input type="text" class="form-control" id="departamento" name="departamento" readonly />
+                <label class="form-label">Acciones:</label>
+                <textarea rows="2" class="form-control" name="acciones" id="acciones"></textarea>
               </div>
             </div>
-               
-            <div class="col-12 col-md-4 mb-2"> 
+
+          </div>
+
+          <div class="row m-3">
+
+            <div class="col-12 col-md-6 mb-2">
               <div class="form-group">
-                <label for="tipo_poa" class="form-label">*Tipo de Poa</label>
-                <input class="form-control" type="text" value="Centralizada" id="tipo_poa" name="tipo_poa" readonly />
+                <label class="form-label" for="estados">*Estados</label>
+                <select id="estados" name="estados" class="select2 form-select">
+                </select>
               </div>
             </div>
-      </div>
-          <div class="row">
+
+            <div class="col-12 col-md-6 mb-2">
+              <div class="form-group">
+                <label class="form-label" for="municipio">*Municipio</label>
+                <select id="municipio" name="municipio" class="select2 form-select">
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row m-3">
+
             <div class="col-12 col-md-12 mb-2">
               <div class="form-group">
-                <label for="enfoque_estrategico" class="form-label">*Enfoque Estratégico</label>
-                <input class="form-control" type="text"value="1.1.4, 1.4.9, 1.4.9.1.1 IV Modelo Productivo Socialista 1er y 5 objetivo histórico del plan de la patria."
-                  id="enfoque_estrategico" name="enfoque_estrategico" readonly />
+                <label class="form-label" for="sede_ubicacion">*Sede</label>
+                <input type="text" class="form-control" name="sede_ubicacion" id="sede_ubicacion">
               </div>
             </div>
-          </div>
-           
-          <div class="row">
-            <div class="col-12 col-md-6 mb-2">
-              <div class="form-group">
-                <label for="objetivos" class="form-label"><b>*Objetivo</b></label>
-                <textarea class="form-control" id="objetivos" name="objetivos"   readonly 
-                rows="2" style="resize: none; height: auto;">Determinación y control de costos operativos por programas totalitarios y zoosanitarios.</textarea> 
-             </div>
-            </div>
 
-            <div class="col-12 col-md-6 mb-2">
-              <div class="form-group">
-                <label for="actividad" class="form-label">*Nombre de la Actividad/Proyecto</label>
-                <textarea class="form-control" id="actividad" name="actividad"   readonly 
-                rows="4" style="resize: none; height: auto;">Determinar el control de costos operativos por programas fitosanitarios y zoosanitarios, Calcular cual es el costo operativo por programa fitosanitario y zoosanitario, Determinar el costo operativo por programa fitosanitario y zoosanitario, Controlar el costo operativo por programa fitosanitario y zoosanitario.</textarea>
-              </div>
-            </div>
           </div>
 
-<!-- REGISTRO DE METAS POR OBJETIVO -->
- 
- <style>
-        .contenedor-float {
-            padding: 20px;
-            background-color: #f0f0f0;
-            overflow: auto; /* Clearfix */
-        }
-        
-        .fila-float {
-            margin-bottom: 20px;
-            overflow: auto;
-        }
-        
-/* COLUMNAS CON FLOAT */
-
-        .col-float {
-            float: left;
-            width: 25%; 
-            box-sizing: border-box;
-            padding: 10px;
-        }
-        
-        .col-float-2 { width: 50%; }
-        .col-float-3 { width: 33.333%; }
-        
-        .contenido-col {
-            background-color: #9C27B0;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            border-radius: 5px;
-        }
-        
-/* CONTENER FLOAT CON CLEARFIX */
-
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-</style>
-
-<style>
- 
- /* METODO FORMULARIO GRID */
-
- .formulario-grid {
-        display: grid;
-        grid-template-columns: 1fr 2fr 1fr; 
-        gap: 10px;
-        padding: 10px;
-        background-color: #f8f9fa;
-        border-radius: 8px;
-        }
-  
-.campo {
-        background-color: white;
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
- .campo label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 10px;
-        }
-        
-.campo textarea, .campo input {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        }
-        
-  /* SUBGRID PARA DISTRIBUCION DE METAS */
-  
-.sub-grid {
-       display: grid;
-       grid-template-columns: repeat(5, 1fr);
-       gap: 5px;
-       margin-top: 10px;
-        }
-        
-      .trimestre {
-            text-align: center;
-        }
-        
-      .trimestre input {
-            text-align: center;
-        }
-
-</style>
-
-<div class="formulario-grid">
-        
-<!-- META POR OBJETIVO-->
-
-<div class="campo">
-     <center><label>META POR OBJETIVO:</label></center>
-     <textarea rows="4"></textarea></div>
-        
-<!-- COLUMNA DISTRIBUCION DE METAS -->
-
-<div class="campo">
-  <center><label>DISTRIBUCION DE METAS:</label></center>
-  <div class="sub-grid">
-    <div class="trimestre">
-      <div class="form-label">TRIM1</div>
-      <input type="text" class="input-trimestre" pattern="[0-9]+" inputmode="numeric">
-    </div>
-    <div class="trimestre">
-      <div class="form-label">TRIM2</div>
-      <input type="text" class="input-trimestre" pattern="[0-9]+" inputmode="numeric">
-    </div>
-    <div class="trimestre">
-      <div class="form-label">TRIM3</div>
-      <input type="text" class="input-trimestre" pattern="[0-9]+" inputmode="numeric">
-    </div>
-    <div class="trimestre">
-      <div class="form-label">TRIM4</div>
-      <input type="text" class="input-trimestre" pattern="[0-9]+" inputmode="numeric">
-    </div>
-    <div class="trimestre">
-      <div class="form-label">TOTAL</div>
-      <input type="text" id="total-metas" readonly>
-    </div>
-  </div>
-</div>
-        
-<!-- COLUMNA ACCIONES -->
-
-  <div class="campo">
-      <center><label>ACCIONES:</label></center>
-      <textarea rows="4"></textarea>
-  </div>
-</div>
-
-<!-- PIE DE PAGINA PARA GUARDAR METAS TRIMESTRES Y ACCIONES -->
-
-<div class="row" id="tipo_proyecto"></div>
-    <div class="modal-footer">
-          <button type="button" id="Crear" class="btn btn-primary">Guardar Metas/Acciones</button>
-          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
-        </div> 
+          <!-- PIE DE PAGINA PARA GUARDAR METAS TRIMESTRES Y ACCIONES -->
+          <div class="modal-footer">
+            <button type="button" id="Crear" class="btn btn-primary">Guardar Metas/Acciones</button>
+            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="FormulacionVerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom">
+        <h4 class="modal-title fw-bold py-2">
+          <i class="bx bx-bullseye me-2"></i>Detalles de la Meta
+        </h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <small class="text-muted text-uppercase fw-semibold d-block">Descripción</small>
+            <p id="view_descripcion" class="fw-bold"></p>
+          </div>
+          <div class="col-md-6">
+            <small class="text-muted text-uppercase fw-semibold d-block">Acciones</small>
+            <p id="view_acciones"></p>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <small class="text-muted text-uppercase fw-semibold d-block">Estado / Municipio</small>
+            <p><span id="view_estado"></span> - <span id="view_municipio"></span></p>
+          </div>
+          <div class="col-md-4">
+            <small class="text-muted text-uppercase fw-semibold d-block">Sede / Ubicación</small>
+            <p id="view_sede"></p>
+          </div>
+        </div>
+
+        <div class="card bg-light">
+          <div class="card-body">
+            <div class="row text-center">
+              <div class="col-3">
+                <small class="text-muted d-block">Trim 1</small>
+                <h5 id="view_trim1" class="mb-0">0</h5>
+              </div>
+              <div class="col-3">
+                <small class="text-muted d-block">Trim 2</small>
+                <h5 id="view_trim2" class="mb-0">0</h5>
+              </div>
+              <div class="col-3">
+                <small class="text-muted d-block">Trim 3</small>
+                <h5 id="view_trim3" class="mb-0">0</h5>
+              </div>
+              <div class="col-3">
+                <small class="text-muted d-block">Trim 4</small>
+                <h5 id="view_trim4" class="mb-0">0</h5>
+              </div>
+            </div>
+            <hr>
+            <div class="text-end">
+              <span class="fw-semibold">Total Actividad: </span>
+              <span id="view_total" class="badge bg-primary fs-6">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
     </div>
   </div>
 </div>
@@ -234,7 +190,7 @@
     <div class="row mb-4">
       <div class="col-12 col-md-4 ">
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ObjetivoModal"
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#FormulacionModal"
           class="btn btn-primary me-2">Crear Metas</button>
 
       </div>
@@ -242,6 +198,13 @@
 
     <!--LISTADO DE CONSULTAS DE METAS-->
 
+    <h5 class="card-header">Formulacion Actual</h5>
+    <table class="table">
+      <tbody class="table-border-bottom-0" id="tablaFormulacionActual">
+      </tbody>
+    </table>
+    
+    <br>
     <div class="table-responsive text-nowrap">
       <table class="table" id="tablaPrincipal">
         <thead>
@@ -253,7 +216,7 @@
             <th>Métodos</th>
           </tr>
         </thead>
-        <tbody class="table-border-bottom-0" id="tablaPlanificacion">
+        <tbody class="table-border-bottom-0" id="tablaFormulacion">
         </tbody>
       </table>
     </div>

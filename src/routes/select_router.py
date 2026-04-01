@@ -9,4 +9,11 @@ def consultar():
     tabla = request.args.get('tabla')
     col1 = request.args.get('col1')
     col2 = request.args.get('col2')
-    return jsonify(ctrl.select(col1, col2, tabla))
+    col3 = request.args.get('col3')
+    id = request.args.get('id')
+    
+    if col3 and id:
+        return jsonify(ctrl.select_where(col1, col2, col3, tabla, id))
+    
+    else:
+        return jsonify(ctrl.select(col1, col2, tabla))
